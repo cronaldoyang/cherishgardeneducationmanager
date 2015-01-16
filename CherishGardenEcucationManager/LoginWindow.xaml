@@ -1,32 +1,48 @@
 ﻿<Window x:Class="CherishGardenEcucationManager.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="恩涛树下幼儿园教育管理系统 " Height="400" Width="600" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" 
-        TextBlock.TextAlignment="Center" Icon="/Resources/imgs/Icon.png">
+        Title="恩涛树下幼儿园教育管理系统 " Height="400" Width="400"   WindowStartupLocation="CenterScreen" 
+        TextBlock.TextAlignment="Center" ResizeMode="NoResize" Icon="/Resources/imgs/Icon.png">
     <Grid>
-  
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="250"/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Source="/Resources/imgs/Icon.png" Width="200" Height="200"/>
-                <TextBlock Text="恩涛树下教育管理系统" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
+                <Image Source="/Resources/imgs/Icon.png" Width="150" Height="150"/>
+                <TextBlock Text="教育管理系统"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" TextWrapping="Wrap"></TextBlock>
             </StackPanel>
-            <Label Content="名字：" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20"/>
-            <TextBox Name="userName"  Grid.Row="1" Grid.Column="1" Margin="5" TextAlignment="Center"/>
-            <Label Content="密码：" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"  FontSize="20"/>
-            <PasswordBox Name="password" Grid.Row="2" Grid.Column="1" Margin="5"/>
-            <Button Name="btnLogin" Grid.Row="3" Grid.ColumnSpan="2" Background="White" Content="登陆" Foreground="Black"  FontSize="20" HorizontalAlignment="Center"
-                    Width="130" />
-
-        </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Resources/imgs/Icon.png" Width="100" Height="100" Margin="10"/>
+                <StackPanel Margin="10">
+                    <TextBox Name="userName"   Margin="10" TextAlignment="Center" Width="200" Height="30">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                <Style.Resources>
+                                    <VisualBrush x:Key="UserNameBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                        <VisualBrush.Visual>
+                                            <Label Content="请输入你的名字" Foreground="LightGray" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Style.Resources>
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Background" Value="{StaticResource UserNameBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="{x:Null}">
+                                        <Setter Property="Background" Value="{StaticResource UserNameBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter Property="Background" Value="White" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <PasswordBox Name="password"  Margin="10" Width="200" Height="30" Password="">
+                    </PasswordBox>
+                    <Button Name="btnLogin" Margin="10" Background="White" Content="登陆" Foreground="Black"  FontSize="20" HorizontalAlignment="Center"
+                    Width="200" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Text="Powered by Lohasedu and CherishGarden 2015~2016!" Width="400" HorizontalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Window> 
