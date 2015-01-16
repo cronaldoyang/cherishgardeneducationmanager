@@ -1,0 +1,32 @@
+﻿<Window x:Class="CherishGardenEcucationManager.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="恩涛树下幼儿园教育管理系统 " Height="400" Width="600" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" 
+        TextBlock.TextAlignment="Center" Icon="/Resources/imgs/Icon.png">
+    <Grid>
+  
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Source="/Resources/imgs/Icon.png" Width="200" Height="200"/>
+                <TextBlock Text="恩涛树下教育管理系统" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
+            </StackPanel>
+            <Label Content="名字：" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20"/>
+            <TextBox Name="userName"  Grid.Row="1" Grid.Column="1" Margin="5" TextAlignment="Center"/>
+            <Label Content="密码：" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"  FontSize="20"/>
+            <PasswordBox Name="password" Grid.Row="2" Grid.Column="1" Margin="5"/>
+            <Button Name="btnLogin" Grid.Row="3" Grid.ColumnSpan="2" Background="White" Content="登陆" Foreground="Black"  FontSize="20" HorizontalAlignment="Center"
+                    Width="130" />
+
+        </Grid>
+    </Grid>
+</Window> 
