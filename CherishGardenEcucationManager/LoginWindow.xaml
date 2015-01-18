@@ -14,12 +14,12 @@
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Resources/imgs/Icon.png" Width="100" Height="100" Margin="10"/>
                 <StackPanel Margin="10">
-                    <TextBox Name="userName"   Margin="5" TextAlignment="Left" Width="200" Height="30"
+                    <TextBox Name="operatorName"   Margin="5" TextAlignment="Left" Width="200" Height="30"
                             Template="{DynamicResource WatermarkedTextBoxTemplate}" local:TextBoxHelper.Watermark="英文名"/>
                     <PasswordBox  Name="pwd"  Margin="5" Width="200" Height="30" 
                                  Template="{StaticResource WatermarkedPasswordBoxTemplate}" local:PasswordBoxHelper.Watermark="密码"/>
                     <Button Name="btnLogin" Margin="5" Background="White" Content="登录" Foreground="Black"  FontSize="20" 
-                            HorizontalAlignment="Center" Width="200" />
+                            HorizontalAlignment="Center" Width="200" Click="btnLogin_Click" />
                 </StackPanel>
             </StackPanel>
             <TextBlock Text="Powered by Lohasedu and CherishGarden 2015~2016!" Width="400" HorizontalAlignment="Center"/>
