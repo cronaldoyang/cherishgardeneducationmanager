@@ -98,11 +98,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="cgemDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>cgemDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Database\DatabaseHelper.cs" />
     <Compile Include="Entity\MemberBasic.cs" />
     <Compile Include="Entity\OperatorUser.cs" />
@@ -132,18 +127,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="cgemDataSet.xsc">
-      <DependentUpon>cgemDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="cgemDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>cgemDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="cgemDataSet.xss">
-      <DependentUpon>cgemDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="CherishGardenEdcucationManager_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
