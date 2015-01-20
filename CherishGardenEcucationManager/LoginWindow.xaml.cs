@@ -19,6 +19,7 @@ namespace CherishGardenEducationManager
 
     public partial class LoginWindow : Window
     {
+
         public LoginWindow()
         {
             InitializeComponent();
@@ -31,15 +32,31 @@ namespace CherishGardenEducationManager
             Button loginBtn = (Button)sender;
             String operatorName = userTB.Text;
             String password = passowrdPB.Password;
-            OperatorUser operatorUser = DatabaseHelper.findOperatorUser(operatorName);
-            if (operatorUser!=null && operatorUser.password == password)
+            OperatorUser currentUser = DatabaseHelper.findOperatorUser(operatorName);
+            if (currentUser != null && currentUser.password == password)
             {
-                MessageBox.Show("login success");
+                navigateToMainWindow();
             }
             else {
-                MessageBox.Show("login failed");
+                //retry login
+                userTB.Text = "";
+                userTB.Focus();
+                passowrdPB.Password = null;
             }
         }
 
+
+        private void navigateToMainWindow() {
+            this.Close();
+
+            MainWindow mainwindow = new MainWindow();
+            Application.Current.MainWindow = mainwindow;
+            mainwindow.ShowDialog();
+        }
+
+        private void operatorName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //get the current user's photo
+        }
     }
 }

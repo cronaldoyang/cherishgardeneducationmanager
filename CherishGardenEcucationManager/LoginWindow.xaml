@@ -15,7 +15,7 @@
                 <Image Source="/Resources/imgs/Icon.png" Width="100" Height="100" Margin="10"/>
                 <StackPanel Margin="10">
                     <TextBox Name="operatorName"   Margin="5" TextAlignment="Left" Width="200" Height="30"
-                            Template="{DynamicResource WatermarkedTextBoxTemplate}" local:TextBoxHelper.Watermark="英文名"/>
+                            Template="{DynamicResource WatermarkedTextBoxTemplate}" local:TextBoxHelper.Watermark="英文名" LostFocus="operatorName_LostFocus"/>
                     <PasswordBox  Name="pwd"  Margin="5" Width="200" Height="30" 
                                  Template="{StaticResource WatermarkedPasswordBoxTemplate}" local:PasswordBoxHelper.Watermark="密码"/>
                     <Button Name="btnLogin" Margin="5" Background="White" Content="登录" Foreground="Black"  FontSize="20" 
