@@ -5,10 +5,9 @@
         WindowState="Maximized" 
         TextBlock.TextAlignment="Center" Icon="/Resources/imgs/Icon.png"
         Title="恩涛树下幼儿园教育管理系统" Height="300" Width="600"
-        xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
         xmlns:local="clr-namespace:CherishGardenEducationManager">
     <Grid>
-        <Grid  local:GridLineHelper.ShowBorder="True">
+        <Grid  local:GridLineHelper.ShowBorder="True" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -16,12 +15,12 @@
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <DockPanel Background="White">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <DockPanel Background="White" >
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                     <Menu TextBlock.FontSize="12" Background="White">
-                        <MenuItem Header="添加师生信息" >
-                            <MenuItem Header="添加学生"/>
-                            <MenuItem Header="添加老师"/>
+                        <MenuItem Header="添加师生信息"  >
+                            <MenuItem Header="添加学生" Click="naviagetToAddStudentInfo"/>
+                            <MenuItem Header="添加老师" Click="naviagetToAddTeacherInfo"/>
                         </MenuItem>
                         <MenuItem Header="学生相关记录">
                             <MenuItem Header="身高体重记录"/>
@@ -35,13 +34,13 @@
                         </MenuItem>
                     </Menu>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
                     <Image Source="/Resources/imgs/Icon.png"  />
                     <TextBlock Text="cronaldo" TextAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
             </DockPanel>
 
-            <Frame Grid.Row="1" Source="Content.xaml"  ></Frame>
+            <Frame Name="contentPanel" Grid.Row="1"   Padding="2"></Frame>
         </Grid>
     </Grid>
 </Window>

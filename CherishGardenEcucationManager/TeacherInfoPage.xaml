@@ -1,0 +1,196 @@
+﻿<Page x:Class="CherishGardenEducationManager.TeacherInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CherishGardenEducationManager"
+      mc:Ignorable="d" 
+      ShowsNavigationUI="False"
+      d:DesignHeight="300" d:DesignWidth="300"
+	  Title="TeacherInfoPage"
+      >
+    <ScrollViewer>
+        <StackPanel>
+            <!-- Title-->
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,5,0,5">
+                <TextBlock Text="恩涛树下幼儿园教师信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top" FontWeight="Black" />
+            </Border>
+
+            <!-- Basic Info-->
+            <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition  Width="0.8*"/>
+                        <ColumnDefinition  Width="0.2*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition  Width="0.2*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition  Width="0.2*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="8" FontWeight="Black" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="姓名:"></Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" MinWidth="75"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="2" Content="英文名:"></Label>
+                    <TextBox Grid.Row="1" Grid.Column="3" MinWidth="75"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="4" Content="性别："></Label>
+                    <TextBox Grid.Row="1" Grid.Column="5" MinWidth="75"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="6" Content="身份证号："></Label>
+                    <TextBox Grid.Row="1" Grid.Column="7"  MinWidth="75"></TextBox>
+                </Grid>
+            </Border>
+
+            <!--More Info-->
+            <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" Name="moreinfoGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.25*"/>
+                        <ColumnDefinition  Width="0.75*"/>
+                        <ColumnDefinition  Width="0.25*"/>
+                        <ColumnDefinition Width="0.75*"/>
+                        <ColumnDefinition  Width="0.25*"/>
+                        <ColumnDefinition Width="0.75*"/>
+                        <ColumnDefinition  Width="0.25*"/>
+                        <ColumnDefinition Width="0.75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="8" FontWeight="Black" Text="更多信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
+
+                    <Label Content="阳历生日:" Grid.Row="1" Grid.Column="0"></Label>
+                    <DatePicker Grid.Row="1" Grid.Column="1"></DatePicker>
+                    <Label Content="农历生日:" Grid.Row="1" Grid.Column="2"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="1" Grid.Column="3"></TextBox>
+                    <Label Content="民族：" Grid.Row="1" Grid.Column="4"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="1" Grid.Column="5"></TextBox>
+                    <Label Content="出生地：" Grid.Row="1" Grid.Column="6"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="1" Grid.Column="7"></TextBox>
+
+                    <Label Content="手机：" Grid.Row="2" Grid.Column="0"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="2" Grid.Column="1"></TextBox>
+                    <Label Content="QQ：" Grid.Row="2" Grid.Column="2"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="2" Grid.Column="3"></TextBox>
+                    <Label Content="普通话水平：" Grid.Row="2" Grid.Column="4" ></Label>
+                    <TextBox  MinWidth="75" Grid.Row="2" Grid.Column="5"></TextBox>
+                    <Label Content="计算机水平：" Grid.Row="2" Grid.Column="6"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="2" Grid.Column="7"></TextBox>
+
+
+                    <Label Content="所获学历：" Grid.Row="3" Grid.Column="0"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="3" Grid.Column="1"></TextBox>
+                    <Label Content="毕业院校：" Grid.Row="3" Grid.Column="2"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="3" Grid.Column="3"></TextBox>
+                    <Label Content="所学专业：" Grid.Row="3" Grid.Column="4"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="3" Grid.Column="5"></TextBox>
+                    <Label Content="毕业时间：" Grid.Row="3" Grid.Column="6"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="3" Grid.Column="7"></TextBox>
+
+                    <Label Content="现居住地:" Grid.Row="4" Grid.Column="0"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                    <Label Content="户口地址:" Grid.Row="4" Grid.Column="4"></Label>
+                    <TextBox  MinWidth="75" Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="3"></TextBox>
+
+                    <Label Content="特长：" Grid.Row="5" Grid.Column="0"></Label>
+                    <TextBox  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4"></TextBox>
+                    <StackPanel Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="3" Grid.RowSpan="3">
+                        <Image Source="/Resources/imgs/Icon.png" Width="100" Height="100" />
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">你的相片</TextBlock>
+                    </StackPanel>
+
+                    <Label Content="所获奖励：" Grid.Row="6" Grid.Column="0"></Label>
+                    <TextBox  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4"></TextBox>
+                    <Label Content="自评：" Grid.Row="7" Grid.Column="0"></Label>
+                    <TextBox  Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Padding="3,0,3,0"></TextBox>
+                </Grid>
+            </Border>
+
+            <!--Member family-->
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="5" FontWeight="Black" Text="家庭成员信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Label  Grid.Row="1" Grid.Column="0" Content="姓名"/>
+                    <Label  Grid.Row="1" Grid.Column="1" Content="关系"/>
+                    <Label  Grid.Row="1" Grid.Column="2" Content="手机"/>
+                    <Label   Grid.Row="1" Grid.Column="3" Content="身份证号"/>
+                    <Label   Grid.Row="1" Grid.Column="4" Content="是否紧急联络人"/>
+
+                    <TextBox Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Grid.Row="2" Grid.Column="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="3"/>
+                    <TextBox Grid.Row="2" Grid.Column="4"/>
+
+                    <TextBox Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Grid.Row="3" Grid.Column="2"/>
+                    <TextBox Grid.Row="3" Grid.Column="3"/>
+                    <TextBox Grid.Row="3" Grid.Column="4"/>
+                </Grid>
+            </Border>
+
+            <!--Education and Employee experience-->
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="5" FontWeight="Black" Text="学习及工作经历"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Label  Grid.Row="1" Grid.Column="0" Content="起始日期"/>
+                    <Label  Grid.Row="1" Grid.Column="1" Content="结束日期"/>
+                    <Label  Grid.Row="1" Grid.Column="2" Content="所在单位或学校"/>
+                    <Label   Grid.Row="1" Grid.Column="3" Content="所负责事务"/>
+                    <Label   Grid.Row="1" Grid.Column="4" Content="职位"/>
+
+                    <TextBox Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Grid.Row="2" Grid.Column="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="3"/>
+                    <TextBox Grid.Row="2" Grid.Column="4"/>
+
+                    <TextBox Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Grid.Row="3" Grid.Column="2"/>
+                    <TextBox Grid.Row="3" Grid.Column="3"/>
+                    <TextBox Grid.Row="3" Grid.Column="4"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

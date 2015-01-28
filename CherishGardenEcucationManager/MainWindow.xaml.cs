@@ -19,10 +19,24 @@ namespace CherishGardenEducationManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        Frame contentPanelFrame;
         public MainWindow()
         {
             InitializeComponent();
+            contentPanelFrame = (Frame)FindName("contentPanel");
+            contentPanelFrame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
         }
+
+        private void naviagetToAddStudentInfo(object sender, RoutedEventArgs e)
+        {
+            contentPanelFrame.Navigate(new StudentsInfoPage());
+        }
+
+        private void naviagetToAddTeacherInfo(object sender, RoutedEventArgs e)
+        {
+            contentPanelFrame.Navigate(new TeacherInfoPage());
+        }
+
 
     }
 }

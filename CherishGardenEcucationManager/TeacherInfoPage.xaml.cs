@@ -15,12 +15,13 @@ using System.Windows.Shapes;
 namespace CherishGardenEducationManager
 {
     /// <summary>
-    /// Interaction logic for MainEntrance.xaml
+    /// Interaction logic for TeacherInfoPage.xaml
     /// </summary>
-    public partial class Content : Page
+    public partial class TeacherInfoPage : Page
     {
-        public Content()
+        public TeacherInfoPage()
         {
+            InitializeComponent();
         }
     }
 }

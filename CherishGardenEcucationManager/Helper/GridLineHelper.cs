@@ -48,9 +48,9 @@ namespace CherishGardenEducationManager
                         var item = controls[i] as FrameworkElement;
                         var border = new Border()
                         {
-                            BorderBrush = new SolidColorBrush(Colors.LightGray),
-                            BorderThickness = new Thickness(1),
-                            Padding = new Thickness(3)
+                            BorderBrush = new SolidColorBrush(Colors.Black),
+                            BorderThickness = new Thickness(0.5),
+                            Padding = new Thickness(0)
                         };
 
                         var row = Grid.GetRow(item);
