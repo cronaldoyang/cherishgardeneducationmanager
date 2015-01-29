@@ -33,7 +33,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.ColumnSpan="8" FontWeight="Black" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" FontWeight="Black" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="姓名:"></Label>
                     <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15"></TextBox>
@@ -41,7 +41,7 @@
                     <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15"></TextBox>
                     <Label Grid.Row="1" Grid.Column="4" Content="性别："></Label>
                     <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding ElementName=genderListBox, Path=SelectedItem}" Name="genderTextBox" ></TextBox>
-                    <Popup IsOpen="{Binding ElementName=genderTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=genderTextBox}"  Name="genderListPopup">
+                    <Popup IsOpen="{Binding ElementName=genderTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=genderTextBox}"  Name="genderListPopup" Grid.Row="1" Grid.Column="5" >
                         <ListBox  ItemsSource="{StaticResource GenderList}" Name="genderListBox" />
                     </Popup>
 
@@ -65,7 +65,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -73,7 +73,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.ColumnSpan="8" FontWeight="Black" Text="更多信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" FontWeight="Black" Text="更多信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Content="阳历生日:" Grid.Row="1" Grid.Column="0"></Label>
                     <DatePicker Grid.Row="1" Grid.Column="1"></DatePicker>
@@ -82,7 +82,7 @@
                     <Label Content="民族：" Grid.Row="1" Grid.Column="4"></Label>
                     <TextBox   Grid.Row="1" Grid.Column="5"></TextBox>
                     <Label Content="出生地：" Grid.Row="1" Grid.Column="6"></Label>
-                    <TextBox   Grid.Row="1" Grid.Column="7"></TextBox>
+                    <TextBox   Grid.Row="1" Grid.Column="7" ></TextBox>
 
                     <Label Content="手机：" Grid.Row="2" Grid.Column="0"></Label>
                     <local:NumberTextBox   Grid.Row="2" Grid.Column="1" x:Name="mobilePhone" MaxLength="11"></local:NumberTextBox>
@@ -90,7 +90,7 @@
                     <local:NumberTextBox   Grid.Row="2" Grid.Column="3"></local:NumberTextBox>
                     <Label Content="普通话水平：" Grid.Row="2" Grid.Column="4" ></Label>
                     <TextBox   Grid.Row="2" Grid.Column="5" Name="putonghuaLevelTextBox" Text="{Binding ElementName=putonghuaLevelListBox, Path=SelectedItem}"></TextBox>
-                    <Popup IsOpen="{Binding ElementName=putonghuaLevelTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=putonghuaLevelTextBox}" >
+                    <Popup IsOpen="{Binding ElementName=putonghuaLevelTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=putonghuaLevelTextBox}" Grid.Row="2" Grid.Column="5">
                         <ListBox  ItemsSource="{StaticResource putonghuaLevelList}" Name="putonghuaLevelListBox" />
                     </Popup>
                     <Label Content="计算机水平：" Grid.Row="2" Grid.Column="6"></Label>

@@ -6,10 +6,13 @@
              xmlns:local="clr-namespace:CherishGardenEducationManager"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!--Gender list-->
         <x:Array x:Key="GenderList" Type="System:String">
             <System:String>男</System:String>
             <System:String>女</System:String>
         </x:Array>
+
+        <!--putonghua Level list-->
         <x:Array x:Key="putonghuaLevelList" Type="System:String">
             <System:String>一级甲等</System:String>
             <System:String>一级乙等</System:String>
@@ -19,19 +22,11 @@
             <System:String>三级乙等</System:String>
             <System:String>未合格</System:String>
         </x:Array>
-        <x:Array x:Key="computerLevelList" Type="System:String">
-            <System:String>一级甲等</System:String>
-            <System:String>一级乙等</System:String>
-            <System:String>二级甲等</System:String>
-            <System:String>二级乙等</System:String>
-            <System:String>三级甲等</System:String>
-            <System:String>三级乙等</System:String>
-            <System:String>未合格</System:String>
-        </x:Array>
-        
-        
+
+
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
+        <!--Template for PasswordBoxTemplate-->
         <ControlTemplate x:Key="WatermarkedPasswordBoxTemplate" TargetType="{x:Type PasswordBox}">
             <Microsoft_Windows_Themes:ListBoxChrome x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderFocused="{TemplateBinding IsKeyboardFocusWithin}" SnapsToDevicePixels="true">
                 <Grid>
@@ -50,6 +45,7 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
+        <!--Template for TextBox with watermark-->
         <ControlTemplate x:Key="WatermarkedTextBoxTemplate" TargetType="{x:Type TextBox}">
             <Microsoft_Windows_Themes:ListBoxChrome x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderFocused="{TemplateBinding IsKeyboardFocusWithin}" SnapsToDevicePixels="true">
                 <Grid>
@@ -64,5 +60,14 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+
+        <!--Let all text size as 14-->
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
     </Application.Resources>
 </Application>
