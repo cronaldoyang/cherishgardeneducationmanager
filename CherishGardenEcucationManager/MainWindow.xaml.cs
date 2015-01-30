@@ -34,7 +34,20 @@ namespace CherishGardenEducationManager
 
         private void naviagetToAddTeacherInfo(object sender, RoutedEventArgs e)
         {
-            contentPanelFrame.Navigate(new TeacherInfoPage());
+            TeacherInfoPage teacherInfoPage = new TeacherInfoPage();
+            contentPanelFrame.Navigate(teacherInfoPage);
+            teacherInfoPage.updateStausbar += teacherInfoPage_updateStausbar;
+        }
+
+        void teacherInfoPage_updateStausbar(object sender, EventArgs e)
+        {
+            updateStatusbar();
+        }
+
+        private void updateStatusbar() {
+            TextBlock statsubarTextBlock = (TextBlock)FindName("statsubarText");
+            statsubarTextBlock.Visibility = System.Windows.Visibility.Visible;
+            statsubarTextBlock.Text = "Start do saving data.";
         }
 
 

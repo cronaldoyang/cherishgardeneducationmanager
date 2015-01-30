@@ -10,7 +10,7 @@ namespace CherishGardenEducationManager.Entity
         string nameField;
         string engnameField;
         string idcardnoField;
-        Boolean maleField;
+        string genderField;
         Boolean isteacherField;
 
         string name { 
@@ -22,9 +22,9 @@ namespace CherishGardenEducationManager.Entity
             set { engnameField = value; }
         }
 
-        Boolean male {
-            get { return maleField; }
-            set { maleField = value; }
+        String male {
+            get { return genderField; }
+            set { genderField = value; }
         }
 
         string idcardno {
@@ -37,12 +37,16 @@ namespace CherishGardenEducationManager.Entity
             set { isteacherField = value; }
         }
 
-        public MemberBasic(String namev, String engnamev, Boolean malev, String idcardnov, Boolean isteacherv) {
+        public MemberBasic(String namev, String engnamev, string gender, String idcardnov, Boolean isteacherv) {
              nameField = namev;
              engnameField = engnamev;
-             maleField = malev;
+             genderField = gender;
              idcardnoField = idcardnov;
              isteacherField = isteacherv;
+        }
+
+        public String ToString() {
+            return "name:" + nameField + "|engName:" + engnameField + "|gender:" + genderField + "|idcardno:" + idcardnoField + "|isteacher:" + isteacherField;
         }
 
     }

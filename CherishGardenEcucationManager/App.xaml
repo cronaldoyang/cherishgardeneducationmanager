@@ -23,6 +23,19 @@
             <System:String>未合格</System:String>
         </x:Array>
 
+        <!--putonghua Level list-->
+        <x:Array x:Key="educationbackgroundList" Type="System:String">
+            <System:String>博士研究生</System:String>
+            <System:String>硕士研究生</System:String>
+            <System:String>本科</System:String>
+            <System:String>专科</System:String>
+            <System:String>高职</System:String>
+            <System:String>中专</System:String>
+            <System:String>高中</System:String>
+            <System:String>初中</System:String>
+            <System:String>小学</System:String>
+        </x:Array>
+
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 

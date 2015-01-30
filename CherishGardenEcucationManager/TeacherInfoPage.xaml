@@ -36,9 +36,9 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" FontWeight="Black" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="姓名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15" Name="teacherName"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" Content="英文名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15" Name="teacherEngName"></TextBox>
                     <Label Grid.Row="1" Grid.Column="4" Content="性别："></Label>
                     <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding ElementName=genderListBox, Path=SelectedItem}" Name="genderTextBox" ></TextBox>
                     <Popup IsOpen="{Binding ElementName=genderTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=genderTextBox}"  Name="genderListPopup" Grid.Row="1" Grid.Column="5" >
@@ -46,7 +46,7 @@
                     </Popup>
 
                     <Label Grid.Row="1" Grid.Column="6" Content="身份证号："></Label>
-                    <TextBox Grid.Row="1" Grid.Column="7"  MaxLength="18"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="7"  MaxLength="18" Name="teacherIdCardNo"></TextBox>
                 </Grid>
             </Border>
 
@@ -71,63 +71,63 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" FontWeight="Black" Text="更多信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Content="阳历生日:" Grid.Row="1" Grid.Column="0"></Label>
-                    <DatePicker Grid.Row="1" Grid.Column="1"></DatePicker>
+                    <DatePicker Grid.Row="1" Grid.Column="1" Name="birthdayYangli"></DatePicker>
                     <Label Content="农历生日:" Grid.Row="1" Grid.Column="2"></Label>
-                    <DatePicker   Grid.Row="1" Grid.Column="3"></DatePicker>
+                    <DatePicker   Grid.Row="1" Grid.Column="3" Name="birthdayNongli"></DatePicker>
                     <Label Content="民族：" Grid.Row="1" Grid.Column="4"></Label>
-                    <TextBox   Grid.Row="1" Grid.Column="5"></TextBox>
+                    <TextBox   Grid.Row="1" Grid.Column="5" Name="minzu"></TextBox>
                     <Label Content="出生地：" Grid.Row="1" Grid.Column="6"></Label>
-                    <TextBox   Grid.Row="1" Grid.Column="7" ></TextBox>
+                    <TextBox   Grid.Row="1" Grid.Column="7" Name="birthdayplace"></TextBox>
 
                     <Label Content="手机：" Grid.Row="2" Grid.Column="0"></Label>
-                    <local:NumberTextBox   Grid.Row="2" Grid.Column="1" x:Name="mobilePhone" MaxLength="11"></local:NumberTextBox>
+                    <local:NumberTextBox   Grid.Row="2" Grid.Column="1" x:Name="phone" MaxLength="11"></local:NumberTextBox>
                     <Label Content="QQ：" Grid.Row="2" Grid.Column="2"></Label>
-                    <local:NumberTextBox   Grid.Row="2" Grid.Column="3"></local:NumberTextBox>
+                    <local:NumberTextBox   Grid.Row="2" Grid.Column="3" x:Name="qq"></local:NumberTextBox>
                     <Label Content="普通话水平：" Grid.Row="2" Grid.Column="4" ></Label>
                     <TextBox   Grid.Row="2" Grid.Column="5" Name="putonghuaLevelTextBox" Text="{Binding ElementName=putonghuaLevelListBox, Path=SelectedItem}"></TextBox>
                     <Popup IsOpen="{Binding ElementName=putonghuaLevelTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=putonghuaLevelTextBox}" Grid.Row="2" Grid.Column="5">
                         <ListBox  ItemsSource="{StaticResource putonghuaLevelList}" Name="putonghuaLevelListBox" />
                     </Popup>
                     <Label Content="计算机水平：" Grid.Row="2" Grid.Column="6"></Label>
-                    <TextBox   Grid.Row="2" Grid.Column="7"></TextBox>
+                    <TextBox   Grid.Row="2" Grid.Column="7" Name="computerlevel"></TextBox>
 
 
                     <Label Content="所获学历：" Grid.Row="3" Grid.Column="0"></Label>
-                    <TextBox   Grid.Row="3" Grid.Column="1" MaxLength="2"></TextBox>
+                    <TextBox Text="{Binding ElementName=educationbackgroundListBox, Path=SelectedItem}"   Grid.Row="3" Grid.Column="1" MaxLength="2" Name="educationbackgroundTextBox"></TextBox>
+                    <Popup IsOpen="{Binding ElementName=educationbackgroundTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=educationbackgroundTextBox}" Grid.Row="3" Grid.Column="1">
+                        <ListBox  ItemsSource="{StaticResource educationbackgroundList}" Name="educationbackgroundListBox" />
+                    </Popup>
                     <Label Content="毕业院校：" Grid.Row="3" Grid.Column="2"></Label>
-                    <TextBox   Grid.Row="3" Grid.Column="3" MaxLength="20"></TextBox>
+                    <TextBox   Grid.Row="3" Grid.Column="3" MaxLength="20" Name="graduatedschool"></TextBox>
                     <Label Content="所学专业：" Grid.Row="3" Grid.Column="4"></Label>
-                    <TextBox   Grid.Row="3" Grid.Column="5" MaxLength="20"></TextBox>
+                    <TextBox   Grid.Row="3" Grid.Column="5" MaxLength="20" Name="profession"></TextBox>
                     <Label Content="毕业时间：" Grid.Row="3" Grid.Column="6"></Label>
-                    <DatePicker   Grid.Row="3" Grid.Column="7" ></DatePicker>
+                    <DatePicker   Grid.Row="3" Grid.Column="7" Name="graducatedDate"></DatePicker>
 
                     <Label Content="现居住地:" Grid.Row="4" Grid.Column="0"></Label>
-                    <TextBox   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
+                    <TextBox   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Name="nowaddress"></TextBox>
                     <Label Content="户口地址:" Grid.Row="4" Grid.Column="4"></Label>
-                    <TextBox   Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="3"></TextBox>
+                    <TextBox   Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="3" Name="residenceaddress"></TextBox>
 
                     <Label Content="特长：" Grid.Row="5" Grid.Column="0"></Label>
-                    <TextBox  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" MaxLength="2000"></TextBox>
-                    <StackPanel Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="3" Grid.RowSpan="3">
-                        <Image Source="/Resources/imgs/Icon.png" Width="100" Height="100" />
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">你的相片</TextBlock>
-                    </StackPanel>
+                    <TextBox Name="forte"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" MaxLength="2000"></TextBox>
 
-                    <Label Content="所获奖励：" Grid.Row="6" Grid.Column="0"></Label>
-                    <TextBox  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="4" MaxLength="2000"></TextBox>
+                    <Button Content="从电脑上选择你的相片" Name="choosePhotoBtn" Click="choosePhotoBtn_Click" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                    <Image Source="/Resources/imgs/Icon.png" Width="125" Height="125" Name="photo" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Collapsed"/>
+
+
                     <Label Content="自评：" Grid.Row="7" Grid.Column="0"></Label>
-                    <TextBox  Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Padding="3,0,3,0" MaxLength="2000"></TextBox>
+                    <TextBox Name="selfvaluation"  Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Padding="3,0,3,0" MaxLength="2000"></TextBox>
                 </Grid>
             </Border>
 
             <!--Member family-->
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" Name="memberFamilyGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -148,17 +148,7 @@
                     <Label   Grid.Row="1" Grid.Column="3" Content="身份证号"/>
                     <Label   Grid.Row="1" Grid.Column="4" Content="是否紧急联络人"/>
 
-                    <TextBox Grid.Row="2" Grid.Column="0"/>
-                    <TextBox Grid.Row="2" Grid.Column="1"/>
-                    <TextBox Grid.Row="2" Grid.Column="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="3"/>
-                    <TextBox Grid.Row="2" Grid.Column="4"/>
-
-                    <TextBox Grid.Row="3" Grid.Column="0"/>
-                    <TextBox Grid.Row="3" Grid.Column="1"/>
-                    <TextBox Grid.Row="3" Grid.Column="2"/>
-                    <TextBox Grid.Row="3" Grid.Column="3"/>
-                    <TextBox Grid.Row="3" Grid.Column="4"/>
+                    <Button Name="gridaddrowBtn" Content="点击添加新数据" Click="gridaddrowBtn_Click" />
                 </Grid>
             </Border>
 
@@ -196,6 +186,41 @@
                     <TextBox Grid.Row="3" Grid.Column="2"/>
                     <TextBox Grid.Row="3" Grid.Column="3"/>
                     <TextBox Grid.Row="3" Grid.Column="4"/>
+                </Grid>
+            </Border>
+
+            <!--Education and Employee experience-->
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="5" FontWeight="Black" Text="所获奖励情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Label  Grid.Row="1" Grid.Column="0" Content="日期"/>
+                    <Label  Grid.Row="1" Grid.Column="1" Content="奖励内容"/>
+                    <Label  Grid.Row="1" Grid.Column="2" Content="所在单位或学校"/>
+
+                    <TextBox Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Grid.Row="2" Grid.Column="2"/>
+
+                    <TextBox Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Grid.Row="3" Grid.Column="2"/>
+                </Grid>
+            </Border>
+
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
+                <Grid>
+                    <Button Content="确认保存"  Width="100" Height="30" Name="TeacherInfoPageSaveBtn" Click="TeacherInfoPageSaveBtn_Click"></Button>
                 </Grid>
             </Border>
         </StackPanel>

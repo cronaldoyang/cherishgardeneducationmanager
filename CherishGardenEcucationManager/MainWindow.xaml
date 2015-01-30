@@ -14,6 +14,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
             <DockPanel Background="White" >
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
@@ -38,9 +39,18 @@
                     <Image Source="/Resources/imgs/Icon.png"  />
                     <TextBlock Text="cronaldo" TextAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
+
             </DockPanel>
 
-            <Frame Name="contentPanel" Grid.Row="1"   Padding="2"></Frame>
+            <Frame Grid.Row="1" Name="contentPanel" Padding="2"></Frame>
+            <StatusBar Grid.Row="2" >
+                <StatusBarItem HorizontalContentAlignment="Left">
+                    <TextBlock x:Name="statsubarText" Margin="5,0,0,0" Text="当前状态：" Visibility="Collapsed"/>
+                </StatusBarItem>
+                <StatusBarItem HorizontalContentAlignment="Stretch">
+                    <ProgressBar x:Name="statsubarProgress" IsIndeterminate="True" Visibility="Collapsed"/>
+                </StatusBarItem>
+            </StatusBar>
         </Grid>
     </Grid>
 </Window>

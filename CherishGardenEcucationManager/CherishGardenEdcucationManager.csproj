@@ -90,6 +90,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entity\AdwardOrPunishment.cs" />
+    <Compile Include="Entity\EducationAndEmployeeExprience.cs" />
+    <Compile Include="Entity\MemberFamily.cs" />
+    <Compile Include="Entity\MemberMoreInfo.cs" />
+    <Compile Include="Helper\ChoosePhotoHelper.cs" />
     <Compile Include="Helper\NumberTextBox.cs" />
     <Compile Include="TeacherInfoPage.xaml.cs">
       <DependentUpon>TeacherInfoPage.xaml</DependentUpon>
