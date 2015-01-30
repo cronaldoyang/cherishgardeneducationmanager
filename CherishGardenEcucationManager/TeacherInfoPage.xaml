@@ -127,95 +127,82 @@
 
             <!--Member family-->
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" Name="memberFamilyGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.ColumnSpan="5" FontWeight="Black" Text="家庭成员信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <Label  Grid.Row="1" Grid.Column="0" Content="姓名"/>
-                    <Label  Grid.Row="1" Grid.Column="1" Content="关系"/>
-                    <Label  Grid.Row="1" Grid.Column="2" Content="手机"/>
-                    <Label   Grid.Row="1" Grid.Column="3" Content="身份证号"/>
-                    <Label   Grid.Row="1" Grid.Column="4" Content="是否紧急联络人"/>
+                <StackPanel>
+                    <TextBlock FontWeight="Black" Text="家庭成员"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" ItemsSource="{Binding MemberFamilyCollection}" Margin="0,10,0,0" >
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="名字"  Binding="{Binding Path=name}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="关系"  Binding="{Binding Path=relationship}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="手机号码"  Binding="{Binding Path=phone}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="身份证号"  Binding="{Binding Path=idcardno}" Width="*"></DataGridTextColumn>
+                            <DataGridCheckBoxColumn Header="是否紧急联系人"  Binding="{Binding Path=emergencycontact}" Width="*"></DataGridCheckBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="点击增加新成员" Name="dynamicAddMemberFamilyBtn" Click="dynamicAddMemberFamilyBtn_Click"/>
+                </StackPanel>
 
-                    <Button Name="gridaddrowBtn" Content="点击添加新数据" Click="gridaddrowBtn_Click" />
-                </Grid>
             </Border>
 
             <!--Education and Employee experience-->
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.ColumnSpan="5" FontWeight="Black" Text="学习及工作经历"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <Label  Grid.Row="1" Grid.Column="0" Content="起始日期"/>
-                    <Label  Grid.Row="1" Grid.Column="1" Content="结束日期"/>
-                    <Label  Grid.Row="1" Grid.Column="2" Content="所在单位或学校"/>
-                    <Label   Grid.Row="1" Grid.Column="3" Content="所负责事务"/>
-                    <Label   Grid.Row="1" Grid.Column="4" Content="职位"/>
-
-                    <TextBox Grid.Row="2" Grid.Column="0"/>
-                    <TextBox Grid.Row="2" Grid.Column="1"/>
-                    <TextBox Grid.Row="2" Grid.Column="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="3"/>
-                    <TextBox Grid.Row="2" Grid.Column="4"/>
-
-                    <TextBox Grid.Row="3" Grid.Column="0"/>
-                    <TextBox Grid.Row="3" Grid.Column="1"/>
-                    <TextBox Grid.Row="3" Grid.Column="2"/>
-                    <TextBox Grid.Row="3" Grid.Column="3"/>
-                    <TextBox Grid.Row="3" Grid.Column="4"/>
-                </Grid>
+                <StackPanel>
+                    <TextBlock FontWeight="Black" Text="学习及工作经历"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <DataGrid AutoGenerateColumns="False" Name="ExprienceDataGrid" CanUserAddRows="False" ItemsSource="{Binding ExprienceCollection}" Margin="0,10,0,0" >
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="起始日期"  Binding="{Binding Path=from}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="结束日期"  Binding="{Binding Path=to}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="所在单位或学校"  Binding="{Binding Path=address}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="所负责事务"  Binding="{Binding Path=responsibility}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="职位"  Binding="{Binding Path=positions}" Width="*"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="点击增加新经历" Name="dynamicAddExprienceBtn" Click="dynamicAddExprienceBtn_Click"/>
+                </StackPanel>
             </Border>
 
             <!--Education and Employee experience-->
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.ColumnSpan="5" FontWeight="Black" Text="所获奖励情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <Label  Grid.Row="1" Grid.Column="0" Content="日期"/>
-                    <Label  Grid.Row="1" Grid.Column="1" Content="奖励内容"/>
-                    <Label  Grid.Row="1" Grid.Column="2" Content="所在单位或学校"/>
-
-                    <TextBox Grid.Row="2" Grid.Column="0"/>
-                    <TextBox Grid.Row="2" Grid.Column="1"/>
-                    <TextBox Grid.Row="2" Grid.Column="2"/>
-
-                    <TextBox Grid.Row="3" Grid.Column="0"/>
-                    <TextBox Grid.Row="3" Grid.Column="1"/>
-                    <TextBox Grid.Row="3" Grid.Column="2"/>
-                </Grid>
+                <StackPanel>
+                    <TextBlock FontWeight="Black" Text="所获奖励情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <DataGrid AutoGenerateColumns="False" Name="AwardsDataGrid" CanUserAddRows="False" ItemsSource="{Binding MemberFamilyCollection}" Margin="0,10,0,0" >
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="日期"  Binding="{Binding Path=date}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="奖励内容"  Binding="{Binding Path=content}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="所在单位或学校"  Binding="{Binding Path=organization}" Width="*"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="点击增加奖励记录" Name="dynamicAddAwardBtn" Click="dynamicAddAwardBtn_Click"/>
+                </StackPanel>
             </Border>
 
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">

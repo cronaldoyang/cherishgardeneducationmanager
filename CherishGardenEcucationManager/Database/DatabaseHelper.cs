@@ -55,5 +55,8 @@ namespace CherishGardenEducationManager.Database
 
             return user;
         }
+
+        //Get MemberFamily;
+
     }
 }

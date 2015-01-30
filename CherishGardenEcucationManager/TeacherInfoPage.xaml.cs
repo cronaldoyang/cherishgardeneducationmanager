@@ -2,6 +2,7 @@
 using CherishGardenEducationManager.Helper;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -24,9 +25,98 @@ namespace CherishGardenEducationManager
     {
         public event EventHandler updateStausbar;
 
+        ObservableCollection<MemberFamily> MemberFamilyCollection = new ObservableCollection<MemberFamily>();
+        ObservableCollection<EducationAndEmployeeExprience> ExprienceCollection = new ObservableCollection<EducationAndEmployeeExprience>();
+        ObservableCollection<AwardOrPunishment> AwardsCollection = new ObservableCollection<AwardOrPunishment>();
+
+        public void initTestData()
+        {
+            //construct member family;
+            MemberFamilyCollection.Add(new MemberFamily
+            {
+                name = "Yangxiao",
+                relationship = "Father",
+                phone = "18286736596",
+                idcardno = "522425198501283918",
+                pickup = true,
+                emergencycontact = false
+            });
+            MemberFamilyCollection.Add(new MemberFamily
+            {
+                name = "Yangxiao",
+                relationship = "Father",
+                phone = "18286736596",
+                idcardno = "522425198501283918",
+                pickup = true,
+                emergencycontact = false
+            });
+            MemberFamilyCollection.Add(new MemberFamily
+            {
+                name = "Yangxiao",
+                relationship = "Father",
+                phone = "18286736596",
+                idcardno = "522425198501283918",
+                pickup = true,
+                emergencycontact = false
+            });
+            //construct exprience;
+            ExprienceCollection.Add(new EducationAndEmployeeExprience() { 
+                from = new DateTime(2013,1,2),
+                to = new DateTime(2014,3,2),
+                address = "TapasDianxin",
+                positions = "Engineer",
+                resoponsibility = "Develop IM"
+            });
+            ExprienceCollection.Add(new EducationAndEmployeeExprience()
+            {
+                from = new DateTime(2010, 10, 2),
+                to = new DateTime(2011, 9, 19),
+                address = "SonyEricssion",
+                positions = "Engineer",
+                resoponsibility = "Develop IM"
+            });
+            //construct award
+            AwardsCollection.Add(new AwardOrPunishment()
+            {
+                date = new DateTime(2015,2,1),
+                content = "Excellect for education",
+                organization = "CherishGarden"
+            });
+        }
+
+        void addMemberFamily(MemberFamily obj)
+        {
+            MemberFamilyCollection.Add(obj);
+        }
+
+        void addExprience(EducationAndEmployeeExprience obj) {
+            ExprienceCollection.Add(obj);
+        }
+
+        void addAward(AwardOrPunishment obj)
+        {
+            AwardsCollection.Add(obj);
+        }
+
+        //delcaration global variable;
+        DataGrid memberFamilyDataGrid;
+        DataGrid exprienceDataGrid;
+        DataGrid awardsDataGrid;
         public TeacherInfoPage()
         {
             InitializeComponent();
+            initTestData();
+            initUI();
+        }
+
+        void initUI() {
+            memberFamilyDataGrid = (DataGrid)FindName("MemberFamilyDataGrid");
+            exprienceDataGrid = (DataGrid)FindName("ExprienceDataGrid");
+            awardsDataGrid = (DataGrid)FindName("AwardsDataGrid");
+
+            memberFamilyDataGrid.ItemsSource = MemberFamilyCollection;
+            exprienceDataGrid.ItemsSource = ExprienceCollection;
+            awardsDataGrid.ItemsSource = AwardsCollection;
         }
 
         private void TeacherInfoPageSaveBtn_Click(object sender, RoutedEventArgs e)
@@ -111,10 +201,19 @@ namespace CherishGardenEducationManager
             }
         }
 
-        private void gridaddrowBtn_Click(object sender, RoutedEventArgs e)
+        private void dynamicAddMemberFamilyBtn_Click(object sender, RoutedEventArgs e)
         {
-            Grid memberFamilyGrid = (Grid)FindName("memberFamilyGrid");
-            memberFamilyGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            addMemberFamily(new MemberFamily());
+        }
+
+        private void dynamicAddAwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addAward(new AwardOrPunishment());
+        }
+
+        private void dynamicAddExprienceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addExprience(new EducationAndEmployeeExprience());
         }
 
     }

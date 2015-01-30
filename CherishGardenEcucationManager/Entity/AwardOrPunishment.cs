@@ -5,13 +5,13 @@ using System.Text;
 
 namespace CherishGardenEducationManager.Entity
 {
-    class AdwardOrPunishment
+    class AwardOrPunishment
     {
         DateTime dateField;
         string contentField;
         string organizationField;
 
-        public AdwardOrPunishment() { }
+        public AwardOrPunishment() { }
 
         public DateTime date {
             get { return dateField; }
