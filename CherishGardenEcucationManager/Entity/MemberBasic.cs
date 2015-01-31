@@ -13,26 +13,30 @@ namespace CherishGardenEducationManager.Entity
         string genderField;
         Boolean isteacherField;
 
-        string name { 
+        public string name { 
             get { return nameField;}
             set { nameField = value;}
         }
-        string engname {
+        public string engname
+        {
             get { return engnameField; }
             set { engnameField = value; }
         }
 
-        String male {
+        public String gender
+        {
             get { return genderField; }
             set { genderField = value; }
         }
 
-        string idcardno {
+        public string idcardno
+        {
             get { return idcardnoField; }
             set { idcardnoField = value; }
         }
 
-        Boolean isteacher {
+        public Boolean isteacher
+        {
             get { return isteacherField; }
             set { isteacherField = value; }
         }
@@ -45,7 +49,7 @@ namespace CherishGardenEducationManager.Entity
              isteacherField = isteacherv;
         }
 
-        public String ToString() {
+        public override String ToString() {
             return "name:" + nameField + "|engName:" + engnameField + "|gender:" + genderField + "|idcardno:" + idcardnoField + "|isteacher:" + isteacherField;
         }
 

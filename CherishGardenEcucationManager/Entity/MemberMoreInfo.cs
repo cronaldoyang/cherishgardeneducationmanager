@@ -11,7 +11,7 @@ namespace CherishGardenEducationManager.Entity
         DateTime birthdayYangliField;
         DateTime birthdayNongliField;
         string minzuField;
-        string birthdayPlaceField;
+        string birthPlaceField;
         string nowaddressField;
         string residenceaddressField;
         string phoneField;
@@ -24,7 +24,7 @@ namespace CherishGardenEducationManager.Entity
         string putonghualevelField;
         string computerlevelField;
         string selfevaluationField;
-        BitmapImage photoField;
+        string photopathField;
 
         public MemberMoreInfo() { }
 
@@ -46,10 +46,10 @@ namespace CherishGardenEducationManager.Entity
             set { minzuField = value; }
         }
 
-        public string birthdayPlace
+        public string birthPlace
         {
-            get { return birthdayPlaceField; }
-            set { birthdayPlaceField = value; }
+            get { return birthPlaceField; }
+            set { birthPlaceField = value; }
         }
 
         public string nowaddress
@@ -127,10 +127,10 @@ namespace CherishGardenEducationManager.Entity
             set { selfevaluationField = value; }
         }
 
-        public BitmapImage photo
+        public string  photopath
         {
-            get { return photoField; }
-            set { photoField = value; }
+            get { return photopathField; }
+            set { photopathField = value; }
         }
     }
 }

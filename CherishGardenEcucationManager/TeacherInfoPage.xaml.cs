@@ -1,4 +1,5 @@
-﻿using CherishGardenEducationManager.Entity;
+﻿using CherishGardenEducationManager.Database;
+using CherishGardenEducationManager.Entity;
 using CherishGardenEducationManager.Helper;
 using System;
 using System.Collections.Generic;
@@ -25,14 +26,16 @@ namespace CherishGardenEducationManager
     {
         public event EventHandler updateStausbar;
 
-        ObservableCollection<MemberFamily> MemberFamilyCollection = new ObservableCollection<MemberFamily>();
-        ObservableCollection<EducationAndEmployeeExprience> ExprienceCollection = new ObservableCollection<EducationAndEmployeeExprience>();
-        ObservableCollection<AwardOrPunishment> AwardsCollection = new ObservableCollection<AwardOrPunishment>();
+        ObservableCollection<MemberFamily> memberFamilyCollection = new ObservableCollection<MemberFamily>();
+        ObservableCollection<EducationAndEmployeeExprience> exprienceCollection = new ObservableCollection<EducationAndEmployeeExprience>();
+        ObservableCollection<AwardOrPunishment> awardsCollection = new ObservableCollection<AwardOrPunishment>();
+
+        string realPhotoPathName;
 
         public void initTestData()
         {
             //construct member family;
-            MemberFamilyCollection.Add(new MemberFamily
+            memberFamilyCollection.Add(new MemberFamily
             {
                 name = "Yangxiao",
                 relationship = "Father",
@@ -41,44 +44,45 @@ namespace CherishGardenEducationManager
                 pickup = true,
                 emergencycontact = false
             });
-            MemberFamilyCollection.Add(new MemberFamily
+            memberFamilyCollection.Add(new MemberFamily
             {
-                name = "Yangxiao",
-                relationship = "Father",
+                name = "LiuMingHui",
+                relationship = "Mother",
                 phone = "18286736596",
                 idcardno = "522425198501283918",
                 pickup = true,
                 emergencycontact = false
             });
-            MemberFamilyCollection.Add(new MemberFamily
+            memberFamilyCollection.Add(new MemberFamily
             {
-                name = "Yangxiao",
-                relationship = "Father",
+                name = "Xiaohui",
+                relationship = "Mother",
                 phone = "18286736596",
                 idcardno = "522425198501283918",
                 pickup = true,
                 emergencycontact = false
             });
             //construct exprience;
-            ExprienceCollection.Add(new EducationAndEmployeeExprience() { 
-                from = new DateTime(2013,1,2),
-                to = new DateTime(2014,3,2),
+            exprienceCollection.Add(new EducationAndEmployeeExprience()
+            {
+                from = new DateTime(2013, 1, 2),
+                to = new DateTime(2014, 3, 2),
                 address = "TapasDianxin",
                 positions = "Engineer",
-                resoponsibility = "Develop IM"
+                responsibility = "Develop IM"
             });
-            ExprienceCollection.Add(new EducationAndEmployeeExprience()
+            exprienceCollection.Add(new EducationAndEmployeeExprience()
             {
                 from = new DateTime(2010, 10, 2),
                 to = new DateTime(2011, 9, 19),
                 address = "SonyEricssion",
                 positions = "Engineer",
-                resoponsibility = "Develop IM"
+                responsibility = "Develop IM"
             });
             //construct award
-            AwardsCollection.Add(new AwardOrPunishment()
+            awardsCollection.Add(new AwardOrPunishment()
             {
-                date = new DateTime(2015,2,1),
+                date = new DateTime(2015, 2, 1),
                 content = "Excellect for education",
                 organization = "CherishGarden"
             });
@@ -86,16 +90,17 @@ namespace CherishGardenEducationManager
 
         void addMemberFamily(MemberFamily obj)
         {
-            MemberFamilyCollection.Add(obj);
+            memberFamilyCollection.Add(obj);
         }
 
-        void addExprience(EducationAndEmployeeExprience obj) {
-            ExprienceCollection.Add(obj);
+        void addExprience(EducationAndEmployeeExprience obj)
+        {
+            exprienceCollection.Add(obj);
         }
 
         void addAward(AwardOrPunishment obj)
         {
-            AwardsCollection.Add(obj);
+            awardsCollection.Add(obj);
         }
 
         //delcaration global variable;
@@ -109,14 +114,15 @@ namespace CherishGardenEducationManager
             initUI();
         }
 
-        void initUI() {
+        void initUI()
+        {
             memberFamilyDataGrid = (DataGrid)FindName("MemberFamilyDataGrid");
             exprienceDataGrid = (DataGrid)FindName("ExprienceDataGrid");
             awardsDataGrid = (DataGrid)FindName("AwardsDataGrid");
 
-            memberFamilyDataGrid.ItemsSource = MemberFamilyCollection;
-            exprienceDataGrid.ItemsSource = ExprienceCollection;
-            awardsDataGrid.ItemsSource = AwardsCollection;
+            memberFamilyDataGrid.ItemsSource = memberFamilyCollection;
+            exprienceDataGrid.ItemsSource = exprienceCollection;
+            awardsDataGrid.ItemsSource = awardsCollection;
         }
 
         private void TeacherInfoPageSaveBtn_Click(object sender, RoutedEventArgs e)
@@ -132,12 +138,14 @@ namespace CherishGardenEducationManager
             //0.
             updateStausbar(this, new EventArgs());
 
-            //2. Generate the memory objects.
+            //1. Generate the memory objects.
             MemberBasic basicObj = generateMemberBasicFromUser();
-            Console.Write(basicObj.ToString());
             MemberMoreInfo moreInfoObj = generateMemberMoreInfoFromUser();
 
-
+            Boolean? result = DatabaseHelper.SaveMemberAllInfo(basicObj, moreInfoObj, memberFamilyCollection, exprienceCollection, awardsCollection);
+            //DatabaseHelper.SaveExprienceAwardsFamilyInfo(memberFamilyCollection, exprienceCollection, awardsCollection);
+            //2.notify save memberinfo into database result.
+            updateStausbar(this, new EventArgs());
         }
 
         private MemberBasic generateMemberBasicFromUser()
@@ -166,13 +174,14 @@ namespace CherishGardenEducationManager
             string putonghualevel = ((TextBox)FindName("putonghuaLevelTextBox")).Text;
             string computerlevel = ((TextBox)FindName("computerlevel")).Text;
             string selfevaluation = ((TextBox)FindName("selfvaluation")).Text;
-            BitmapImage photo = (BitmapImage)((Image)FindName("photo")).Source;
+            string educationbackground = ((TextBox)FindName("educationbackgroundTextBox")).Text;
+
 
             MemberMoreInfo moreInfoObj = new MemberMoreInfo();
             moreInfoObj.birthdayNongli = birthdayNongli;
             moreInfoObj.birthdayYangli = birthdayYangli;
             moreInfoObj.minzu = minzu;
-            moreInfoObj.birthdayPlace = birthdayPlace;
+            moreInfoObj.birthPlace = birthdayPlace;
             moreInfoObj.nowaddress = nowaddress;
             moreInfoObj.residenceaddress = residenceaddress;
             moreInfoObj.phone = phone;
@@ -181,29 +190,39 @@ namespace CherishGardenEducationManager
             moreInfoObj.profession = profession;
             moreInfoObj.forte = forte;
             moreInfoObj.graduatedschool = graduatedschool;
+            moreInfoObj.educationbackground = educationbackground;
             moreInfoObj.putonghualevel = putonghualevel;
             moreInfoObj.computerlevel = computerlevel;
             moreInfoObj.selfevaluation = selfevaluation;
-            moreInfoObj.photo = photo;
+            moreInfoObj.photopath = realPhotoPathName;
             return moreInfoObj;
         }
 
         private void choosePhotoBtn_Click(object sender, RoutedEventArgs e)
         {
-            string  realPhotoName = ChoosePhotoHelper.getFilenameFromUserChoose();
+            realPhotoPathName = ChoosePhotoHelper.getFilenameFromUserChoose();
             Button choosePhotoPBtn = (Button)sender;
             Image photo = (Image)FindName("photo");
             choosePhotoPBtn.Visibility = System.Windows.Visibility.Collapsed;
             photo.Visibility = System.Windows.Visibility.Visible;
-            if (!realPhotoName.Equals(""))
+            if (!realPhotoPathName.Equals(""))
             {
-                photo.Source = ChoosePhotoHelper.getRealPhoto(realPhotoName);
+                photo.Source = ChoosePhotoHelper.getRealPhoto(realPhotoPathName);
             }
         }
 
         private void dynamicAddMemberFamilyBtn_Click(object sender, RoutedEventArgs e)
         {
             addMemberFamily(new MemberFamily());
+            int familycount = memberFamilyCollection.Count;
+            //MemberFamily tempfamily = null;
+            //for (int i = 0; i < familycount; i++)
+            //{
+            //    tempfamily = memberFamilyCollection[i];
+            //    string insertMemberFamilySql = "";
+            //    insertMemberFamilySql += "(" + tempfamily.name + "," + tempfamily.relationship + "," + tempfamily.phone + "," + tempfamily.idcardno + "," + tempfamily.pickup + "," + tempfamily.emergencycontact + ")";
+
+            //}
         }
 
         private void dynamicAddAwardBtn_Click(object sender, RoutedEventArgs e)

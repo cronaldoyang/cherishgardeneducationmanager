@@ -38,7 +38,7 @@ namespace CherishGardenEducationManager.Entity
             set { positionsField = value; }
         }
 
-        public string  resoponsibility
+        public string  responsibility
         {
             get { return responsibilityField; }
             set { responsibilityField = value; }

@@ -129,7 +129,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="家庭成员"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" ItemsSource="{Binding MemberFamilyCollection}" Margin="0,10,0,0" >
+                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" ItemsSource="{Binding memberFamilyCollection}" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -148,7 +148,7 @@
                             <DataGridCheckBoxColumn Header="是否紧急联系人"  Binding="{Binding Path=emergencycontact}" Width="*"></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="点击增加新成员" Name="dynamicAddMemberFamilyBtn" Click="dynamicAddMemberFamilyBtn_Click"/>
+                    <Button Height="30" Content="点击增加新成员" Name="dynamicAddMemberFamilyBtn" Click="dynamicAddMemberFamilyBtn_Click" TextBlock.FontSize="14"/>
                 </StackPanel>
 
             </Border>
@@ -157,7 +157,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="学习及工作经历"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="ExprienceDataGrid" CanUserAddRows="False" ItemsSource="{Binding ExprienceCollection}" Margin="0,10,0,0" >
+                    <DataGrid AutoGenerateColumns="False" Name="ExprienceDataGrid" CanUserAddRows="False" ItemsSource="{Binding exprienceCollection}" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -176,7 +176,7 @@
                             <DataGridTextColumn Header="职位"  Binding="{Binding Path=positions}" Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="点击增加新经历" Name="dynamicAddExprienceBtn" Click="dynamicAddExprienceBtn_Click"/>
+                    <Button Height="30" Content="点击增加新经历" Name="dynamicAddExprienceBtn" Click="dynamicAddExprienceBtn_Click" TextBlock.FontSize="14" />
                 </StackPanel>
             </Border>
 
@@ -184,7 +184,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="所获奖励情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="AwardsDataGrid" CanUserAddRows="False" ItemsSource="{Binding MemberFamilyCollection}" Margin="0,10,0,0" >
+                    <DataGrid AutoGenerateColumns="False" Name="AwardsDataGrid" CanUserAddRows="False" ItemsSource="{Binding awardsCollection}" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -201,13 +201,13 @@
                             <DataGridTextColumn Header="所在单位或学校"  Binding="{Binding Path=organization}" Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="点击增加奖励记录" Name="dynamicAddAwardBtn" Click="dynamicAddAwardBtn_Click"/>
+                    <Button Height="30" Content="点击增加奖励记录" Name="dynamicAddAwardBtn" Click="dynamicAddAwardBtn_Click" TextBlock.FontSize="14" />
                 </StackPanel>
             </Border>
 
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
                 <Grid>
-                    <Button Content="确认保存"  Width="100" Height="30" Name="TeacherInfoPageSaveBtn" Click="TeacherInfoPageSaveBtn_Click"></Button>
+                    <Button Content="确认保存"  Width="100" Height="30" Name="TeacherInfoPageSaveBtn" Click="TeacherInfoPageSaveBtn_Click" TextBlock.FontSize="14" ></Button>
                 </Grid>
             </Border>
         </StackPanel>
