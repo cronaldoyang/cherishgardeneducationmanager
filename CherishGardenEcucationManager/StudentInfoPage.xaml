@@ -34,13 +34,17 @@
                     <TextBlock  FontWeight="Black" Grid.Row="0" Grid.ColumnSpan="8" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="姓名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" MinWidth="75"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15" Name="studentName"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" Content="英文名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="3" MinWidth="75"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15" Name="studentEngName"></TextBox>
                     <Label Grid.Row="1" Grid.Column="4" Content="性别："></Label>
-                    <TextBox Grid.Row="1" Grid.Column="5" MinWidth="75"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding ElementName=genderListBox, Path=SelectedItem}" Name="genderTextBox" ></TextBox>
+                    <Popup IsOpen="{Binding ElementName=genderTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=genderTextBox}"  Name="genderListPopup" Grid.Row="1" Grid.Column="5" >
+                        <ListBox  ItemsSource="{StaticResource GenderList}" Name="genderListBox" />
+                    </Popup>
+
                     <Label Grid.Row="1" Grid.Column="6" Content="身份证号："></Label>
-                    <TextBox Grid.Row="1" Grid.Column="7"  MinWidth="75"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="7"  MaxLength="18" Name="studentIdCardNo"></TextBox>
                 </Grid>
             </Border>
 
@@ -54,12 +58,10 @@
                         <ColumnDefinition Width="0.75*"/>
                         <ColumnDefinition  Width="0.25*"/>
                         <ColumnDefinition Width="0.75*"/>
-                        <ColumnDefinition  Width="0.25*"/>
-                        <ColumnDefinition Width="0.75*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -70,61 +72,51 @@
                     <TextBlock  FontWeight="Black" Grid.Row="0" Grid.ColumnSpan="8" Text="更多信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Content="阳历生日:" Grid.Row="1" Grid.Column="0"></Label>
-                    <DatePicker Grid.Row="1" Grid.Column="1"></DatePicker>
+                    <DatePicker Grid.Row="1" Grid.Column="1" Name="birthdayYangli"></DatePicker>
                     <Label Content="农历生日:" Grid.Row="1" Grid.Column="2"></Label>
-                    <DatePicker  MinWidth="75" Grid.Row="1" Grid.Column="3"></DatePicker>
+                    <DatePicker   Grid.Row="1" Grid.Column="3" Name="birthdayNongli"></DatePicker>
                     <Label Content="民族：" Grid.Row="1" Grid.Column="4"></Label>
-                    <TextBox  MinWidth="75" Grid.Row="1" Grid.Column="5"></TextBox>
-                    <Label Content="出生地：" Grid.Row="1" Grid.Column="6"></Label>
-                    <TextBox  MinWidth="75" Grid.Row="1" Grid.Column="7"></TextBox>
+                    <TextBox   Grid.Row="1" Grid.Column="5" Name="minzu"></TextBox>
+                    <Label Content="出生地：" Grid.Row="2" Grid.Column="0"></Label>
+                    <TextBox   Grid.Row="2" Grid.Column="1" Name="birthdayplace" Grid.ColumnSpan="4"></TextBox>
 
-                    <Label Content="现居住地:" Grid.Row="4" Grid.Column="0"></Label>
-                    <TextBox  MinWidth="75" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"></TextBox>
-                    <Label Content="户口地址:" Grid.Row="4" Grid.Column="4"></Label>
-                    <TextBox  MinWidth="75" Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="3"></TextBox>
+                    <Label Content="现居住地:" Grid.Row="3" Grid.Column="0"></Label>
+                    <TextBox   Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="4" Name="nowaddress"></TextBox>
+                    <Label Content="户口地址:" Grid.Row="4" Grid.Column="0"></Label>
+                    <TextBox   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" Name="residenceaddress"></TextBox>
 
-                    <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="8" Grid.RowSpan="3">
-                        <Image Source="/Resources/imgs/Icon.png" Width="100" Height="100" />
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">你的相片</TextBlock>
-                    </StackPanel>
-                 </Grid>
+                    <Button Content="从电脑上选择学生的相片" Name="choosePhotoBtn" Click="choosePhotoBtn_Click" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="3"/>
+                    <Image Source="/Resources/imgs/Icon.png" Width="125" Height="125" Name="photo" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="3" Visibility="Collapsed"/>
+
+
+                </Grid>
             </Border>
 
             <!--Member family-->
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock  FontWeight="Black" Grid.Row="0" Grid.ColumnSpan="5" Text="家庭成员信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <Label  Grid.Row="1" Grid.Column="0" Content="姓名"/>
-                    <Label  Grid.Row="1" Grid.Column="1" Content="关系"/>
-                    <Label  Grid.Row="1" Grid.Column="2" Content="手机"/>
-                    <Label   Grid.Row="1" Grid.Column="3" Content="身份证号"/>
-                    <Label   Grid.Row="1" Grid.Column="4" Content="是否紧急联络人"/>
-
-                    <TextBox Grid.Row="2" Grid.Column="0"/>
-                    <TextBox Grid.Row="2" Grid.Column="1"/>
-                    <TextBox Grid.Row="2" Grid.Column="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="3"/>
-                    <TextBox Grid.Row="2" Grid.Column="4"/>
-
-                    <TextBox Grid.Row="3" Grid.Column="0"/>
-                    <TextBox Grid.Row="3" Grid.Column="1"/>
-                    <TextBox Grid.Row="3" Grid.Column="2"/>
-                    <TextBox Grid.Row="3" Grid.Column="3"/>
-                    <TextBox Grid.Row="3" Grid.Column="4"/>
-                </Grid>
+                <StackPanel>
+                    <TextBlock FontWeight="Black" Text="家庭成员"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" ItemsSource="{Binding memberFamilyCollection}" Margin="0,10,0,0" >
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="名字"  Binding="{Binding Path=name}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="关系"  Binding="{Binding Path=relationship}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="手机号码"  Binding="{Binding Path=phone}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="身份证号"  Binding="{Binding Path=idcardno}" Width="*"></DataGridTextColumn>
+                            <DataGridCheckBoxColumn Header="是否接送人"  Binding="{Binding Path=pickup}" Width="*"></DataGridCheckBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Height="30" Content="点击增加新成员" Name="dynamicAddMemberFamilyBtn" Click="dynamicAddMemberFamilyBtn_Click" TextBlock.FontSize="14"/>
+                </StackPanel>
             </Border>
 
             <!--Physic more info-->
@@ -144,22 +136,22 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock  FontWeight="Black" Grid.Row="0" Grid.ColumnSpan="5"  Text="健康情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <CheckBox Content="有无抽风、癫痫史" Grid.Row="1" Grid.Column="0" />
-                    <CheckBox Content="有无脑部疾病" Grid.Row="1"  Grid.Column="1"/>
-                    <CheckBox Content="有无急慢性传染病史" Grid.Row="1"  Grid.Column="2"/>
-                    <CheckBox Content="有无心脏病史" Grid.Row="1"  Grid.Column="3"/>
-                    <CheckBox Content="有无肾脏病史 " Grid.Row="1" Grid.Column="4"/>
-                    <CheckBox Content="有无药物过敏史" Grid.Row="2" Grid.Column="0" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"></TextBox>
-                    <CheckBox Content="有无食物过敏史" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4"></TextBox>
+                    <CheckBox Content="有无抽风、癫痫史" Grid.Row="1" Grid.Column="0" Name="haveConvulsionsepilepsy"/>
+                    <CheckBox Content="有无脑部疾病" Grid.Row="1"  Grid.Column="1" Name="haveBraindiseases"/>
+                    <CheckBox Content="有无急慢性传染病史" Grid.Row="1"  Grid.Column="2" Name="haveAcutechronicinfectious"/>
+                    <CheckBox Content="有无心脏病史" Grid.Row="1"  Grid.Column="3" Name="haveheartdiseases"/>
+                    <CheckBox Content="有无肾脏病史 " Grid.Row="1" Grid.Column="4" Name="haverenaldisease"/>
+                    <CheckBox Content="有无药物过敏史" Grid.Row="2" Grid.Column="0" Name="haveFoodallergy"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Name="foodallergyTextBox"></TextBox>
+                    <CheckBox Content="有无食物过敏史" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Name="havedrugallergy"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name="drugallergy"></TextBox>
                 </Grid>
             </Border>
 
             <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock  FontWeight="Black"  Text="其他特别说明"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <TextBox></TextBox>
+                    <TextBox Name="mark"></TextBox>
                 </StackPanel>
             </Border>
 
@@ -169,7 +161,13 @@
                     <Border BorderThickness="1" BorderBrush="BlueViolet"></Border>
                     <TextBlock Foreground="Red" Text="为了能让所有孩子能够健康快乐地在园成长，请家长如实填写，特别是幼儿的食物过敏史和健康情况，如有隐瞒病情，在幼儿园发病造成的后果由家长自己负责，本园概不负责，请家长确认，谢谢配合！"  FontSize="14" TextAlignment="Left" VerticalAlignment="Top" TextWrapping="WrapWithOverflow"></TextBlock>
                 </StackPanel>
-                </Border>
+            </Border>
+
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
+                <Grid>
+                    <Button Content="确认保存"  Width="100" Height="30" Name="StudentInfoPageSaveBtn" Click="StudentInfoPageSaveBtn_Click" TextBlock.FontSize="14" ></Button>
+                </Grid>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>

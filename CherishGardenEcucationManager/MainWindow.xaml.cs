@@ -29,7 +29,9 @@ namespace CherishGardenEducationManager
 
         private void naviagetToAddStudentInfo(object sender, RoutedEventArgs e)
         {
-            contentPanelFrame.Navigate(new StudentsInfoPage());
+            StudentsInfoPage studentInfoPage = new StudentsInfoPage();
+            contentPanelFrame.Navigate(studentInfoPage);
+            studentInfoPage.updateStausbar += studentInfoPage_updateStausbar;
         }
 
         private void naviagetToAddTeacherInfo(object sender, RoutedEventArgs e)
@@ -37,6 +39,10 @@ namespace CherishGardenEducationManager
             TeacherInfoPage teacherInfoPage = new TeacherInfoPage();
             contentPanelFrame.Navigate(teacherInfoPage);
             teacherInfoPage.updateStausbar += teacherInfoPage_updateStausbar;
+        }
+
+        void studentInfoPage_updateStausbar(object sender, EventArgs e) {
+            updateStatusbar();
         }
 
         void teacherInfoPage_updateStausbar(object sender, EventArgs e)

@@ -142,7 +142,7 @@ namespace CherishGardenEducationManager
             MemberBasic basicObj = generateMemberBasicFromUser();
             MemberMoreInfo moreInfoObj = generateMemberMoreInfoFromUser();
 
-            Boolean? result = DatabaseHelper.SaveMemberAllInfo(basicObj, moreInfoObj, memberFamilyCollection, exprienceCollection, awardsCollection);
+            Boolean? result = DatabaseHelper.SaveMemberAllInfo(basicObj, moreInfoObj, memberFamilyCollection, exprienceCollection, awardsCollection, null);
             //DatabaseHelper.SaveExprienceAwardsFamilyInfo(memberFamilyCollection, exprienceCollection, awardsCollection);
             //2.notify save memberinfo into database result.
             updateStausbar(this, new EventArgs());

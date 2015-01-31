@@ -66,13 +66,23 @@ namespace CherishGardenEducationManager.Database
         public static Boolean SaveMemberAllInfo(MemberBasic basicobj, MemberMoreInfo moreobj,
             ObservableCollection<MemberFamily> familyCollection,
             ObservableCollection<EducationAndEmployeeExprience> exprienceCollection,
-            ObservableCollection<AwardOrPunishment> awardsCollection)
+            ObservableCollection<AwardOrPunishment> awardsCollection,
+            PhysicMoreinfo physicMoreInfoObj)
         {
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            conn.Open();
+            MySqlTransaction trans = conn.BeginTransaction();
             try
             {
                 MySqlCommand cmd = new MySqlCommand(SAVEMEMBERINFO_SP, conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Transaction = trans;
+
+                /**turn off autocommit */
+                //cmd.CommandType = CommandType.Text;
+                //cmd.CommandText = "SET autocommit = 0";
+                //cmd.ExecuteNonQuery();
+
                 //fill the memberbasic parameters.
                 cmd.Parameters.AddWithValue("@basicname", basicobj.name);
                 cmd.Parameters.AddWithValue("@basicengname", basicobj.engname);
@@ -105,11 +115,9 @@ namespace CherishGardenEducationManager.Database
                 basicRecordIdParameter.Direction = ParameterDirection.Output;
                 cmd.Parameters.Add(basicRecordIdParameter);
 
-
-
-
-                conn.Open();
+                
                 cmd.ExecuteNonQuery();
+                cmd.Parameters.Clear();
                 //
                 int result = Convert.ToInt16(resultParameter.Value);
                 int basicId = Convert.ToInt16(basicRecordIdParameter.Value);
@@ -134,6 +142,7 @@ namespace CherishGardenEducationManager.Database
                             {
                                 insertMemberFamilySql += ";";
                             }
+
                         }
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText = insertMemberFamilySql;
@@ -150,7 +159,7 @@ namespace CherishGardenEducationManager.Database
                         for (int i = 0; i < expriencecount; i++)
                         {
                             tempExprience = exprienceCollection[i];
-                            insetrExprienceSql += "('" + tempExprience.from.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempExprience.to.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempExprience.address + "','" + tempExprience.positions + "','" + tempExprience.responsibility +"'," + basicId + ")";
+                            insetrExprienceSql += "('" + tempExprience.from.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempExprience.to.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempExprience.address + "','" + tempExprience.positions + "','" + tempExprience.responsibility + "'," + basicId + ")";
                             if (i < expriencecount - 1)
                             {
                                 insetrExprienceSql += ",";
@@ -169,24 +178,45 @@ namespace CherishGardenEducationManager.Database
                     int awardscount = awardsCollection.Count;
                     if (awardscount > 0)
                     {
-                        string insetrAwardsSql = "insert into awardspunishmentsinfo(date, content,organization,mbid) values ";
+                        string insertAwardsSql = "insert into awardspunishmentsinfo(date, content,organization,mbid) values ";
                         AwardOrPunishment tempAward = null;
                         for (int i = 0; i < awardscount; i++)
                         {
                             tempAward = awardsCollection[i];
-                            insetrAwardsSql += "('" + tempAward.date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempAward.content + "','" + tempAward.organization +"'," + basicId + ")";
+                            insertAwardsSql += "('" + tempAward.date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempAward.content + "','" + tempAward.organization + "'," + basicId + ")";
                             if (i < awardscount - 1)
                             {
-                                insetrAwardsSql += ",";
+                                insertAwardsSql += ",";
                             }
                             else
                             {
-                                insetrAwardsSql += ";";
+                                insertAwardsSql += ";";
                             }
                         }
-                        cmd.CommandText = insetrAwardsSql;
+                        cmd.CommandText = insertAwardsSql;
                         cmd.ExecuteNonQuery();
                     }
+
+                    //save physic more info obj;
+                    if (physicMoreInfoObj != null)
+                    {
+                        string insertphysicMoreInfoSql = "insert into physicmoreinfo(haveFoodallergy, foodallergyinfo, haveConvulsionsepilepsy, haveBraindiseases, haveAcutechronicinfectious, haveheartdiseases, haverenaldisease, havedrugallergy, drugallergy, mark, mbid) values " +
+                            "(@haveFoodallergy, @foodallergyinfo, @haveConvulsionsepilepsy, @haveBraindiseases, @haveAcutechronicinfectious, @haveheartdiseases, @haverenaldisease, @havedrugallergy, @drugallergy, @mark, @mbid); ";
+                        cmd.Parameters.AddWithValue("@haveFoodallergy", physicMoreInfoObj.haveFoodallergy ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@foodallergyinfo", physicMoreInfoObj.foodallergyinfo);
+                        cmd.Parameters.AddWithValue("@haveConvulsionsepilepsy", physicMoreInfoObj.haveConvulsionsepilepsy ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@haveBraindiseases", physicMoreInfoObj.haveBraindiseases ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@haveAcutechronicinfectious", physicMoreInfoObj.haveAcutechronicinfectious ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@haveheartdiseases", physicMoreInfoObj.haveheartdiseases ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@haverenaldisease", physicMoreInfoObj.haverenaldisease ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@havedrugallergy", physicMoreInfoObj.havedrugallergy ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@drugallergy", physicMoreInfoObj.drugallergy);
+                        cmd.Parameters.AddWithValue("@mark", physicMoreInfoObj.mark);
+                        cmd.Parameters.AddWithValue("@mbid", basicId);
+                        cmd.CommandText = insertphysicMoreInfoSql;
+                        cmd.ExecuteNonQuery();
+                    }
+                    trans.Commit();
                     return true;
                 }
 
@@ -194,7 +224,7 @@ namespace CherishGardenEducationManager.Database
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                trans.Rollback();
                 return false;
             }
             finally
@@ -202,6 +232,6 @@ namespace CherishGardenEducationManager.Database
                 conn.Close();
             }
         }
-        
+
     }
 }
