@@ -1,0 +1,72 @@
+﻿<Page x:Class="CherishGardenEducationManager.ClassPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CherishGardenEducationManager"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="ClassPage">
+    <ScrollViewer>
+        <StackPanel>
+            <!-- Title-->
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,5,0,5">
+                <TextBlock Text="恩涛树下幼儿园课程信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top" FontWeight="Black" />
+            </Border>
+
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
+                <StackPanel>
+                    <TextBlock FontWeight="Black" Text="所有年级信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <DataGrid AutoGenerateColumns="False" Name="AllGradesDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="年级名字"  Binding="{Binding Path=name}" Width="*"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Height="30" Content="点击增加新年级" Name="dynamicAddGradeBtn" Click="dynamicAddGradeBtn_Click" TextBlock.FontSize="14"/>
+                    <Button Height="30" Content="保存年级信息" Name="saveGradesBtn" Click="saveGradesBtn_Click" TextBlock.FontSize="14"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 班级信息-->
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
+                <StackPanel>
+                    <TextBlock FontWeight="Black" Text="所有班级信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <DataGrid AutoGenerateColumns="False" Name="AllClassesDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="14" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="班级名字"  Binding="{Binding Path=name}" Width="*"></DataGridTextColumn>
+                            <DataGridComboBoxColumn Width="*" Header="年级" x:Name="classGroupColumn"   DisplayMemberPath="name" SelectedValuePath="id" SelectedValueBinding="{Binding Path=gradeid}"/>
+                            <DataGridComboBoxColumn Width="*" Header="班主任" x:Name="headTeacherColumn"   DisplayMemberPath="name" SelectedValuePath="id" SelectedValueBinding="{Binding Path=teacherid}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Height="30" Content="点击增加新班级" Name="dynamicAddClassBtn" Click="dynamicAddClassBtn_Click" TextBlock.FontSize="14"/>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible">
+                <Grid>
+                    <Button Content="确认保存"  Width="100" Height="30" Name="ClassPageSaveBtn" Click="ClassPageSaveBtn_Click" TextBlock.FontSize="14" ></Button>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

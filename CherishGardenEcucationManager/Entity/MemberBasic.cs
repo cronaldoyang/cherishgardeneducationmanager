@@ -7,11 +7,17 @@ namespace CherishGardenEducationManager.Entity
 {
     class MemberBasic
     {
+        int _id;
         string nameField;
         string engnameField;
         string idcardnoField;
         string genderField;
         Boolean isteacherField;
+
+        public int id {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public string name { 
             get { return nameField;}
@@ -40,6 +46,8 @@ namespace CherishGardenEducationManager.Entity
             get { return isteacherField; }
             set { isteacherField = value; }
         }
+
+        public MemberBasic() { }
 
         public MemberBasic(String namev, String engnamev, string gender, String idcardnov, Boolean isteacherv) {
              nameField = namev;

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CherishGardenEducationManager"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       ShowsNavigationUI="False"
       d:DesignHeight="300" d:DesignWidth="300"
@@ -169,8 +170,30 @@
                             </Style>
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="起始日期"  Binding="{Binding Path=from}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="结束日期"  Binding="{Binding Path=to}" Width="*"></DataGridTextColumn>
+                            <DataGridTemplateColumn x:Name="fromColumn"  Header="起始日期" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path= from, StringFormat=\{0:d\}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker Name="fromDatePicker" SelectedDate="{Binding Path=from, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+                                        </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn x:Name="toColumn"  Header="结束日期" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path= to, StringFormat=\{0:d\}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker Name="toDatePicker" SelectedDate="{Binding Path=to, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="所在单位或学校"  Binding="{Binding Path=address}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="所负责事务"  Binding="{Binding Path=responsibility}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="职位"  Binding="{Binding Path=positions}" Width="*"></DataGridTextColumn>

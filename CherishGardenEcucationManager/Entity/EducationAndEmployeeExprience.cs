@@ -7,8 +7,8 @@ namespace CherishGardenEducationManager.Entity
 {
     class EducationAndEmployeeExprience
     {
-        DateTime fromField;
-        DateTime toField;
+        DateTime fromField = new DateTime(1990,1,1);
+        DateTime toField = new DateTime(1990, 1, 1);
         string addressField;
         string positionsField;
         string responsibilityField;

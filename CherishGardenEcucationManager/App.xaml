@@ -86,5 +86,6 @@
         <Style TargetType="{x:Type CheckBox}">
             <Setter Property="FontSize" Value="14" />
         </Style>
+
     </Application.Resources>
 </Application>

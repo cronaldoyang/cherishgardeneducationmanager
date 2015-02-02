@@ -56,6 +56,12 @@ namespace CherishGardenEducationManager
             statsubarTextBlock.Text = "Start do saving data.";
         }
 
+        private void naviagetToClassesManager(object sender, RoutedEventArgs e)
+        {
+            ClassPage classpage = new ClassPage();
+            contentPanelFrame.Navigate(classpage);
+        }
+
 
     }
 }
