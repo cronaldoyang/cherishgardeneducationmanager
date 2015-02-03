@@ -8,8 +8,8 @@ namespace CherishGardenEducationManager.Entity
 {
     class Grade
     {
-        int _id;
-        string nameField;
+        int _id = -1;
+        string nameField = "";
 
         public Grade() { }
 

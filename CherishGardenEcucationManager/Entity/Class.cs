@@ -7,11 +7,18 @@ namespace CherishGardenEducationManager.Entity
 {
     class Class
     {
-        string nameField;
+        int _id = -1;
+        string nameField = "";
         int teacheridField;
         int groupidField;
 
         public Class() { }
+
+        public int id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public string name {
             get { return nameField; }

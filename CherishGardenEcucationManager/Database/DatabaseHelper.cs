@@ -236,7 +236,7 @@ namespace CherishGardenEducationManager.Database
         }
 
         //Save classes info;
-        public static Boolean SaveClassesInfo(ObservableCollection<Class> classesCollection)
+        public static Boolean SaveClassesInfo(ObservableCollection<Class> oldClasses, ObservableCollection<Class> newClasses)
         {
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
             conn.Open();
@@ -248,17 +248,55 @@ namespace CherishGardenEducationManager.Database
                 cmd.CommandType = CommandType.Text;
                 cmd.Transaction = trans;
 
+                //update old classes
+                int oldGradesCount = oldClasses.Count;
+                if (oldGradesCount > 0)
+                {
+                    // the last final string like this :
+                    //update class 
+                    //set name=case _id when 3 then 'shabi' when 4 then 'niubi' end,
+                    //headerteacherid=case _id when 3 then 6 when 4 then 7' end, 
+                    //gradeid=case _id when 3 then 5 when 4 then 6 end where _id in (3,4);
+                    string updateClassesSql = "update class set ";
+                    string nameUpdateSql = " classname=case _id ";
+                    string headteacheridUpdateSql = " headteacherid=case _id ";
+                    string gradeidUpdateSql = " gradeid=case _id ";
+                    string wheresql = "where _id in (";
+                    Class tempClass = null;
+                    for (int i = 0; i < oldGradesCount; i++)
+                    {
+                        tempClass = oldClasses[i];
+                        nameUpdateSql += " when " + tempClass.id + " then  '" + tempClass.name + "'";
+                        headteacheridUpdateSql += " when " + tempClass.id + " then  " + tempClass.teacherid;
+                        gradeidUpdateSql += " when " + tempClass.id + " then  " + tempClass.gradeid;
+                        wheresql += tempClass.id; 
+                        if (i < oldGradesCount - 1)
+                        {
+                           wheresql += ",";
+                        }
+                        else
+                        {
+                            nameUpdateSql += " end, ";
+                            headteacheridUpdateSql += " end, ";
+                            gradeidUpdateSql += " end ";
+                            wheresql += ");";
+                        }
+                    }
+                    cmd.CommandText = updateClassesSql + nameUpdateSql + headteacheridUpdateSql + gradeidUpdateSql + wheresql ;
+                    cmd.ExecuteNonQuery();
+                }
+
                 //save physic more info obj;
-                int classesCount = classesCollection.Count;
-                if (classesCount > 0)
+                int newClassesCount = newClasses.Count;
+                if (newClassesCount > 0)
                 {
                     string insertClassesSql = "insert into class(classname, headteacherid, gradeid) values ";
                     Class tempClass = null;
-                    for (int i = 0; i < classesCount; i++)
+                    for (int i = 0; i < newClassesCount; i++)
                     {
-                        tempClass = classesCollection[i];
+                        tempClass = newClasses[i];
                         insertClassesSql += "('" + tempClass.name + "'," + tempClass.teacherid + "," + tempClass.gradeid + ")";
-                        if (i < classesCount - 1)
+                        if (i < newClassesCount - 1)
                         {
                             insertClassesSql += ",";
                         }
@@ -269,8 +307,8 @@ namespace CherishGardenEducationManager.Database
                     }
                     cmd.CommandText = insertClassesSql;
                     cmd.ExecuteNonQuery();
-                    trans.Commit();
                 }
+                trans.Commit();
                 return true;
             }
             catch (Exception ex)
@@ -285,7 +323,7 @@ namespace CherishGardenEducationManager.Database
         }
 
         //Save Grades info;
-        public static Boolean SaveGradesInfo(ObservableCollection<Grade> gradesCollection)
+        public static Boolean SaveGradesInfo(ObservableCollection<Grade> oldGrades, ObservableCollection<Grade> newGrades)
         {
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
             conn.Open();
@@ -297,17 +335,44 @@ namespace CherishGardenEducationManager.Database
                 cmd.CommandType = CommandType.Text;
                 cmd.Transaction = trans;
 
+                int oldGradesCount = oldGrades.Count;
+                if (oldGradesCount > 0)
+                {
+                    // the last final string like this :
+                    //update grade set name=case _id when 3 then 'shabi' when 4 then 'niubi' end where _id in (3,4);
+                    string updateClassesSql = "update grade set name=case _id ";
+                    string wheresql = "where _id in (";
+                    Grade tempGrade = null;
+                    for (int i = 0; i < oldGradesCount; i++)
+                    {
+                        tempGrade = oldGrades[i];
+                        updateClassesSql += " when " + tempGrade.id + " then  '" + tempGrade.name + "'";
+                        wheresql += tempGrade.id;
+                        if(i < oldGradesCount-1)
+                        {
+                            wheresql += ",";
+                        }
+                        else 
+                        {
+                            updateClassesSql += " end ";
+                            wheresql += ");";
+                        }
+                    }
+                    cmd.CommandText = updateClassesSql + wheresql;
+                    cmd.ExecuteNonQuery();
+                }
+
                 //save physic more info obj;
-                int gradesCount = gradesCollection.Count;
-                if (gradesCount > 0)
+                int newgradesCount = newGrades.Count;
+                if (newgradesCount > 0)
                 {
                     string insertClassesSql = "insert into grade(name) values ";
                     Grade tempGrade = null;
-                    for (int i = 0; i < gradesCount; i++)
+                    for (int i = 0; i < newgradesCount; i++)
                     {
-                        tempGrade = gradesCollection[i];
-                        insertClassesSql += "('" + tempGrade.name +"')";
-                        if (i < gradesCount - 1)
+                        tempGrade = newGrades[i];
+                        insertClassesSql += "('" + tempGrade.name + "')";
+                        if (i < newgradesCount - 1)
                         {
                             insertClassesSql += ",";
                         }
@@ -318,8 +383,10 @@ namespace CherishGardenEducationManager.Database
                     }
                     cmd.CommandText = insertClassesSql;
                     cmd.ExecuteNonQuery();
-                    trans.Commit();
                 }
+
+                //update old grades
+                trans.Commit();
                 return true;
             }
             catch (Exception ex)
@@ -333,7 +400,8 @@ namespace CherishGardenEducationManager.Database
             }
         }
 
-        public static ObservableCollection<MemberBasic> getAllTeachers() {
+        public static ObservableCollection<MemberBasic> getAllTeachers()
+        {
             ObservableCollection<MemberBasic> allTeachers = new ObservableCollection<MemberBasic>();
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
             conn.Open();
@@ -363,13 +431,14 @@ namespace CherishGardenEducationManager.Database
                         string idcardnoValue = (String)reader[4];
                         int isteacherValue = (int)reader[5];
 
-                        allTeachers.Add(new MemberBasic() {
-                        id = _id,
-                        name = nameValue,
-                        engname = engnameValue,
-                        gender = genderValue,
-                        idcardno = idcardnoValue,
-                        isteacher = isteacherValue==1 ? true : false
+                        allTeachers.Add(new MemberBasic()
+                        {
+                            id = _id,
+                            name = nameValue,
+                            engname = engnameValue,
+                            gender = genderValue,
+                            idcardno = idcardnoValue,
+                            isteacher = isteacherValue == 1 ? true : false
                         });
                     }
                 }
@@ -431,6 +500,55 @@ namespace CherishGardenEducationManager.Database
             }
 
             return allClassGroups;
+        }
+
+        public static ObservableCollection<Class> getAllClasses()
+        {
+            ObservableCollection<Class> allClasses = new ObservableCollection<Class>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            conn.Open();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                string queryAllClassGroups = "select * from class";
+                cmd.CommandText = queryAllClassGroups;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (!reader.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (reader.Read())
+                    {
+                        int _id = (int)reader[0];
+                        string _name = (String)reader[1];
+                        int _headteacherid = (int)reader[2];
+                        int _gradeid = (int)reader[3];
+
+                        allClasses.Add(new Class() {
+                            id = _id,
+                            name = _name,
+                            teacherid = _headteacherid,
+                            gradeid = _id
+                        });
+                    }
+                }
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return allClasses;
         }
     }
 }
