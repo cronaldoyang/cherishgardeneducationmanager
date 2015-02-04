@@ -67,7 +67,7 @@ namespace CherishGardenEducationManager
 
             //1. Generate the memory objects.
             Boolean result = DatabaseHelper.SaveMemberAllInfo(generateMemberBasicFromUser(), generateMemberMoreInfoFromUser() , 
-                memberFamilyCollection, new ObservableCollection<EducationAndEmployeeExprience>(), 
+                memberFamilyCollection, new ObservableCollection<Exprience>(), 
                 new ObservableCollection<AwardOrPunishment>(), generatePhysicMoreInfoFromUser());
 
             //2.notify save memberinfo into database result.
@@ -99,10 +99,10 @@ namespace CherishGardenEducationManager
 
 
             MemberMoreInfo moreInfoObj = new MemberMoreInfo();
-            moreInfoObj.birthdayNongli = birthdayNongli;
-            moreInfoObj.birthdayYangli = birthdayYangli;
+            moreInfoObj.birthdaynongli = birthdayNongli;
+            moreInfoObj.birthdayyangli = birthdayYangli;
             moreInfoObj.minzu = minzu;
-            moreInfoObj.birthPlace = birthdayPlace;
+            moreInfoObj.birthplace = birthdayPlace;
             moreInfoObj.nowaddress = nowaddress;
             moreInfoObj.residenceaddress = residenceaddress;
             moreInfoObj.photopath = realPhotoPathName;

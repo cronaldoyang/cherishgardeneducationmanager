@@ -5,15 +5,22 @@ using System.Text;
 
 namespace CherishGardenEducationManager.Entity
 {
-    class EducationAndEmployeeExprience
+    class Exprience
     {
+        int _id;
         DateTime fromField = new DateTime(1990,1,1);
         DateTime toField = new DateTime(1990, 1, 1);
         string addressField;
         string positionsField;
         string responsibilityField;
 
-        public EducationAndEmployeeExprience() { }
+        public Exprience() { }
+
+        public int id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public DateTime from {
             get { return fromField; }

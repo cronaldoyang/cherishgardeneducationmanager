@@ -7,11 +7,18 @@ namespace CherishGardenEducationManager.Entity
 {
     class AwardOrPunishment
     {
+        int _id;
         DateTime dateField;
         string contentField;
         string organizationField;
 
         public AwardOrPunishment() { }
+
+        public int id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public DateTime date {
             get { return dateField; }

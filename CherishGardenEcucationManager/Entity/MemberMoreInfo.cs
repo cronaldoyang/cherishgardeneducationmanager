@@ -8,6 +8,7 @@ namespace CherishGardenEducationManager.Entity
 {
     class MemberMoreInfo
     {
+        int _id;
         DateTime birthdayYangliField;
         DateTime birthdayNongliField;
         string minzuField;
@@ -25,16 +26,29 @@ namespace CherishGardenEducationManager.Entity
         string computerlevelField;
         string selfevaluationField;
         string photopathField;
+        int _mbid;
 
         public MemberMoreInfo() { }
 
-        public DateTime birthdayYangli
+        public int id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        public int mbid
+        {
+            get { return _mbid; }
+            set { _mbid = value; }
+        }
+
+        public DateTime birthdayyangli
         {
             get { return birthdayYangliField; }
             set { birthdayYangliField = value; }
         }
 
-        public DateTime birthdayNongli
+        public DateTime birthdaynongli
         {
             get { return birthdayNongliField; }
             set { birthdayNongliField = value; }
@@ -46,7 +60,7 @@ namespace CherishGardenEducationManager.Entity
             set { minzuField = value; }
         }
 
-        public string birthPlace
+        public string birthplace
         {
             get { return birthPlaceField; }
             set { birthPlaceField = value; }

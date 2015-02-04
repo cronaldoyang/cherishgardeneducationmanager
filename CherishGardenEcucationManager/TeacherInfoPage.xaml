@@ -10,6 +10,9 @@
       d:DesignHeight="300" d:DesignWidth="300"
 	  Title="TeacherInfoPage"
       >
+    <Page.Resources>
+        <local:TypeToDisplayPhotoFromPath x:Key="TypeToDisplayPhotoFromPath" />
+    </Page.Resources>
     <ScrollViewer>
         <StackPanel>
             <!-- Title-->
@@ -19,7 +22,7 @@
 
             <!-- Basic Info-->
             <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" x:Name="basicInfoGrid">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" x:Name="basicInfoGrid" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*"/>
                         <ColumnDefinition  Width="0.8*"/>
@@ -37,23 +40,23 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" FontWeight="Black" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="姓名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15" Name="teacherName"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15" Name="teacherName" Text="{Binding name}"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" Content="英文名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15" Name="teacherEngName"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15" Name="teacherEngName"  Text="{Binding engname}"></TextBox>
                     <Label Grid.Row="1" Grid.Column="4" Content="性别："></Label>
                     <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding ElementName=genderListBox, Path=SelectedItem}" Name="genderTextBox" ></TextBox>
                     <Popup IsOpen="{Binding ElementName=genderTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=genderTextBox}"  Name="genderListPopup" Grid.Row="1" Grid.Column="5" >
-                        <ListBox  ItemsSource="{StaticResource GenderList}" Name="genderListBox" />
+                        <ListBox  ItemsSource="{StaticResource GenderList}" Name="genderListBox" SelectedItem="{Binding gender}"  />
                     </Popup>
 
                     <Label Grid.Row="1" Grid.Column="6" Content="身份证号："></Label>
-                    <TextBox Grid.Row="1" Grid.Column="7"  MaxLength="18" Name="teacherIdCardNo"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="7"  MaxLength="18" Name="teacherIdCardNo" Text="{Binding idcardno}"></TextBox>
                 </Grid>
             </Border>
 
             <!--More Info-->
             <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" Name="moreinfoGrid">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" x:Name="moreinfoGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.25*"/>
                         <ColumnDefinition  Width="0.75*"/>
@@ -76,53 +79,53 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" FontWeight="Black" Text="更多信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Content="阳历生日:" Grid.Row="1" Grid.Column="0"></Label>
-                    <DatePicker Grid.Row="1" Grid.Column="1" Name="birthdayYangli"></DatePicker>
+                    <DatePicker Grid.Row="1" Grid.Column="1" Name="birthdayYangli"  DataContext="{Binding}" SelectedDate="{Binding Path=birthdayyangli,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, TargetNullValue=''}"></DatePicker>
                     <Label Content="农历生日:" Grid.Row="1" Grid.Column="2"></Label>
-                    <DatePicker   Grid.Row="1" Grid.Column="3" Name="birthdayNongli"></DatePicker>
+                    <DatePicker   Grid.Row="1" Grid.Column="3" Name="birthdayNongli"  DataContext="{Binding}"  SelectedDate="{Binding Path=birthdaynongli,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, TargetNullValue=''}"></DatePicker>
                     <Label Content="民族：" Grid.Row="1" Grid.Column="4"></Label>
-                    <TextBox   Grid.Row="1" Grid.Column="5" Name="minzu"></TextBox>
+                    <TextBox   Grid.Row="1" Grid.Column="5" Name="minzu" Text="{Binding minzu}"></TextBox>
                     <Label Content="出生地：" Grid.Row="1" Grid.Column="6"></Label>
-                    <TextBox   Grid.Row="1" Grid.Column="7" Name="birthdayplace"></TextBox>
+                    <TextBox   Grid.Row="1" Grid.Column="7" Name="birthdayplace" Text="{Binding birthplace}"></TextBox>
 
                     <Label Content="手机：" Grid.Row="2" Grid.Column="0"></Label>
-                    <local:NumberTextBox   Grid.Row="2" Grid.Column="1" x:Name="phone" MaxLength="11"></local:NumberTextBox>
+                    <local:NumberTextBox   Grid.Row="2" Grid.Column="1" x:Name="phone" MaxLength="11" Text="{Binding phone}"></local:NumberTextBox>
                     <Label Content="QQ：" Grid.Row="2" Grid.Column="2"></Label>
-                    <local:NumberTextBox   Grid.Row="2" Grid.Column="3" x:Name="qq"></local:NumberTextBox>
+                    <local:NumberTextBox   Grid.Row="2" Grid.Column="3" x:Name="qq" Text="{Binding qq}"></local:NumberTextBox>
                     <Label Content="普通话水平：" Grid.Row="2" Grid.Column="4" ></Label>
                     <TextBox   Grid.Row="2" Grid.Column="5" Name="putonghuaLevelTextBox" Text="{Binding ElementName=putonghuaLevelListBox, Path=SelectedItem}"></TextBox>
                     <Popup IsOpen="{Binding ElementName=putonghuaLevelTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=putonghuaLevelTextBox}" Grid.Row="2" Grid.Column="5">
-                        <ListBox  ItemsSource="{StaticResource putonghuaLevelList}" Name="putonghuaLevelListBox" />
+                        <ListBox  ItemsSource="{StaticResource putonghuaLevelList}" Name="putonghuaLevelListBox" SelectedItem="{Binding putonghualevel}" />
                     </Popup>
                     <Label Content="计算机水平：" Grid.Row="2" Grid.Column="6"></Label>
-                    <TextBox   Grid.Row="2" Grid.Column="7" Name="computerlevel"></TextBox>
+                    <TextBox   Grid.Row="2" Grid.Column="7" Name="computerlevel" Text="{Binding computerlevel}"></TextBox>
 
 
                     <Label Content="所获学历：" Grid.Row="3" Grid.Column="0"></Label>
                     <TextBox Text="{Binding ElementName=educationbackgroundListBox, Path=SelectedItem}"   Grid.Row="3" Grid.Column="1" MaxLength="2" Name="educationbackgroundTextBox"></TextBox>
                     <Popup IsOpen="{Binding ElementName=educationbackgroundTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=educationbackgroundTextBox}" Grid.Row="3" Grid.Column="1">
-                        <ListBox  ItemsSource="{StaticResource educationbackgroundList}" Name="educationbackgroundListBox" />
+                        <ListBox  ItemsSource="{StaticResource educationbackgroundList}" Name="educationbackgroundListBox" SelectedItem="{Binding educationbackground}"  />
                     </Popup>
                     <Label Content="毕业院校：" Grid.Row="3" Grid.Column="2"></Label>
-                    <TextBox   Grid.Row="3" Grid.Column="3" MaxLength="20" Name="graduatedschool"></TextBox>
+                    <TextBox   Grid.Row="3" Grid.Column="3" MaxLength="20" Name="graduatedschool" Text="{Binding graduatedschool}"></TextBox>
                     <Label Content="所学专业：" Grid.Row="3" Grid.Column="4"></Label>
-                    <TextBox   Grid.Row="3" Grid.Column="5" MaxLength="20" Name="profession"></TextBox>
+                    <TextBox   Grid.Row="3" Grid.Column="5" MaxLength="20" Name="profession" Text="{Binding profession}"></TextBox>
                     <Label Content="毕业时间：" Grid.Row="3" Grid.Column="6"></Label>
-                    <DatePicker   Grid.Row="3" Grid.Column="7" Name="graducatedDate"></DatePicker>
+                    <DatePicker   Grid.Row="3" Grid.Column="7"  DataContext="{Binding}" Name="graducatedDate" SelectedDate="{Binding graduateddate,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, TargetNullValue=''}"></DatePicker>
 
                     <Label Content="现居住地:" Grid.Row="4" Grid.Column="0"></Label>
-                    <TextBox   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Name="nowaddress"></TextBox>
+                    <TextBox   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Name="nowaddress" Text="{Binding nowaddress}"></TextBox>
                     <Label Content="户口地址:" Grid.Row="4" Grid.Column="4"></Label>
-                    <TextBox   Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="3" Name="residenceaddress"></TextBox>
+                    <TextBox   Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="3" Name="residenceaddress" Text="{Binding residenceaddress}"></TextBox>
 
                     <Label Content="特长：" Grid.Row="5" Grid.Column="0"></Label>
-                    <TextBox Name="forte"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" MaxLength="2000"></TextBox>
+                    <TextBox Name="forte"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" MaxLength="2000" Text="{Binding forte}"></TextBox>
 
                     <Button Content="从电脑上选择你的相片" Name="choosePhotoBtn" Click="choosePhotoBtn_Click" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                    <Image Source="/Resources/imgs/Icon.png" Width="125" Height="125" Name="photo" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Collapsed"/>
+                    <Image Source="{Binding Path=photopath, Converter={StaticResource TypeToDisplayPhotoFromPath}}" Width="125" Height="125" Name="photo" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Collapsed"/>
 
 
                     <Label Content="自评：" Grid.Row="7" Grid.Column="0"></Label>
-                    <TextBox Name="selfvaluation"  Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Padding="3,0,3,0" MaxLength="2000"></TextBox>
+                    <TextBox Name="selfvaluation"  Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5"  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Padding="3,0,3,0" MaxLength="2000" Text="{Binding selfevaluation}"></TextBox>
                 </Grid>
             </Border>
 
@@ -130,7 +133,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="家庭成员"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" ItemsSource="{Binding memberFamilyCollection}" Margin="0,10,0,0" >
+                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -158,7 +161,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible" Name="expriencePanel">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="学习及工作经历"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="ExprienceDataGrid" CanUserAddRows="False" ItemsSource="{Binding exprienceCollection}" Margin="0,10,0,0" >
+                    <DataGrid AutoGenerateColumns="False" Name="ExprienceDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -207,7 +210,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible" Name="awardsPanel">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="所获奖励情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="AwardsDataGrid" CanUserAddRows="False" ItemsSource="{Binding awardsCollection}" Margin="0,10,0,0" >
+                    <DataGrid AutoGenerateColumns="False" Name="AwardsDataGrid" CanUserAddRows="False" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -219,7 +222,18 @@
                             </Style>
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="日期"  Binding="{Binding Path=date}" Width="*"></DataGridTextColumn>
+                            <DataGridTemplateColumn x:Name="awardDate"  Header="日期" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path= date, StringFormat=\{0:d\}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker  SelectedDate="{Binding Path=date, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="奖励内容"  Binding="{Binding Path=content}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="所在单位或学校"  Binding="{Binding Path=organization}" Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>

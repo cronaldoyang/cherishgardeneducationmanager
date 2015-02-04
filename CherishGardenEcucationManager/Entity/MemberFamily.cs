@@ -7,14 +7,23 @@ namespace CherishGardenEducationManager.Entity
 {
     class MemberFamily
     {
+        int _id;
         string nameField;
         string realtionshipField;
         string phoneField;
         string idcardnoField;
         Boolean  pickupField;
         Boolean  emergencycontactField;
+        string addressField;
+
 
         public MemberFamily() { }
+
+        public int id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public string name
         {
@@ -50,6 +59,12 @@ namespace CherishGardenEducationManager.Entity
         {
             get { return emergencycontactField; }
             set { emergencycontactField = value; }
+        }
+
+        public string address
+        {
+            get { return addressField; }
+            set { idcardnoField = value; }
         }
     }
 }

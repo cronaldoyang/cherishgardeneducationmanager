@@ -96,6 +96,7 @@
     <Compile Include="ClassPage.xaml.cs">
       <DependentUpon>ClassPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\TypeToDisplayPhotoFromPath.cs" />
     <Compile Include="Converter\TypeFromTeacherNameToTeacherIdConverter.cs" />
     <Compile Include="Converter\TypeToDisplayTeacherNameConerter.cs" />
     <Compile Include="Converter\TypeToDisplayGradeNameConverter.cs" />
@@ -105,7 +106,7 @@
     <Compile Include="Entity\AwardOrPunishment.cs" />
     <Compile Include="Entity\Class.cs" />
     <Compile Include="Entity\Grade.cs" />
-    <Compile Include="Entity\EducationAndEmployeeExprience.cs" />
+    <Compile Include="Entity\Exprience.cs" />
     <Compile Include="Entity\MemberFamily.cs" />
     <Compile Include="Entity\MemberMoreInfo.cs" />
     <Compile Include="Entity\PhysicBasic.cs" />
@@ -117,6 +118,7 @@
       <DependentUpon>TeacherInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ClassViewModel.cs" />
+    <Compile Include="ViewModel\MemberAllInfoViewModel.cs" />
     <Page Include="ClassPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

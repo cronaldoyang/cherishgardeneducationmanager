@@ -20,21 +20,17 @@ namespace CherishGardenEducationManager.Database
         public static OperatorUser findOperatorUser(string loginuser)
         {
             OperatorUser user = null;
-            MySqlConnection conn;
-            MySqlCommand cmd;
-            conn = new MySqlConnection();
-            conn.ConnectionString = CONNECTIONSTR;
-            string query = "select password, mbid from operatorinfo where mbid in (select _id from memberbasic where engname=@username)";
-
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            conn.Open();
+            MySqlTransaction trans = conn.BeginTransaction();
             try
             {
-
-                cmd = new MySqlCommand();
+                MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = query;
-                cmd.Prepare();
+                cmd.CommandType = CommandType.Text;
+                string query = "select password, mbid from operatorinfo where mbid in (select _id from memberbasic where engname=@username)";
                 cmd.Parameters.AddWithValue("@username", loginuser);
-                conn.Open();
+                cmd.CommandText = query;
                 MySqlDataReader reader = cmd.ExecuteReader();
                 if (!reader.HasRows)
                 {
@@ -66,7 +62,7 @@ namespace CherishGardenEducationManager.Database
         //Save memberinfo;
         public static Boolean SaveMemberAllInfo(MemberBasic basicobj, MemberMoreInfo moreobj,
             ObservableCollection<MemberFamily> familyCollection,
-            ObservableCollection<EducationAndEmployeeExprience> exprienceCollection,
+            ObservableCollection<Exprience> exprienceCollection,
             ObservableCollection<AwardOrPunishment> awardsCollection,
             PhysicMoreinfo physicMoreInfoObj)
         {
@@ -91,10 +87,10 @@ namespace CherishGardenEducationManager.Database
                 cmd.Parameters.AddWithValue("@basicidcardno", basicobj.idcardno);
                 cmd.Parameters.AddWithValue("@basicisteacher", basicobj.isteacher ? 1 : 0);
                 //fill the membermoreinfo parameters
-                cmd.Parameters.AddWithValue("@birthdayyangli", moreobj.birthdayYangli);
-                cmd.Parameters.AddWithValue("@birthdaynongli", moreobj.birthdayNongli);
+                cmd.Parameters.AddWithValue("@birthdayyangli", moreobj.birthdayyangli);
+                cmd.Parameters.AddWithValue("@birthdaynongli", moreobj.birthdaynongli);
                 cmd.Parameters.AddWithValue("@minzu", moreobj.minzu);
-                cmd.Parameters.AddWithValue("@birthplace", moreobj.birthPlace);
+                cmd.Parameters.AddWithValue("@birthplace", moreobj.birthplace);
                 cmd.Parameters.AddWithValue("@nowaddress", moreobj.nowaddress);
                 cmd.Parameters.AddWithValue("@residenceaddress", moreobj.residenceaddress);
                 cmd.Parameters.AddWithValue("@photopath", moreobj.photopath);
@@ -156,7 +152,7 @@ namespace CherishGardenEducationManager.Database
                     if (expriencecount > 0)
                     {
                         string insetrExprienceSql = "insert into experience(fromdate, todate,address,positions,responsibility,mbid) values ";
-                        EducationAndEmployeeExprience tempExprience = null;
+                        Exprience tempExprience = null;
                         for (int i = 0; i < expriencecount; i++)
                         {
                             tempExprience = exprienceCollection[i];
@@ -269,10 +265,10 @@ namespace CherishGardenEducationManager.Database
                         nameUpdateSql += " when " + tempClass.id + " then  '" + tempClass.name + "'";
                         headteacheridUpdateSql += " when " + tempClass.id + " then  " + tempClass.teacherid;
                         gradeidUpdateSql += " when " + tempClass.id + " then  " + tempClass.gradeid;
-                        wheresql += tempClass.id; 
+                        wheresql += tempClass.id;
                         if (i < oldGradesCount - 1)
                         {
-                           wheresql += ",";
+                            wheresql += ",";
                         }
                         else
                         {
@@ -282,7 +278,7 @@ namespace CherishGardenEducationManager.Database
                             wheresql += ");";
                         }
                     }
-                    cmd.CommandText = updateClassesSql + nameUpdateSql + headteacheridUpdateSql + gradeidUpdateSql + wheresql ;
+                    cmd.CommandText = updateClassesSql + nameUpdateSql + headteacheridUpdateSql + gradeidUpdateSql + wheresql;
                     cmd.ExecuteNonQuery();
                 }
 
@@ -348,11 +344,11 @@ namespace CherishGardenEducationManager.Database
                         tempGrade = oldGrades[i];
                         updateClassesSql += " when " + tempGrade.id + " then  '" + tempGrade.name + "'";
                         wheresql += tempGrade.id;
-                        if(i < oldGradesCount-1)
+                        if (i < oldGradesCount - 1)
                         {
                             wheresql += ",";
                         }
-                        else 
+                        else
                         {
                             updateClassesSql += " end ";
                             wheresql += ");";
@@ -589,7 +585,8 @@ namespace CherishGardenEducationManager.Database
                         int _headteacherid = (int)readerClasses[2];
                         int _gradeid = (int)readerClasses[3];
 
-                        allClasses.Add(new Class() {
+                        allClasses.Add(new Class()
+                        {
                             id = _id,
                             name = _name,
                             teacherid = _headteacherid,
@@ -611,6 +608,309 @@ namespace CherishGardenEducationManager.Database
             }
 
             return allClasses;
+        }
+
+        public static MemberBasic getMemberBasicInfoFromDB(string name)
+        {
+            MemberBasic basicobj = null;
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            conn.Open();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryMemberBasicSql = "select * from memberbasic where engname=@engname;";
+                cmd.CommandText = queryMemberBasicSql;
+                //if it's teacher, isteacher is 1.
+                cmd.Parameters.AddWithValue("@engname", name);
+                MySqlDataReader readerMemberInfo = cmd.ExecuteReader();
+                if (!readerMemberInfo.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerMemberInfo.Read())
+                    {
+                        int _id = (int)readerMemberInfo[0];
+                        string nameValue = (String)readerMemberInfo[1];
+                        string engnameValue = (String)readerMemberInfo[2];
+                        string genderValue = (String)readerMemberInfo[3];
+                        string idcardnoValue = (String)readerMemberInfo[4];
+                        int isteacherValue = (int)readerMemberInfo[5];
+
+                        basicobj = new MemberBasic()
+                        {
+                            id = _id,
+                            name = nameValue,
+                            engname = engnameValue,
+                            gender = genderValue,
+                            idcardno = idcardnoValue,
+                            isteacher = isteacherValue == 1 ? true : false
+                        };
+                    }
+                }
+                readerMemberInfo.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return basicobj;
+        }
+
+        public static MemberMoreInfo getMemberMoreInfoFromDB(int basicid)
+        {
+            MemberMoreInfo moreinfoobj = null;
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            conn.Open();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryMemberMoreInfoSql = "select * from membermoreinfo where mbid=@mbid;";
+                cmd.CommandText = queryMemberMoreInfoSql;
+                //if it's teacher, isteacher is 1.
+                cmd.Parameters.AddWithValue("@mbid", basicid);
+                MySqlDataReader readerMemberMoreInfo = cmd.ExecuteReader();
+                if (!readerMemberMoreInfo.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerMemberMoreInfo.Read())
+                    {
+                        int _id = (int)readerMemberMoreInfo[0];
+                        DateTime _birthdayyangli = (DateTime)readerMemberMoreInfo[1];
+                        DateTime _birthdaynongli = (DateTime)readerMemberMoreInfo[2];
+                        string _minzu = (String)readerMemberMoreInfo[3];
+                        string _birthplace = (String)readerMemberMoreInfo[4];
+                        string _nowaddress = (String)readerMemberMoreInfo[5];
+                        string _residenceaddress = (String)readerMemberMoreInfo[6];
+                        string _photopath = (string)readerMemberMoreInfo[7];
+                        string _phone = (string)readerMemberMoreInfo[8];
+                        string _qq = (string)readerMemberMoreInfo[9];
+                        DateTime _graduated = (DateTime)readerMemberMoreInfo[10];
+                        string _profession = (string)readerMemberMoreInfo[11];
+                        string _forte = (string)readerMemberMoreInfo[12];
+                        string _educationbackground = (string)readerMemberMoreInfo[13];
+                        string _graduatedschool = (string)readerMemberMoreInfo[14];
+                        string _putonghualevel = (string)readerMemberMoreInfo[15];
+                        string _computerlevel = (string)readerMemberMoreInfo[16];
+                        string _selfevaluation = (string)readerMemberMoreInfo[17];
+                        int _mbid = (int)readerMemberMoreInfo[18];
+                        moreinfoobj = new MemberMoreInfo()
+                        {
+                            id = _id,
+                            birthdaynongli = _birthdaynongli,
+                            birthdayyangli = _birthdayyangli,
+                            minzu = _minzu,
+                            birthplace = _birthplace,
+                            nowaddress = _nowaddress,
+                            residenceaddress = _residenceaddress,
+                            photopath = _photopath,
+                            phone = _phone,
+                            qq = _qq,
+                            graduateddate = _graduated,
+                            profession = _profession,
+                            forte = _forte,
+                            educationbackground = _educationbackground,
+                            graduatedschool = _graduatedschool,
+                            putonghualevel = _putonghualevel,
+                            computerlevel = _computerlevel,
+                            selfevaluation = _selfevaluation,
+                            mbid = _mbid
+                        };
+                    }
+                }
+                readerMemberMoreInfo.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return moreinfoobj;
+        }
+
+        public static ObservableCollection<Exprience> getExpriencesByMemberBasicIdFromDB(int basicid)
+        {
+            ObservableCollection<Exprience> allExpriences = new ObservableCollection<Exprience>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryAllExpriencesSql = "select * from experience where mbid=@mbid;";
+                cmd.CommandText = queryAllExpriencesSql;
+                //if it's teacher, isteacher is 1.
+                cmd.Parameters.AddWithValue("@mbid", basicid);
+                MySqlDataReader readerAllExpriencesInfo = cmd.ExecuteReader();
+                if (!readerAllExpriencesInfo.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerAllExpriencesInfo.Read())
+                    {
+                        int _id = (int)readerAllExpriencesInfo[0];
+                        DateTime _fromdate = (DateTime)readerAllExpriencesInfo[1];
+                        DateTime _todate = (DateTime)readerAllExpriencesInfo[2];
+                        string _address = (String)readerAllExpriencesInfo[3];
+                        string _positions = (String)readerAllExpriencesInfo[4];
+                        string _responsibility = (String)readerAllExpriencesInfo[5];
+                        int _mbid = (int)readerAllExpriencesInfo[6];
+                        allExpriences.Add(new Exprience()
+                        {
+                            id = _id,
+                            from = _fromdate,
+                            to = _todate,
+                            address = _address,
+                            positions = _positions,
+                            responsibility = _responsibility
+                        });
+                    }
+                }
+                readerAllExpriencesInfo.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allExpriences;
+        }
+
+        public static ObservableCollection<MemberFamily> getMemberFamilyByMemberBasicIdFromDB(int basicid)
+        {
+            ObservableCollection<MemberFamily> allMemberFamily = new ObservableCollection<MemberFamily>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryAllMemberFamilySql = "select * from memberfamily where mbid=@mbid;";
+                cmd.CommandText = queryAllMemberFamilySql;
+                //if it's teacher, isteacher is 1.
+                cmd.Parameters.AddWithValue("@mbid", basicid);
+                MySqlDataReader readerAllMemberFamilyInfo = cmd.ExecuteReader();
+                if (!readerAllMemberFamilyInfo.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerAllMemberFamilyInfo.Read())
+                    {
+                        int _id = (int)readerAllMemberFamilyInfo[0];
+                        string _name = (string)readerAllMemberFamilyInfo[1];
+                        string _relation = (string)readerAllMemberFamilyInfo[2];
+                        string _phone = (String)readerAllMemberFamilyInfo[3];
+                        string _idcardno = (String)readerAllMemberFamilyInfo[4];
+                        Boolean _pickup = (Boolean)readerAllMemberFamilyInfo[5] ;
+                        Boolean _emergency = (Boolean )readerAllMemberFamilyInfo[6];
+                        string _address = (string)readerAllMemberFamilyInfo[7];
+                        allMemberFamily.Add(new MemberFamily()
+                        {
+                            id = _id,
+                            name = _name,
+                            relationship = _relation,
+                            phone = _phone,
+                            idcardno = _idcardno,
+                            pickup = _pickup,
+                            emergencycontact = _emergency,
+                            address = _address
+                        });
+                    }
+                }
+                readerAllMemberFamilyInfo.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allMemberFamily;
+        }
+
+        public static ObservableCollection<AwardOrPunishment> getAwardsByMemberBasicIdFromDB(int basicid)
+        {
+            ObservableCollection<AwardOrPunishment> allAwards = new ObservableCollection<AwardOrPunishment>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryAllAwardsSql = "select * from awardspunishmentsinfo where mbid=@mbid;";
+                cmd.CommandText = queryAllAwardsSql;
+                cmd.Parameters.AddWithValue("@mbid", basicid);
+                MySqlDataReader readerAllAwards = cmd.ExecuteReader();
+                if (!readerAllAwards.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerAllAwards.Read())
+                    {
+                        int _id = (int)readerAllAwards[0];
+                        DateTime _date = (DateTime)readerAllAwards[1];
+                        string _content = (string)readerAllAwards[2];
+                        string _organization = (String)readerAllAwards[3];
+                        allAwards.Add(new AwardOrPunishment()
+                        {
+                            id = _id,
+                            date = _date,
+                            content = _content,
+                            organization = _organization
+                        });
+                    }
+                }
+                readerAllAwards.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allAwards;
         }
     }
 }
