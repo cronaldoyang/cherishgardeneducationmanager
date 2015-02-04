@@ -20,7 +20,7 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                     <Menu TextBlock.FontSize="12" Background="White">
                         <MenuItem Header="添加师生信息"  >
-                            <MenuItem Header="班级管理" Click="naviagetToClassesManager"/>
+                            <MenuItem Header="年级班级管理" Click="naviagetToClassesManager"/>
                             <MenuItem Header="添加老师" Click="naviagetToAddTeacherInfo"/>
                             <MenuItem Header="添加学生" Click="naviagetToAddStudentInfo"/>
                         </MenuItem>

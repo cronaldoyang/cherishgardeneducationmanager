@@ -16,7 +16,7 @@
         <StackPanel>
             <!-- Title-->
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,5,0,5">
-                <TextBlock Text="恩涛树下幼儿园课程信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top" FontWeight="Black" />
+                <TextBlock Text="恩涛树下幼儿园年级班级管理"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top" FontWeight="Black" />
             </Border>
 
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
@@ -85,9 +85,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <!--<DataGridComboBoxColumn Width="*" Header="班主任" x:Name="headTeacherColumn"   DisplayMemberPath="name" SelectedValuePath="id" SelectedValueBinding="{Binding Path=teacherid}"/>
-                            <DataGridComboBoxColumn Width="*" Header="年级" x:Name="greadColumn"   DisplayMemberPath="name" SelectedValuePath="id" SelectedValueBinding="{Binding Path=gradeid}" />-->
-                        </DataGrid.Columns>
+                            </DataGrid.Columns>
                     </DataGrid>
                     <Button Height="30" Content="点击增加新班级" Name="dynamicAddClassBtn" Click="dynamicAddClassBtn_Click" TextBlock.FontSize="14"/>
                 </StackPanel>
