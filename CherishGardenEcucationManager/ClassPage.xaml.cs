@@ -1,5 +1,6 @@
 ﻿using CherishGardenEducationManager.Database;
 using CherishGardenEducationManager.Entity;
+using CherishGardenEducationManager.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,29 +29,17 @@ namespace CherishGardenEducationManager
         private readonly BackgroundWorker workerForSaveAndUpdateGradesData = new BackgroundWorker();
         private readonly BackgroundWorker workerForSaveAndUpdateClassesData = new BackgroundWorker();
 
-
-        public delegate void UpdateAllGradesDataCallback(string message);
-
-
-
-        ObservableCollection<MemberBasic> allTeachersCollection{ get; set; }
-        ObservableCollection<Grade> allGradesForDataGridCollection{ get; set; }
-        ObservableCollection<Grade> allGradesForClassDataGridGradeColumnCollection{ get; set; }
-        ObservableCollection<Class> allClassesCollection{ get; set; }
-
-
         DataGrid allClassesDataGrid;
         DataGrid allGradesDataGrid;
-        DataGridComboBoxColumn dgHeadTeacherColumn;
-        DataGridComboBoxColumn dgGradeColumn;
-
+        
         public ClassPage()
         {
             InitializeComponent();
-            allClassesDataGrid = (DataGrid)FindName("AllClassesDataGrid");
-            allGradesDataGrid = (DataGrid)FindName("AllGradesDataGrid");
-            dgHeadTeacherColumn = (DataGridComboBoxColumn)FindName("headTeacherColumn");
-            dgGradeColumn = (DataGridComboBoxColumn)FindName("greadColumn");
+            initData();
+        }
+
+        public  void initData()
+        {
             workerForInitData.DoWork += worker_initData;
             workerForInitData.RunWorkerCompleted += worker_initDataCompleted;
             workerForInitData.RunWorkerAsync();
@@ -58,24 +47,20 @@ namespace CherishGardenEducationManager
 
         public void worker_initData(object sender, DoWorkEventArgs e)
         {
-            allGradesForClassDataGridGradeColumnCollection =DatabaseHelper.getAllGrades();
-            allTeachersCollection = DatabaseHelper.getAllTeachers();
-            allGradesForDataGridCollection = new ObservableCollection<Grade>(allGradesForClassDataGridGradeColumnCollection);
-            allClassesCollection = DatabaseHelper.getAllClasses();
+            ClassViewModel.getInstance().worker_initData();
         }
 
         public void worker_initDataCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            dgGradeColumn.ItemsSource = allGradesForClassDataGridGradeColumnCollection;
-            dgHeadTeacherColumn.ItemsSource = allTeachersCollection;
-            allClassesDataGrid.ItemsSource = allClassesCollection;
-            allGradesDataGrid.ItemsSource = allGradesForDataGridCollection;
-
+            allClassesDataGrid = (DataGrid)FindName("AllClassesDataGrid");
+            allGradesDataGrid = (DataGrid)FindName("AllGradesDataGrid");
+            allClassesDataGrid.ItemsSource = ClassViewModel.getInstance().allClasses;
+            allGradesDataGrid.ItemsSource = ClassViewModel.getInstance().allGrades;
         }
 
         private void dynamicAddClassBtn_Click(object sender, RoutedEventArgs e)
         {
-            allClassesCollection.Add(new Class());
+            ClassViewModel.getInstance().addNewClassRecord();
         }
 
         private void ClassPageSaveBtn_Click(object sender, RoutedEventArgs e)
@@ -83,37 +68,21 @@ namespace CherishGardenEducationManager
             workerForSaveAndUpdateClassesData.DoWork += worker_saveClassesData;
             workerForSaveAndUpdateClassesData.RunWorkerCompleted += worker_saveClassesDataCompleted;
             workerForSaveAndUpdateClassesData.RunWorkerAsync();
-
         }
 
         private void worker_saveClassesData(object sender, DoWorkEventArgs e)
         {
-            ObservableCollection<Class> newAddedClasses = new ObservableCollection<Class>();
-            ObservableCollection<Class> OldClasses = new ObservableCollection<Class>();
-            foreach (Class _class in allClassesCollection)
-            {
-                if (_class.name.Equals("")) continue;
-                if (_class.id == -1)
-                {
-                    newAddedClasses.Add(_class);
-                }
-                else
-                {
-                    OldClasses.Add(_class);
-                }
-            }
-            DatabaseHelper.SaveClassesInfo(OldClasses, newAddedClasses);
-            allClassesCollection = DatabaseHelper.getAllClasses();
+            ClassViewModel.getInstance().saveAllClassesData();
         }
 
         private void worker_saveClassesDataCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            allClassesDataGrid.ItemsSource = allClassesCollection;
+            allClassesDataGrid.ItemsSource = ClassViewModel.getInstance().allClasses;
         }
 
         private void dynamicAddGradeBtn_Click(object sender, RoutedEventArgs e)
         {
-            allGradesForDataGridCollection.Add(new Grade());
+            ClassViewModel.getInstance().addNewGradeRecord();
         }
 
         private void saveGradesBtn_Click(object sender, RoutedEventArgs e)
@@ -123,32 +92,14 @@ namespace CherishGardenEducationManager
             workerForSaveAndUpdateGradesData.RunWorkerAsync();
         }
 
-        private void worker_saveGradesDataCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //allGradesDataGrid.ItemsSource = allGradesForDataGridCollection;
-        }
-
         private void worker_saveGradesData(object sender, DoWorkEventArgs e)
         {
-            ObservableCollection<Grade> newAddedGrades = new ObservableCollection<Grade>();
-            ObservableCollection<Grade> oldGrades = new ObservableCollection<Grade>();
-            foreach (Grade grade in allGradesForDataGridCollection)
-            {
-                if (grade.name.Equals("")) continue;
-                if (grade.id == -1)
-                {
-                    //this means new add grade.
-                    newAddedGrades.Add(grade);
-                }
-                else
-                {
-                    oldGrades.Add(grade);
-                }
-            }
-            DatabaseHelper.SaveGradesInfo(oldGrades, newAddedGrades);
-            //reload gradesData from database;
-            allGradesForDataGridCollection = DatabaseHelper.getAllGrades();
+            ClassViewModel.getInstance().saveAllGradesData();
         }
 
+        private void worker_saveGradesDataCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            allGradesDataGrid.ItemsSource = ClassViewModel.getInstance().allGrades;
+        }
     }
 }

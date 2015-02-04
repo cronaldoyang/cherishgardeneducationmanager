@@ -458,7 +458,7 @@ namespace CherishGardenEducationManager.Database
 
         public static ObservableCollection<Grade> getAllGrades()
         {
-            ObservableCollection<Grade> allClassGroups = new ObservableCollection<Grade>();
+            ObservableCollection<Grade> allGradesGroups = new ObservableCollection<Grade>();
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
             conn.Open();
             try
@@ -467,8 +467,8 @@ namespace CherishGardenEducationManager.Database
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.Text;
 
-                string queryAllClassGroups = "select * from grade";
-                cmd.CommandText = queryAllClassGroups;
+                string queryAllGradesSql = "select * from grade;";
+                cmd.CommandText = queryAllGradesSql;
                 MySqlDataReader reader = cmd.ExecuteReader();
                 if (!reader.HasRows)
                 {
@@ -481,7 +481,7 @@ namespace CherishGardenEducationManager.Database
                         int _id = (int)reader[0];
                         string nameValue = (String)reader[1];
 
-                        allClassGroups.Add(new Grade()
+                        allGradesGroups.Add(new Grade()
                         {
                             id = _id,
                             name = nameValue
@@ -499,7 +499,7 @@ namespace CherishGardenEducationManager.Database
                 conn.Close();
             }
 
-            return allClassGroups;
+            return allGradesGroups;
         }
 
         public static ObservableCollection<Class> getAllClasses()
@@ -513,31 +513,93 @@ namespace CherishGardenEducationManager.Database
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.Text;
 
-                string queryAllClassGroups = "select * from class";
-                cmd.CommandText = queryAllClassGroups;
-                MySqlDataReader reader = cmd.ExecuteReader();
-                if (!reader.HasRows)
+                //get all grades.
+                ObservableCollection<Grade> candidateGradesFromDB = new ObservableCollection<Grade>();
+                string queryAllGradesSql = "select * from grade;";
+                cmd.CommandText = queryAllGradesSql;
+                MySqlDataReader readerGrades = cmd.ExecuteReader();
+                if (!readerGrades.HasRows)
                 {
                     Console.WriteLine("no data!");
                 }
                 else
                 {
-                    while (reader.Read())
+                    while (readerGrades.Read())
                     {
-                        int _id = (int)reader[0];
-                        string _name = (String)reader[1];
-                        int _headteacherid = (int)reader[2];
-                        int _gradeid = (int)reader[3];
+                        int _id = (int)readerGrades[0];
+                        string nameValue = (String)readerGrades[1];
+
+                        candidateGradesFromDB.Add(new Grade()
+                        {
+                            id = _id,
+                            name = nameValue
+                        });
+                    }
+                }
+                readerGrades.Close();
+
+                //get all teachers
+                ObservableCollection<MemberBasic> candidateTeachersFromDB = new ObservableCollection<MemberBasic>();
+                string queryAllTeachers = "select * from memberbasic where isteacher=@isteacher;";
+                cmd.CommandText = queryAllTeachers;
+                //if it's teacher, isteacher is 1.
+                cmd.Parameters.AddWithValue("@isteacher", 1);
+                MySqlDataReader readerTeachers = cmd.ExecuteReader();
+                if (!readerTeachers.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerTeachers.Read())
+                    {
+                        int _id = (int)readerTeachers[0];
+                        string nameValue = (String)readerTeachers[1];
+                        string engnameValue = (String)readerTeachers[2];
+                        string genderValue = (String)readerTeachers[3];
+                        string idcardnoValue = (String)readerTeachers[4];
+                        int isteacherValue = (int)readerTeachers[5];
+
+                        candidateTeachersFromDB.Add(new MemberBasic()
+                        {
+                            id = _id,
+                            name = nameValue,
+                            engname = engnameValue,
+                            gender = genderValue,
+                            idcardno = idcardnoValue,
+                            isteacher = isteacherValue == 1 ? true : false
+                        });
+                    }
+                }
+                readerTeachers.Close();
+
+                string queryAllClassGroups = "select * from class;";
+                cmd.CommandText = queryAllClassGroups;
+                MySqlDataReader readerClasses = cmd.ExecuteReader();
+                if (!readerClasses.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerClasses.Read())
+                    {
+                        int _id = (int)readerClasses[0];
+                        string _name = (String)readerClasses[1];
+                        int _headteacherid = (int)readerClasses[2];
+                        int _gradeid = (int)readerClasses[3];
 
                         allClasses.Add(new Class() {
                             id = _id,
                             name = _name,
                             teacherid = _headteacherid,
-                            gradeid = _id
+                            gradeid = _gradeid,
+                            candidateGrades = candidateGradesFromDB,
+                            candidateTeachers = candidateTeachersFromDB
                         });
                     }
                 }
-                reader.Close();
+                readerClasses.Close();
             }
             catch (MySqlException ex)
             {

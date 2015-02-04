@@ -1,4 +1,5 @@
 ﻿using CherishGardenEducationManager.Entity;
+using CherishGardenEducationManager.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Windows.Data;
 
 namespace CherishGardenEducationManager
 {
-    class TypeToDisplayPropertyConverter : IValueConverter
+    class TypeToDisplayTeacherNameConerter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            MemberBasic basic = (MemberBasic)value;
-            return basic.name;
+            int  teacherid = (int)value;
+            return ClassViewModel.getInstance().getTeacherNameByid(teacherid);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -96,7 +96,9 @@
     <Compile Include="ClassPage.xaml.cs">
       <DependentUpon>ClassPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converter\TypeToDisplayPropertyConverter.cs" />
+    <Compile Include="Converter\TypeFromTeacherNameToTeacherIdConverter.cs" />
+    <Compile Include="Converter\TypeToDisplayTeacherNameConerter.cs" />
+    <Compile Include="Converter\TypeToDisplayGradeNameConverter.cs" />
     <Compile Include="CoursePage.xaml.cs">
       <DependentUpon>CoursePage.xaml</DependentUpon>
     </Compile>
@@ -114,6 +116,7 @@
     <Compile Include="TeacherInfoPage.xaml.cs">
       <DependentUpon>TeacherInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ClassViewModel.cs" />
     <Page Include="ClassPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

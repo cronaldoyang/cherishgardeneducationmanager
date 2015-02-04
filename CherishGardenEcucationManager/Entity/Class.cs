@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -11,6 +12,9 @@ namespace CherishGardenEducationManager.Entity
         string nameField = "";
         int teacheridField;
         int groupidField;
+
+        public ObservableCollection<Grade> candidateGrades { get; set; }
+        public ObservableCollection<MemberBasic> candidateTeachers { get; set; }
 
         public Class() { }
 

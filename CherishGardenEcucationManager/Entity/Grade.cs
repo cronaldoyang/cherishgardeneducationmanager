@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CherishGardenEducationManager.Entity
 {
-    class Grade
+    class Grade : ICloneable 
     {
         int _id = -1;
         string nameField = "";
@@ -21,6 +21,11 @@ namespace CherishGardenEducationManager.Entity
         public string name {
             get { return nameField; }
             set { nameField = value; }
+        }
+
+        public Object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }
