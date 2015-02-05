@@ -149,6 +149,7 @@
                             <DataGridTextColumn Header="关系"  Binding="{Binding Path=relationship}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="手机号码"  Binding="{Binding Path=phone}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="身份证号"  Binding="{Binding Path=idcardno}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="现居住地"  Binding="{Binding Path=address}" Width="*"></DataGridTextColumn>
                             <DataGridCheckBoxColumn Header="是否紧急联系人"  Binding="{Binding Path=emergencycontact}" Width="*"></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -181,7 +182,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <DatePicker Name="fromDatePicker" SelectedDate="{Binding Path=from, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+                                        <DatePicker Name="fromDatePicker" SelectedDate="{Binding Path=from, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, TargetNullValue={x:Static sys:DateTime.Now}}"/>
                                         </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                             </DataGridTemplateColumn>

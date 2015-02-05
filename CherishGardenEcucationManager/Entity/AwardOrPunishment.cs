@@ -8,7 +8,7 @@ namespace CherishGardenEducationManager.Entity
     class AwardOrPunishment
     {
         int _id;
-        DateTime dateField;
+        DateTime dateField = DateTime.Now;
         string contentField;
         string organizationField;
 

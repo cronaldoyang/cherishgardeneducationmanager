@@ -81,6 +81,7 @@ namespace CherishGardenEducationManager.Database
                 //cmd.ExecuteNonQuery();
 
                 //fill the memberbasic parameters.
+                cmd.Parameters.AddWithValue("@basicid", basicobj.id);
                 cmd.Parameters.AddWithValue("@basicname", basicobj.name);
                 cmd.Parameters.AddWithValue("@basicengname", basicobj.engname);
                 cmd.Parameters.AddWithValue("@basicgender", basicobj.gender);
@@ -115,6 +116,8 @@ namespace CherishGardenEducationManager.Database
 
                 cmd.ExecuteNonQuery();
                 cmd.Parameters.Clear();
+                cmd.CommandType = CommandType.Text;
+
                 //
                 int result = Convert.ToInt16(resultParameter.Value);
                 int basicId = Convert.ToInt16(basicRecordIdParameter.Value);
@@ -122,16 +125,30 @@ namespace CherishGardenEducationManager.Database
                 {
                     //save member family records;
                     //save member family records;
-                    int familycount = familyCollection.Count;
-                    if (familycount > 0)
+                    //save exprience records;
+                    ObservableCollection<MemberFamily> updateFamilyCollection = new ObservableCollection<MemberFamily>();
+                    ObservableCollection<MemberFamily> insertFamilyCollection = new ObservableCollection<MemberFamily>();
+                    foreach (MemberFamily family in familyCollection)
                     {
-                        string insertMemberFamilySql = "insert into memberfamily(name, relation,mobilephone,idcardno,pickup,emergencycontact,mbid) values ";
-                        MemberFamily tempfamily = null;
-                        for (int i = 0; i < familycount; i++)
+                        if (family.id == 0)
                         {
-                            tempfamily = familyCollection[i];
-                            insertMemberFamilySql += "('" + tempfamily.name + "','" + tempfamily.relationship + "','" + tempfamily.phone + "','" + tempfamily.idcardno + "'," + (tempfamily.pickup ? 1 : 0) + "," + (tempfamily.emergencycontact ? 1 : 0) + "," + basicId + ")";
-                            if (i < familycount - 1)
+                            insertFamilyCollection.Add(family);
+                        }
+                        else
+                        {
+                            updateFamilyCollection.Add(family);
+                        }
+                    }
+                    int insertfamilycount = insertFamilyCollection.Count;
+                    if (insertfamilycount > 0)
+                    {
+                        string insertMemberFamilySql = "insert into memberfamily(name, relation,mobilephone,idcardno,address, pickup,emergencycontact,mbid) values ";
+                        MemberFamily tempfamily = null;
+                        for (int i = 0; i < insertfamilycount; i++)
+                        {
+                            tempfamily = insertFamilyCollection[i];
+                            insertMemberFamilySql += "('" + tempfamily.name + "','" + tempfamily.relationship + "','" + tempfamily.phone + "','" + tempfamily.idcardno + "','" + tempfamily.address +  "'," + (tempfamily.pickup ? 1 : 0) + "," + (tempfamily.emergencycontact ? 1 : 0) + "," + basicId + ")";
+                            if (i < insertfamilycount - 1)
                             {
                                 insertMemberFamilySql += ",";
                             }
@@ -141,23 +158,82 @@ namespace CherishGardenEducationManager.Database
                             }
 
                         }
-                        cmd.CommandType = CommandType.Text;
                         cmd.CommandText = insertMemberFamilySql;
                         cmd.ExecuteNonQuery();
                     }
 
+                    //update family record;
+                    int updatefamilycount = updateFamilyCollection.Count;
+                     if (updatefamilycount > 0)
+                     {
+                         string updateExprienceSql = "update memberfamily set ";
+                         string nameUpdateSql = " name=case _id ";
+                         string relationUpdateSql = " relation=case _id ";
+                         string mobilephoneUpdateSql = " mobilephone=case _id ";
+                         string idcardnoUpdateSql = " idcardno=case _id ";
+                         string pickupUpdateSql = " pickup=case _id ";
+                         string emergencycontactUpdateSql = " emergencycontact=case _id ";
+                         string addressUpdateSql = " address=case _id ";
+                         string wheresql = "where _id in (";
+                         MemberFamily tempFamily = null;
+                         for (int i = 0; i < updatefamilycount; i++)
+                         {
+                             tempFamily = updateFamilyCollection[i];
+                             nameUpdateSql += " when " + tempFamily.id + " then '" + tempFamily.name + "'";
+                             relationUpdateSql += " when " + tempFamily.id + " then '" + tempFamily.relationship + "'";
+                             mobilephoneUpdateSql += " when " + tempFamily.id + " then '" + tempFamily.phone + "'";
+                             idcardnoUpdateSql += " when " + tempFamily.id + " then '" + tempFamily.idcardno + "'";
+                             pickupUpdateSql += " when " + tempFamily.id + " then " + (tempFamily.pickup==true ? 1 :0) + "";
+                             emergencycontactUpdateSql += " when " + tempFamily.id + " then " + (tempFamily.emergencycontact==true ? 1 : 0) + "";
+                             addressUpdateSql += " when " + tempFamily.id + " then '" + tempFamily.address + "'";
+
+                             wheresql += tempFamily.id;
+                             if (i < updatefamilycount - 1)
+                             {
+                                 wheresql += ",";
+                             }
+                             else
+                             {
+                                 nameUpdateSql += " end, ";
+                                 relationUpdateSql += " end, ";
+                                 mobilephoneUpdateSql += " end, ";
+                                 idcardnoUpdateSql += " end, ";
+                                 pickupUpdateSql += " end, ";
+                                 emergencycontactUpdateSql += " end, ";
+                                 addressUpdateSql += " end ";
+                                 wheresql += ");";
+                             }
+                         }
+                         cmd.CommandText = updateExprienceSql + nameUpdateSql + relationUpdateSql + mobilephoneUpdateSql + idcardnoUpdateSql + pickupUpdateSql + emergencycontactUpdateSql + addressUpdateSql + wheresql;
+                         cmd.ExecuteNonQuery();
+                     }
+
 
                     //save exprience records;
-                    int expriencecount = exprienceCollection.Count;
-                    if (expriencecount > 0)
+                    ObservableCollection<Exprience> updateExpriencesCollection = new ObservableCollection<Exprience>();
+                    ObservableCollection<Exprience> insertexpriencesCollection = new ObservableCollection<Exprience>();
+                    foreach (Exprience exprience in exprienceCollection)
                     {
-                        string insetrExprienceSql = "insert into experience(fromdate, todate,address,positions,responsibility,mbid) values ";
-                        Exprience tempExprience = null;
-                        for (int i = 0; i < expriencecount; i++)
+                        if (exprience.id == 0)
                         {
-                            tempExprience = exprienceCollection[i];
+                            insertexpriencesCollection.Add(exprience);
+                        }
+                        else
+                        {
+                            updateExpriencesCollection.Add(exprience);
+                        }
+                    }
+
+                    int insertExprienceCount = insertexpriencesCollection.Count;
+                    if (insertExprienceCount > 0)
+                    {
+                        string insetrExprienceSql = "insert into exprience(fromdate, todate,address,positions,responsibility,mbid) values ";
+                        Exprience tempExprience = null;
+                        for (int i = 0; i < insertExprienceCount; i++)
+                        {
+                            tempExprience = insertexpriencesCollection[i];
                             insetrExprienceSql += "('" + tempExprience.from.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempExprience.to.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempExprience.address + "','" + tempExprience.positions + "','" + tempExprience.responsibility + "'," + basicId + ")";
-                            if (i < expriencecount - 1)
+                            if (i < insertExprienceCount - 1)
                             {
                                 insetrExprienceSql += ",";
                             }
@@ -170,18 +246,72 @@ namespace CherishGardenEducationManager.Database
                         cmd.ExecuteNonQuery();
                     }
 
+                    //update all expriences
+                    int updateExprienceCount = updateExpriencesCollection.Count;
+                    if (updateExprienceCount > 0)
+                    {
+                        string updateExprienceSql = "update exprience set ";
+                        string fromdateUpdateSql = " fromdate=case _id ";
+                        string todateUpdateSql = " todate=case _id ";
+                        string addressUpdateSql = " address=case _id ";
+                        string positionsUpdateSql = " positions=case _id ";
+                        string responsibilityUpdateSql = " responsibility=case _id ";
+                        string wheresql = "where _id in (";
+                        Exprience tempExprience = null;
+                        for (int i = 0; i < updateExprienceCount; i++)
+                        {
+                            tempExprience = updateExpriencesCollection[i];
+                            fromdateUpdateSql += " when " + tempExprience.id + " then '" + tempExprience.from.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "'";
+                            todateUpdateSql += " when " + tempExprience.id + " then '" + tempExprience.to.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "'";
+                            addressUpdateSql += " when " + tempExprience.id + " then '" + tempExprience.address + "'";
+                            positionsUpdateSql += " when " + tempExprience.id + " then '" + tempExprience.positions + "'";
+                            responsibilityUpdateSql += " when " + tempExprience.id + " then '" + tempExprience.responsibility + "'";
+                            wheresql += tempExprience.id;
+                            if (i < updateExprienceCount - 1)
+                            {
+                                wheresql += ",";
+                            }
+                            else
+                            {
+                                fromdateUpdateSql += " end, ";
+                                todateUpdateSql += " end, ";
+                                addressUpdateSql += " end, ";
+                                positionsUpdateSql += " end, ";
+                                responsibilityUpdateSql += " end ";
+                                wheresql += ");";
+                            }
+                        }
+                        cmd.CommandText = updateExprienceSql + fromdateUpdateSql + todateUpdateSql + addressUpdateSql + positionsUpdateSql + responsibilityUpdateSql + wheresql;
+                        cmd.ExecuteNonQuery();
+                    }
 
-                    //save exprience records;
-                    int awardscount = awardsCollection.Count;
-                    if (awardscount > 0)
+
+                    //save award records;
+                    ObservableCollection<AwardOrPunishment> updateAwardsCollection = new ObservableCollection<AwardOrPunishment>();
+                    ObservableCollection<AwardOrPunishment> insertAwardsCollection = new ObservableCollection<AwardOrPunishment>();
+
+                    foreach (AwardOrPunishment award in awardsCollection)
+                    {
+                        if (award.id == 0)
+                        {
+                            insertAwardsCollection.Add(award);
+                        }
+                        else
+                        {
+                            updateAwardsCollection.Add(award);
+                        }
+                    }
+
+                    int insertAwardsCount = insertAwardsCollection.Count;
+                    if (insertAwardsCount > 0)
                     {
                         string insertAwardsSql = "insert into awardspunishmentsinfo(date, content,organization,mbid) values ";
                         AwardOrPunishment tempAward = null;
-                        for (int i = 0; i < awardscount; i++)
+                        for (int i = 0; i < insertAwardsCount; i++)
                         {
-                            tempAward = awardsCollection[i];
+                            tempAward = insertAwardsCollection[i];
                             insertAwardsSql += "('" + tempAward.date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempAward.content + "','" + tempAward.organization + "'," + basicId + ")";
-                            if (i < awardscount - 1)
+                            if (i < insertAwardsCount - 1)
                             {
                                 insertAwardsSql += ",";
                             }
@@ -191,6 +321,39 @@ namespace CherishGardenEducationManager.Database
                             }
                         }
                         cmd.CommandText = insertAwardsSql;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    int updateAwardsCount = updateAwardsCollection.Count;
+                    if (updateAwardsCount > 0)
+                    {
+                        //update related awards.
+                        string updateAwardsSql = "update awardspunishmentsinfo set ";
+                        string dateUpdateSql = " date=case _id ";
+                        string contentUpdateSql = " content=case _id ";
+                        string organizationUpdateSql = " organization=case _id ";
+                        string wheresql = "where _id in (";
+                        AwardOrPunishment tempAward = null;
+                        for (int i = 0; i < updateAwardsCount; i++)
+                        {
+                            tempAward = updateAwardsCollection[i];
+                            dateUpdateSql += " when " + tempAward.id + " then '" + tempAward.date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "'";
+                            contentUpdateSql += " when " + tempAward.id + " then '" + tempAward.content + "'";
+                            organizationUpdateSql += " when " + tempAward.id + " then '" + tempAward.organization + "'";
+                            wheresql += tempAward.id;
+                            if (i < updateAwardsCount - 1)
+                            {
+                                wheresql += ",";
+                            }
+                            else
+                            {
+                                dateUpdateSql += " end, ";
+                                contentUpdateSql += " end, ";
+                                organizationUpdateSql += " end ";
+                                wheresql += ");";
+                            }
+                        }
+                        cmd.CommandText = updateAwardsSql + dateUpdateSql + contentUpdateSql + organizationUpdateSql + wheresql;
                         cmd.ExecuteNonQuery();
                     }
 
@@ -760,7 +923,7 @@ namespace CherishGardenEducationManager.Database
                 cmd.CommandType = CommandType.Text;
 
                 //get all grades.
-                string queryAllExpriencesSql = "select * from experience where mbid=@mbid;";
+                string queryAllExpriencesSql = "select * from exprience where mbid=@mbid;";
                 cmd.CommandText = queryAllExpriencesSql;
                 //if it's teacher, isteacher is 1.
                 cmd.Parameters.AddWithValue("@mbid", basicid);
@@ -834,8 +997,8 @@ namespace CherishGardenEducationManager.Database
                         string _relation = (string)readerAllMemberFamilyInfo[2];
                         string _phone = (String)readerAllMemberFamilyInfo[3];
                         string _idcardno = (String)readerAllMemberFamilyInfo[4];
-                        Boolean _pickup = (Boolean)readerAllMemberFamilyInfo[5] ;
-                        Boolean _emergency = (Boolean )readerAllMemberFamilyInfo[6];
+                        Boolean _pickup = (Boolean)readerAllMemberFamilyInfo[5];
+                        Boolean _emergency = (Boolean)readerAllMemberFamilyInfo[6];
                         string _address = (string)readerAllMemberFamilyInfo[7];
                         allMemberFamily.Add(new MemberFamily()
                         {

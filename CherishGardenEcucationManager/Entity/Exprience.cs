@@ -8,8 +8,8 @@ namespace CherishGardenEducationManager.Entity
     class Exprience
     {
         int _id;
-        DateTime fromField = new DateTime(1990,1,1);
-        DateTime toField = new DateTime(1990, 1, 1);
+        DateTime fromField = DateTime.Now;
+        DateTime toField = DateTime.Now;
         string addressField;
         string positionsField;
         string responsibilityField;

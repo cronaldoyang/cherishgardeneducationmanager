@@ -12,8 +12,8 @@ namespace CherishGardenEducationManager.Entity
         string realtionshipField;
         string phoneField;
         string idcardnoField;
-        Boolean  pickupField;
-        Boolean  emergencycontactField;
+        Boolean  pickupField = false;
+        Boolean  emergencycontactField = false;
         string addressField;
 
 
@@ -64,7 +64,7 @@ namespace CherishGardenEducationManager.Entity
         public string address
         {
             get { return addressField; }
-            set { idcardnoField = value; }
+            set { addressField = value; }
         }
     }
 }
