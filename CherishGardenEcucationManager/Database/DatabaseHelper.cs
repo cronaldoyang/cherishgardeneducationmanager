@@ -13,7 +13,7 @@ namespace CherishGardenEducationManager.Database
 {
     class DatabaseHelper
     {
-        private static string CONNECTIONSTR = ConfigurationManager.ConnectionStrings["cgemConnectionString"].ConnectionString;
+        private static string CONNECTIONSTR = ConfigurationManager.ConnectionStrings["cgemConnectionstring"].ConnectionString;
         private static string SAVEMEMBERINFO_SP = "savememberinfo_sp";
 
         //Judge the user login success?
@@ -584,10 +584,10 @@ namespace CherishGardenEducationManager.Database
                     while (reader.Read())
                     {
                         int _id = (int)reader[0];
-                        string nameValue = (String)reader[1];
-                        string engnameValue = (String)reader[2];
-                        string genderValue = (String)reader[3];
-                        string idcardnoValue = (String)reader[4];
+                        string nameValue = (string)reader[1];
+                        string engnameValue = (string)reader[2];
+                        string genderValue = (string)reader[3];
+                        string idcardnoValue = (string)reader[4];
                         int isteacherValue = (int)reader[5];
 
                         allTeachers.Add(new MemberBasic()
@@ -638,7 +638,7 @@ namespace CherishGardenEducationManager.Database
                     while (reader.Read())
                     {
                         int _id = (int)reader[0];
-                        string nameValue = (String)reader[1];
+                        string nameValue = (string)reader[1];
 
                         allGradesGroups.Add(new Grade()
                         {
@@ -686,7 +686,7 @@ namespace CherishGardenEducationManager.Database
                     while (readerGrades.Read())
                     {
                         int _id = (int)readerGrades[0];
-                        string nameValue = (String)readerGrades[1];
+                        string nameValue = (string)readerGrades[1];
 
                         candidateGradesFromDB.Add(new Grade()
                         {
@@ -713,10 +713,10 @@ namespace CherishGardenEducationManager.Database
                     while (readerTeachers.Read())
                     {
                         int _id = (int)readerTeachers[0];
-                        string nameValue = (String)readerTeachers[1];
-                        string engnameValue = (String)readerTeachers[2];
-                        string genderValue = (String)readerTeachers[3];
-                        string idcardnoValue = (String)readerTeachers[4];
+                        string nameValue = (string)readerTeachers[1];
+                        string engnameValue = (string)readerTeachers[2];
+                        string genderValue = (string)readerTeachers[3];
+                        string idcardnoValue = (string)readerTeachers[4];
                         int isteacherValue = (int)readerTeachers[5];
 
                         candidateTeachersFromDB.Add(new MemberBasic()
@@ -744,7 +744,7 @@ namespace CherishGardenEducationManager.Database
                     while (readerClasses.Read())
                     {
                         int _id = (int)readerClasses[0];
-                        string _name = (String)readerClasses[1];
+                        string _name = (string)readerClasses[1];
                         int _headteacherid = (int)readerClasses[2];
                         int _gradeid = (int)readerClasses[3];
 
@@ -799,10 +799,10 @@ namespace CherishGardenEducationManager.Database
                     while (readerMemberInfo.Read())
                     {
                         int _id = (int)readerMemberInfo[0];
-                        string nameValue = (String)readerMemberInfo[1];
-                        string engnameValue = (String)readerMemberInfo[2];
-                        string genderValue = (String)readerMemberInfo[3];
-                        string idcardnoValue = (String)readerMemberInfo[4];
+                        string nameValue = (string)readerMemberInfo[1];
+                        string engnameValue = (string)readerMemberInfo[2];
+                        string genderValue = (string)readerMemberInfo[3];
+                        string idcardnoValue = (string)readerMemberInfo[4];
                         int isteacherValue = (int)readerMemberInfo[5];
 
                         basicobj = new MemberBasic()
@@ -830,7 +830,7 @@ namespace CherishGardenEducationManager.Database
             return basicobj;
         }
 
-        public static MemberMoreInfo getMemberMoreInfoFromDB(int basicid)
+        public static MemberMoreInfo getMemberMoreInfoFromDB(int basicid, Boolean isteacher)
         {
             MemberMoreInfo moreinfoobj = null;
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
@@ -858,21 +858,35 @@ namespace CherishGardenEducationManager.Database
                         int _id = (int)readerMemberMoreInfo[0];
                         DateTime _birthdayyangli = (DateTime)readerMemberMoreInfo[1];
                         DateTime _birthdaynongli = (DateTime)readerMemberMoreInfo[2];
-                        string _minzu = (String)readerMemberMoreInfo[3];
-                        string _birthplace = (String)readerMemberMoreInfo[4];
-                        string _nowaddress = (String)readerMemberMoreInfo[5];
-                        string _residenceaddress = (String)readerMemberMoreInfo[6];
+                        string _minzu = (string)readerMemberMoreInfo[3];
+                        string _birthplace = (string)readerMemberMoreInfo[4];
+                        string _nowaddress = (string)readerMemberMoreInfo[5];
+                        string _residenceaddress = (string)readerMemberMoreInfo[6];
                         string _photopath = (string)readerMemberMoreInfo[7];
-                        string _phone = (string)readerMemberMoreInfo[8];
-                        string _qq = (string)readerMemberMoreInfo[9];
-                        DateTime _graduated = (DateTime)readerMemberMoreInfo[10];
-                        string _profession = (string)readerMemberMoreInfo[11];
-                        string _forte = (string)readerMemberMoreInfo[12];
-                        string _educationbackground = (string)readerMemberMoreInfo[13];
-                        string _graduatedschool = (string)readerMemberMoreInfo[14];
-                        string _putonghualevel = (string)readerMemberMoreInfo[15];
-                        string _computerlevel = (string)readerMemberMoreInfo[16];
-                        string _selfevaluation = (string)readerMemberMoreInfo[17];
+                        string _phone = "";
+                        string _qq = "";
+                        DateTime _graduated = new DateTime();
+                        string _profession = "";
+                        string _forte = "";
+                        string _educationbackground = "";
+                        string _graduatedschool = "";
+                        string _putonghualevel = "";
+                        string _computerlevel = "";
+                        string _selfevaluation = "";
+                        if (isteacher)
+                        {
+                             _phone = (string)readerMemberMoreInfo[8];
+                             _qq =  (string)readerMemberMoreInfo[9];
+                             _graduated =  (DateTime)readerMemberMoreInfo[10];
+                             _profession = (string)readerMemberMoreInfo[11];
+                             _forte = (string)readerMemberMoreInfo[12];
+                             _educationbackground = (string)readerMemberMoreInfo[13];
+                             _graduatedschool = (string)readerMemberMoreInfo[14];
+                             _putonghualevel =  (string)readerMemberMoreInfo[15];
+                             _computerlevel = (string)readerMemberMoreInfo[16];
+                             _selfevaluation = (string)readerMemberMoreInfo[17];
+                        }
+                        
                         int _mbid = (int)readerMemberMoreInfo[18];
                         moreinfoobj = new MemberMoreInfo()
                         {
@@ -939,9 +953,9 @@ namespace CherishGardenEducationManager.Database
                         int _id = (int)readerAllExpriencesInfo[0];
                         DateTime _fromdate = (DateTime)readerAllExpriencesInfo[1];
                         DateTime _todate = (DateTime)readerAllExpriencesInfo[2];
-                        string _address = (String)readerAllExpriencesInfo[3];
-                        string _positions = (String)readerAllExpriencesInfo[4];
-                        string _responsibility = (String)readerAllExpriencesInfo[5];
+                        string _address = (string)readerAllExpriencesInfo[3];
+                        string _positions = (string)readerAllExpriencesInfo[4];
+                        string _responsibility = (string)readerAllExpriencesInfo[5];
                         int _mbid = (int)readerAllExpriencesInfo[6];
                         allExpriences.Add(new Exprience()
                         {
@@ -995,8 +1009,8 @@ namespace CherishGardenEducationManager.Database
                         int _id = (int)readerAllMemberFamilyInfo[0];
                         string _name = (string)readerAllMemberFamilyInfo[1];
                         string _relation = (string)readerAllMemberFamilyInfo[2];
-                        string _phone = (String)readerAllMemberFamilyInfo[3];
-                        string _idcardno = (String)readerAllMemberFamilyInfo[4];
+                        string _phone = (string)readerAllMemberFamilyInfo[3];
+                        string _idcardno = (string)readerAllMemberFamilyInfo[4];
                         Boolean _pickup = (Boolean)readerAllMemberFamilyInfo[5];
                         Boolean _emergency = (Boolean)readerAllMemberFamilyInfo[6];
                         string _address = (string)readerAllMemberFamilyInfo[7];
@@ -1053,7 +1067,7 @@ namespace CherishGardenEducationManager.Database
                         int _id = (int)readerAllAwards[0];
                         DateTime _date = (DateTime)readerAllAwards[1];
                         string _content = (string)readerAllAwards[2];
-                        string _organization = (String)readerAllAwards[3];
+                        string _organization = (string)readerAllAwards[3];
                         allAwards.Add(new AwardOrPunishment()
                         {
                             id = _id,
@@ -1074,6 +1088,70 @@ namespace CherishGardenEducationManager.Database
                 conn.Close();
             }
             return allAwards;
+        }
+
+        public static PhysicMoreinfo getPhysicMoreInfo(int basicid)
+        {
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            PhysicMoreinfo physicMoreInfo = null;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryAllAwardsSql = "select * from physicmoreinfo where mbid=@mbid;";
+                cmd.CommandText = queryAllAwardsSql;
+                cmd.Parameters.AddWithValue("@mbid", basicid);
+                MySqlDataReader readerPhysicMoreInfo = cmd.ExecuteReader();
+                if (!readerPhysicMoreInfo.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerPhysicMoreInfo.Read())
+                    {
+                        int _id = (int)readerPhysicMoreInfo[0];
+                        Boolean _haveFoodallergy = (Boolean)readerPhysicMoreInfo[1];
+                        string _foodallergyinfo = (string)readerPhysicMoreInfo[2];
+                        Boolean _haveConvulsionsepilepsy = (Boolean)readerPhysicMoreInfo[3];
+                        Boolean _haveBraindiseases = (Boolean)readerPhysicMoreInfo[4];
+                        Boolean _haveAcutechronicinfectious = (Boolean)readerPhysicMoreInfo[5];
+                        Boolean _haveheartdiseases = (Boolean)readerPhysicMoreInfo[6];
+                        Boolean _haverenaldisease = (Boolean)readerPhysicMoreInfo[7];
+                        Boolean _havedrugallergy = (Boolean)readerPhysicMoreInfo[8];
+                        string _drugallergy = (string)readerPhysicMoreInfo[9];
+                        string _mark = (string)readerPhysicMoreInfo[10];
+                        physicMoreInfo = new PhysicMoreinfo()
+                        {
+                            id = _id,
+                            haveFoodallergy= _haveFoodallergy,
+                            foodallergyinfo = _foodallergyinfo,
+                            haveConvulsionsepilepsy = _haveConvulsionsepilepsy,
+                            haveBraindiseases = _haveBraindiseases,
+                            haveAcutechronicinfectious = _haveAcutechronicinfectious,
+                            haveheartdiseases = _haveheartdiseases,
+                            haverenaldisease = _haverenaldisease,
+                            havedrugallergy = _havedrugallergy,
+                            drugallergy = _drugallergy,
+                            mark = _mark
+                        };
+                    }
+                }
+                readerPhysicMoreInfo.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return physicMoreInfo;
         }
     }
 }

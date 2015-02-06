@@ -7,6 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="StudentsInfo">
+    <Page.Resources>
+        <local:TypeToDisplayPhotoFromPath x:Key="TypeToDisplayPhotoFromPath" />
+    </Page.Resources>
     <ScrollViewer>
         <StackPanel>
             <!-- Title-->
@@ -16,7 +19,7 @@
 
             <!-- Basic Info-->
             <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" x:Name="studentBasicInfoGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*"/>
                         <ColumnDefinition  Width="0.8*"/>
@@ -34,23 +37,23 @@
                     <TextBlock  FontWeight="Black" Grid.Row="0" Grid.ColumnSpan="8" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="姓名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15" Name="studentName"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15" Name="studentName" Text="{Binding name}"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" Content="英文名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15" Name="studentEngName"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15" Name="studentEngName" Text="{Binding engname}"></TextBox>
                     <Label Grid.Row="1" Grid.Column="4" Content="性别："></Label>
                     <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding ElementName=genderListBox, Path=SelectedItem}" Name="genderTextBox" ></TextBox>
                     <Popup IsOpen="{Binding ElementName=genderTextBox,Path=IsFocused, Mode=OneWay}" PlacementTarget="{Binding ElementName=genderTextBox}"  Name="genderListPopup" Grid.Row="1" Grid.Column="5" >
-                        <ListBox  ItemsSource="{StaticResource GenderList}" Name="genderListBox" />
+                        <ListBox  ItemsSource="{StaticResource GenderList}" Name="genderListBox"  SelectedItem="{Binding gender}" />
                     </Popup>
 
                     <Label Grid.Row="1" Grid.Column="6" Content="身份证号："></Label>
-                    <TextBox Grid.Row="1" Grid.Column="7"  MaxLength="18" Name="studentIdCardNo"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="7"  MaxLength="18" Name="studentIdCardNo" Text="{Binding idcardno}"></TextBox>
                 </Grid>
             </Border>
 
             <!--More Info-->
             <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" Name="moreinfoGrid">
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" x:Name="studentMoreInfoGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.25*"/>
                         <ColumnDefinition  Width="0.75*"/>
@@ -72,21 +75,21 @@
                     <TextBlock  FontWeight="Black" Grid.Row="0" Grid.ColumnSpan="8" Text="更多信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Content="阳历生日:" Grid.Row="1" Grid.Column="0"></Label>
-                    <DatePicker Grid.Row="1" Grid.Column="1" Name="birthdayYangli"></DatePicker>
+                    <DatePicker Grid.Row="1" Grid.Column="1" Name="birthdayYangli" SelectedDate="{Binding Path=birthdayyangli,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, TargetNullValue=''}"></DatePicker>
                     <Label Content="农历生日:" Grid.Row="1" Grid.Column="2"></Label>
-                    <DatePicker   Grid.Row="1" Grid.Column="3" Name="birthdayNongli"></DatePicker>
+                    <DatePicker   Grid.Row="1" Grid.Column="3" Name="birthdayNongli" SelectedDate="{Binding Path=birthdaynongli,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, TargetNullValue=''}"></DatePicker>
                     <Label Content="民族：" Grid.Row="1" Grid.Column="4"></Label>
-                    <TextBox   Grid.Row="1" Grid.Column="5" Name="minzu"></TextBox>
+                    <TextBox   Grid.Row="1" Grid.Column="5" Name="minzu" Text="{Binding minzu}"></TextBox>
                     <Label Content="出生地：" Grid.Row="2" Grid.Column="0"></Label>
-                    <TextBox   Grid.Row="2" Grid.Column="1" Name="birthdayplace" Grid.ColumnSpan="4"></TextBox>
+                    <TextBox   Grid.Row="2" Grid.Column="1" Name="birthdayplace" Grid.ColumnSpan="4" Text="{Binding birthplace}"></TextBox>
 
                     <Label Content="现居住地:" Grid.Row="3" Grid.Column="0"></Label>
-                    <TextBox   Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="4" Name="nowaddress"></TextBox>
+                    <TextBox   Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="4" Name="nowaddress" Text="{Binding nowaddress}"></TextBox>
                     <Label Content="户口地址:" Grid.Row="4" Grid.Column="0"></Label>
-                    <TextBox   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" Name="residenceaddress"></TextBox>
+                    <TextBox   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" Name="residenceaddress" Text="{Binding residenceaddress}"></TextBox>
 
                     <Button Content="从电脑上选择学生的相片" Name="choosePhotoBtn" Click="choosePhotoBtn_Click" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="3"/>
-                    <Image Source="/Resources/imgs/Icon.png" Width="125" Height="125" Name="photo" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="3" Visibility="Collapsed"/>
+                    <Image Source="{Binding Path=photopath, Converter={StaticResource TypeToDisplayPhotoFromPath}}" Width="125" Height="125" Name="photo" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Grid.RowSpan="3" Visibility="Collapsed"/>
 
 
                 </Grid>
@@ -112,16 +115,17 @@
                             <DataGridTextColumn Header="关系"  Binding="{Binding Path=relationship}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="手机号码"  Binding="{Binding Path=phone}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="身份证号"  Binding="{Binding Path=idcardno}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="现居住地"  Binding="{Binding Path=address}" Width="*"></DataGridTextColumn>
                             <DataGridCheckBoxColumn Header="是否接送人"  Binding="{Binding Path=pickup}" Width="*"></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Height="30" Content="点击增加新成员" Name="dynamicAddMemberFamilyBtn" Click="dynamicAddMemberFamilyBtn_Click" TextBlock.FontSize="14"/>
+                    <Button Height="30" Content="点击增加新家庭成员" Name="dynamicAddMemberFamilyBtn" Click="dynamicAddMemberFamilyBtn_Click" TextBlock.FontSize="14"/>
                 </StackPanel>
             </Border>
 
             <!--Physic more info-->
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
-                <Grid local:GridLineHelper.ShowBorder="True" Margin="5">
+                <Grid Margin="5" x:Name="physicMoreInfoGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -136,22 +140,22 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock  FontWeight="Black" Grid.Row="0" Grid.ColumnSpan="5"  Text="健康情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <CheckBox Content="有无抽风、癫痫史" Grid.Row="1" Grid.Column="0" Name="haveConvulsionsepilepsy"/>
-                    <CheckBox Content="有无脑部疾病" Grid.Row="1"  Grid.Column="1" Name="haveBraindiseases"/>
-                    <CheckBox Content="有无急慢性传染病史" Grid.Row="1"  Grid.Column="2" Name="haveAcutechronicinfectious"/>
-                    <CheckBox Content="有无心脏病史" Grid.Row="1"  Grid.Column="3" Name="haveheartdiseases"/>
-                    <CheckBox Content="有无肾脏病史 " Grid.Row="1" Grid.Column="4" Name="haverenaldisease"/>
-                    <CheckBox Content="有无药物过敏史" Grid.Row="2" Grid.Column="0" Name="haveFoodallergy"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Name="foodallergyTextBox"></TextBox>
-                    <CheckBox Content="有无食物过敏史" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Name="havedrugallergy"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name="drugallergy"></TextBox>
+                    <CheckBox Content="有无抽风、癫痫史" Grid.Row="1" Grid.Column="0" Name="haveConvulsionsepilepsy" IsChecked="{Binding haveConvulsionsepilepsy}"/>
+                    <CheckBox Content="有无脑部疾病" Grid.Row="1"  Grid.Column="1" Name="haveBraindiseases" IsChecked="{Binding haveBraindiseases}"/>
+                    <CheckBox Content="有无急慢性传染病史" Grid.Row="1"  Grid.Column="2" Name="haveAcutechronicinfectious" IsChecked="{Binding haveAcutechronicinfectious}"/>
+                    <CheckBox Content="有无心脏病史" Grid.Row="1"  Grid.Column="3" Name="haveheartdiseases" IsChecked="{Binding haveheartdiseases}"/>
+                    <CheckBox Content="有无肾脏病史 " Grid.Row="1" Grid.Column="4" Name="haverenaldisease" IsChecked="{Binding haverenaldisease}"/>
+                    <CheckBox Content="有无药物过敏史" Grid.Row="2" Grid.Column="0" Name="haveFoodallergy" IsChecked="{Binding haveFoodallergy}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Name="foodallergyTextBox" Text="{Binding foodallergyinfo}"></TextBox>
+                    <CheckBox Content="有无食物过敏史" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Name="havedrugallergy" IsChecked="{Binding havedrugallergy}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name="drugallergy" Text="{Binding drugallergy}"></TextBox>
                 </Grid>
             </Border>
 
             <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock  FontWeight="Black"  Text="其他特别说明"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <TextBox Name="mark"></TextBox>
+                    <TextBox Name="mark" Text="{Binding mark}" ></TextBox>
                 </StackPanel>
             </Border>
 

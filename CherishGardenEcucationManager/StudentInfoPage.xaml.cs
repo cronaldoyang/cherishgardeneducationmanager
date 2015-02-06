@@ -1,9 +1,11 @@
 ﻿using CherishGardenEducationManager.Database;
 using CherishGardenEducationManager.Entity;
 using CherishGardenEducationManager.Helper;
+using CherishGardenEducationManager.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -23,24 +25,53 @@ namespace CherishGardenEducationManager
     /// </summary>
     public partial class StudentsInfoPage : Page
     {
-        public event EventHandler updateStausbar;
-        ObservableCollection<MemberFamily> memberFamilyCollection = new ObservableCollection<MemberFamily>();
+        private readonly BackgroundWorker workerForInitData = new BackgroundWorker();
 
+        public event EventHandler updateStausbar;
         string realPhotoPathName;
         DataGrid memberFamilyDataGrid;
-
-
+        TextBox markTextBox;
         public StudentsInfoPage()
         {
             InitializeComponent();
-            initUI();
+            initData();
         }
 
-        void initUI()
+        void initData()
         {
-            memberFamilyDataGrid = (DataGrid)FindName("MemberFamilyDataGrid");
-            memberFamilyDataGrid.ItemsSource = memberFamilyCollection;
+            workerForInitData.DoWork += workerForInitData_DoWork;
+            workerForInitData.RunWorkerCompleted += workerForInitData_RunWorkerCompleted;
+            workerForInitData.RunWorkerAsync();
         }
+
+        private void workerForInitData_DoWork(object sender, DoWorkEventArgs e)
+        {
+            MemberAllInfoViewModel.getInstance().initData(true);
+        }
+
+        private void workerForInitData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            markTextBox = (TextBox)FindName("mark");
+            memberFamilyDataGrid = (DataGrid)FindName("MemberFamilyDataGrid");
+            Button choosePhtotoBtn = (Button)FindName("choosePhotoBtn");
+            Image photo = (Image)FindName("photo"); 
+            
+            MemberMoreInfo membermoreinfo = MemberAllInfoViewModel.getInstance().moreInfo;
+            studentBasicInfoGrid.DataContext = MemberAllInfoViewModel.getInstance().basic;
+            studentMoreInfoGrid.DataContext = membermoreinfo;
+            if ( !membermoreinfo.photopath.Equals(""))
+            {
+                choosePhotoBtn.Visibility = System.Windows.Visibility.Collapsed;
+                photo.Visibility = System.Windows.Visibility.Visible;
+            }
+            memberFamilyDataGrid.ItemsSource = MemberAllInfoViewModel.getInstance().allMemberFamily;
+            PhysicMoreinfo physicmoreinfo = MemberAllInfoViewModel.getInstance().physicMoreInfo;
+            physicMoreInfoGrid.DataContext = physicmoreinfo;
+            markTextBox.DataContext = physicmoreinfo;
+        }
+
+  
+
 
         private void choosePhotoBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -66,9 +97,7 @@ namespace CherishGardenEducationManager
             updateStausbar(this, new EventArgs());
 
             //1. Generate the memory objects.
-            Boolean result = DatabaseHelper.SaveMemberAllInfo(generateMemberBasicFromUser(), generateMemberMoreInfoFromUser() , 
-                memberFamilyCollection, new ObservableCollection<Exprience>(), 
-                new ObservableCollection<AwardOrPunishment>(), generatePhysicMoreInfoFromUser());
+            
 
             //2.notify save memberinfo into database result.
             updateStausbar(this, new EventArgs());
@@ -76,7 +105,7 @@ namespace CherishGardenEducationManager
 
         void addMemberFamily(MemberFamily obj)
         {
-            memberFamilyCollection.Add(obj);
+            
         }
 
         private MemberBasic generateMemberBasicFromUser()

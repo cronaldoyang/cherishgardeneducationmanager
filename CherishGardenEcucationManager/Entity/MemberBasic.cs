@@ -12,7 +12,7 @@ namespace CherishGardenEducationManager.Entity
         string engnameField;
         string idcardnoField;
         string genderField;
-        Boolean isteacherField;
+        Boolean isteacherField =false;
 
         public int id {
             get { return _id; }

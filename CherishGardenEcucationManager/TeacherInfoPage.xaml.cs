@@ -51,7 +51,7 @@ namespace CherishGardenEducationManager
 
         public void worker_initData(object sender, DoWorkEventArgs e)
         {
-            MemberAllInfoViewModel.getInstance().initData();
+            MemberAllInfoViewModel.getInstance().initData(false);
         }
 
         void worker_initDataCompleted(object sender, RunWorkerCompletedEventArgs e)

@@ -7,6 +7,7 @@ namespace CherishGardenEducationManager.Entity
 {
     class PhysicMoreinfo
     {
+        int _id;
         Boolean haveFoodallergyField;
         string foodallergyinfoField;
         Boolean haveConvulsionsepilepsyField;
@@ -19,6 +20,12 @@ namespace CherishGardenEducationManager.Entity
         string markField;
 
         public PhysicMoreinfo() { }
+
+        public int id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         /**有无食物过敏史*/
         public Boolean haveFoodallergy {
