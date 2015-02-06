@@ -360,21 +360,42 @@ namespace CherishGardenEducationManager.Database
                     //save physic more info obj;
                     if (physicMoreInfoObj != null)
                     {
-                        string insertphysicMoreInfoSql = "insert into physicmoreinfo(haveFoodallergy, foodallergyinfo, haveConvulsionsepilepsy, haveBraindiseases, haveAcutechronicinfectious, haveheartdiseases, haverenaldisease, havedrugallergy, drugallergy, mark, mbid) values " +
+                        if (physicMoreInfoObj.id == 0)
+                        {
+                            string insertphysicMoreInfoSql = "insert into physicmoreinfo(haveFoodallergy, foodallergyinfo, haveConvulsionsepilepsy, haveBraindiseases, haveAcutechronicinfectious, haveheartdiseases, haverenaldisease, havedrugallergy, drugallergy, mark, mbid) values " +
                             "(@haveFoodallergy, @foodallergyinfo, @haveConvulsionsepilepsy, @haveBraindiseases, @haveAcutechronicinfectious, @haveheartdiseases, @haverenaldisease, @havedrugallergy, @drugallergy, @mark, @mbid); ";
-                        cmd.Parameters.AddWithValue("@haveFoodallergy", physicMoreInfoObj.haveFoodallergy ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@foodallergyinfo", physicMoreInfoObj.foodallergyinfo);
-                        cmd.Parameters.AddWithValue("@haveConvulsionsepilepsy", physicMoreInfoObj.haveConvulsionsepilepsy ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@haveBraindiseases", physicMoreInfoObj.haveBraindiseases ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@haveAcutechronicinfectious", physicMoreInfoObj.haveAcutechronicinfectious ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@haveheartdiseases", physicMoreInfoObj.haveheartdiseases ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@haverenaldisease", physicMoreInfoObj.haverenaldisease ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@havedrugallergy", physicMoreInfoObj.havedrugallergy ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@drugallergy", physicMoreInfoObj.drugallergy);
-                        cmd.Parameters.AddWithValue("@mark", physicMoreInfoObj.mark);
-                        cmd.Parameters.AddWithValue("@mbid", basicId);
-                        cmd.CommandText = insertphysicMoreInfoSql;
-                        cmd.ExecuteNonQuery();
+                            cmd.Parameters.AddWithValue("@haveFoodallergy", physicMoreInfoObj.haveFoodallergy ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@foodallergyinfo", physicMoreInfoObj.foodallergyinfo);
+                            cmd.Parameters.AddWithValue("@haveConvulsionsepilepsy", physicMoreInfoObj.haveConvulsionsepilepsy ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haveBraindiseases", physicMoreInfoObj.haveBraindiseases ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haveAcutechronicinfectious", physicMoreInfoObj.haveAcutechronicinfectious ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haveheartdiseases", physicMoreInfoObj.haveheartdiseases ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haverenaldisease", physicMoreInfoObj.haverenaldisease ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@havedrugallergy", physicMoreInfoObj.havedrugallergy ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@drugallergy", physicMoreInfoObj.drugallergy);
+                            cmd.Parameters.AddWithValue("@mark", physicMoreInfoObj.mark);
+                            cmd.Parameters.AddWithValue("@mbid", basicId);
+                            cmd.CommandText = insertphysicMoreInfoSql;
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            string updatephysicMoreInfoSql = "update  physicmoreinfo set haveFoodallergy=@haveFoodallergy, foodallergyinfo=@foodallergyinfo, haveConvulsionsepilepsy=@haveConvulsionsepilepsy, haveBraindiseases=@haveBraindiseases, haveAcutechronicinfectious=@haveAcutechronicinfectious, haveheartdiseases=@haveheartdiseases, haverenaldisease=@haverenaldisease, havedrugallergy=@havedrugallergy, drugallergy=@drugallergy, mark=@mark where mbid=@mbid;" ;
+                            cmd.Parameters.AddWithValue("@haveFoodallergy", physicMoreInfoObj.haveFoodallergy ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@foodallergyinfo", physicMoreInfoObj.foodallergyinfo);
+                            cmd.Parameters.AddWithValue("@haveConvulsionsepilepsy", physicMoreInfoObj.haveConvulsionsepilepsy ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haveBraindiseases", physicMoreInfoObj.haveBraindiseases ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haveAcutechronicinfectious", physicMoreInfoObj.haveAcutechronicinfectious ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haveheartdiseases", physicMoreInfoObj.haveheartdiseases ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@haverenaldisease", physicMoreInfoObj.haverenaldisease ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@havedrugallergy", physicMoreInfoObj.havedrugallergy ? 1 : 0);
+                            cmd.Parameters.AddWithValue("@drugallergy", physicMoreInfoObj.drugallergy);
+                            cmd.Parameters.AddWithValue("@mark", physicMoreInfoObj.mark);
+                            cmd.Parameters.AddWithValue("@mbid", basicId);
+                            cmd.CommandText = updatephysicMoreInfoSql;
+                            cmd.ExecuteNonQuery();
+                        }
+                        
                     }
                     trans.Commit();
                     return true;

@@ -74,10 +74,10 @@ namespace CherishGardenEducationManager.ViewModel
             allAwards.Add(new AwardOrPunishment());
         }
 
-        public void saveMemberInfo()
+        public void saveMemberInfo(Boolean fromStudentPage)
         {
             //TODO this should be save new data and updata
-            DatabaseHelper.SaveMemberAllInfo(basic, moreInfo, allMemberFamily, allExpriences, allAwards, null);
+            DatabaseHelper.SaveMemberAllInfo(basic, moreInfo, allMemberFamily, allExpriences, allAwards, fromStudentPage ? physicMoreInfo : null);
         }
     }
 }

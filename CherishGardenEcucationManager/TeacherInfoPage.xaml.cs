@@ -96,7 +96,7 @@ namespace CherishGardenEducationManager
 
         public void worker_saveMemberAllInfo(object sender, DoWorkEventArgs e)
         {
-            MemberAllInfoViewModel.getInstance().saveMemberInfo();
+            MemberAllInfoViewModel.getInstance().saveMemberInfo(false);
         }
 
         void worker_saveMemberAllInfoCompleted(object sender, RunWorkerCompletedEventArgs e)
