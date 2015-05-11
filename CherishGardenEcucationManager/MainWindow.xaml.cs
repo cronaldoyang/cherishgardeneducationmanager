@@ -62,6 +62,12 @@ namespace CherishGardenEducationManager
             contentPanelFrame.Navigate(classpage);
         }
 
+        private void navigateToMakeupCourse(object sender, RoutedEventArgs e)
+        {
+            CourseWeek coursePage = new CourseWeek();
+            contentPanelFrame.Navigate(coursePage);
+        }
+
 
     }
 }

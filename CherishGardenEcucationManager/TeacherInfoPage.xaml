@@ -12,6 +12,17 @@
       >
     <Page.Resources>
         <local:TypeToDisplayPhotoFromPath x:Key="TypeToDisplayPhotoFromPath" />
+            <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
     </Page.Resources>
     <ScrollViewer>
         <StackPanel>
@@ -40,7 +51,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" FontWeight="Black" Text="基本信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Top"></TextBlock>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="姓名:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1"  MaxLength="15" Name="teacherName" Text="{Binding name}"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"   Name="teacherName" Text="{Binding name}"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" Content="英文名:"></Label>
                     <TextBox Grid.Row="1" Grid.Column="3"  MaxLength="15" Name="teacherEngName"  Text="{Binding engname}"></TextBox>
                     <Label Grid.Row="1" Grid.Column="4" Content="性别："></Label>
@@ -133,7 +144,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="家庭成员"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" Margin="0,10,0,0" >
+                    <DataGrid DataGridCell.Selected="DataGrid_GotFocus" AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -162,7 +173,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible" Name="expriencePanel">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="学习及工作经历"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="ExprienceDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" >
+                    <DataGrid DataGridCell.Selected="DataGrid_GotFocus" AutoGenerateColumns="False" Name="ExprienceDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -211,7 +222,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10" Visibility="Visible" Name="awardsPanel">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="所获奖励情况"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="AwardsDataGrid" CanUserAddRows="False" Margin="0,10,0,0" >
+                    <DataGrid DataGridCell.Selected="DataGrid_GotFocus" AutoGenerateColumns="False" Name="AwardsDataGrid" CanUserAddRows="False" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />

@@ -93,6 +93,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChooseCourseDetailWindow.xaml.cs">
+      <DependentUpon>ChooseCourseDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ClassPage.xaml.cs">
       <DependentUpon>ClassPage.xaml</DependentUpon>
     </Compile>
@@ -100,30 +103,41 @@
     <Compile Include="Converter\TypeFromTeacherNameToTeacherIdConverter.cs" />
     <Compile Include="Converter\TypeToDisplayTeacherNameConerter.cs" />
     <Compile Include="Converter\TypeToDisplayGradeNameConverter.cs" />
-    <Compile Include="CoursePage.xaml.cs">
-      <DependentUpon>CoursePage.xaml</DependentUpon>
+    <Compile Include="CourseWeek.xaml.cs">
+      <DependentUpon>CourseWeek.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entity\AwardOrPunishment.cs" />
     <Compile Include="Entity\Class.cs" />
+    <Compile Include="Entity\Course.cs" />
+    <Compile Include="Entity\CourseGroup.cs" />
     <Compile Include="Entity\Grade.cs" />
     <Compile Include="Entity\Exprience.cs" />
+    <Compile Include="Entity\CourseLocation.cs" />
     <Compile Include="Entity\MemberFamily.cs" />
     <Compile Include="Entity\MemberMoreInfo.cs" />
     <Compile Include="Entity\PhysicBasic.cs" />
     <Compile Include="Entity\PhysicMoreinfo.cs" />
+    <Compile Include="Entity\CourseWeekItem.cs" />
     <Compile Include="Helper\ChoosePhotoHelper.cs" />
     <Compile Include="Helper\DynamicGridHelper.cs" />
     <Compile Include="Helper\NumberTextBox.cs" />
+    <Compile Include="Helper\Utils.cs" />
     <Compile Include="TeacherInfoPage.xaml.cs">
       <DependentUpon>TeacherInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ClassViewModel.cs" />
+    <Compile Include="ViewModel\CourseViewModel.cs" />
+    <Compile Include="ViewModel\CourseWeekViewModel.cs" />
     <Compile Include="ViewModel\MemberAllInfoViewModel.cs" />
+    <Page Include="ChooseCourseDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ClassPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CoursePage.xaml">
+    <Page Include="CourseWeek.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

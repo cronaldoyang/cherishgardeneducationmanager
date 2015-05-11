@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CherishGardenEducationManager.Entity
 {
-    class MemberBasic
+    public class MemberBasic
     {
         int _id;
         string nameField;
@@ -59,6 +59,14 @@ namespace CherishGardenEducationManager.Entity
 
         public override String ToString() {
             return "name:" + nameField + "|engName:" + engnameField + "|gender:" + genderField + "|idcardno:" + idcardnoField + "|isteacher:" + isteacherField;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is MemberBasic))
+                return false;
+
+            return ((MemberBasic)obj).id == this.id;
         }
 
     }

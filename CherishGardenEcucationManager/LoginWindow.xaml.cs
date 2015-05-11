@@ -35,6 +35,7 @@ namespace CherishGardenEducationManager
             OperatorUser currentUser = DatabaseHelper.findOperatorUser(operatorName);
             if (currentUser != null && currentUser.password == password)
             {
+                Application.Current.Properties["currentUser"] = currentUser;
                 navigateToMainWindow();
             }
             else {

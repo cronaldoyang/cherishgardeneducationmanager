@@ -99,7 +99,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="家庭成员"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" ItemsSource="{Binding memberFamilyCollection}" Margin="0,10,0,0" >
+                    <DataGrid DataGridCell.Selected="DataGrid_GotFocus"  AutoGenerateColumns="False" Name="MemberFamilyDataGrid" CanUserAddRows="False" ItemsSource="{Binding memberFamilyCollection}" Margin="0,10,0,0" >
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />

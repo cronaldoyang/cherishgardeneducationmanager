@@ -1,0 +1,85 @@
+﻿<Page x:Class="CherishGardenEducationManager.CourseWeek"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CherishGardenEducationManager"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="CourseWeek">
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Border  BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock FontWeight="Black" Text="恩涛树下幼儿园"   TextAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox  Name="GradesBox"  DisplayMemberPath="name"  SelectedValuePath="id" FontSize="20"  FontWeight="Black" SelectionChanged="GradesBox_SelectionChanged"/>
+                    <TextBlock Name="weeknoTextBlock" FontWeight="Black"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+               
+                <Grid local:GridLineHelper.ShowBorder="True" Margin="5" x:Name="CourseWeekGrid"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition  Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="周一"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="周二"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="周三"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="周四"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="0" Grid.Column="4" Text="周五"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="0" Grid.Column="5" Text="周六"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Row="0" Grid.Column="6" Text="周日"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+
+
+                    <TextBox Grid.Row="1" Grid.Column="0" MouseDoubleClick="showPopupWindow" Name="TextBox10"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox11"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox12"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox13"/>
+                    <TextBox Grid.Row="1" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox14"/>
+                    <TextBox Grid.Row="1" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox15"/>
+                    <TextBox Grid.Row="1" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox16" />
+
+                    <TextBox Grid.Row="2" Grid.Column="0"  MouseDoubleClick="showPopupWindow" Name="TextBox20"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox21"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox22"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox23"/>
+                    <TextBox Grid.Row="2" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox24"/>
+                    <TextBox Grid.Row="2" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox25"/>
+                    <TextBox Grid.Row="2" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox26"/>
+
+                    <TextBox Grid.Row="3" Grid.Column="0" MouseDoubleClick="showPopupWindow" Name="TextBox30"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox31"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox32"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox33"/>
+                    <TextBox Grid.Row="3" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox34"/>
+                    <TextBox Grid.Row="3" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox35"/>
+                    <TextBox Grid.Row="3" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox36"/>
+                </Grid>
+
+                <Button Content="保存" Width="100" Margin="20" FontSize="20" FontWeight="Black" Background="Azure" Click="saveDataToDBBtn_Click"></Button>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

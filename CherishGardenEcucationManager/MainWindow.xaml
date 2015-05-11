@@ -18,7 +18,7 @@
             </Grid.RowDefinitions>
             <DockPanel Background="White" >
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Menu TextBlock.FontSize="12" Background="White">
+                    <Menu TextBlock.FontSize="14"  Background="White">
                         <MenuItem Header="添加师生信息"  >
                             <MenuItem Header="年级班级管理" Click="naviagetToClassesManager"/>
                             <MenuItem Header="添加老师" Click="naviagetToAddTeacherInfo"/>
@@ -30,7 +30,7 @@
                             <MenuItem Header="写给未来的信"/>
                         </MenuItem>
                         <MenuItem Header="制作相关报表">
-                            <MenuItem Header="每周课表"/>
+                            <MenuItem Header="每周课表" Click="navigateToMakeupCourse"/>
                             <MenuItem Header="成长报告"/>
                             <MenuItem Header="学期报告"/>
                         </MenuItem>

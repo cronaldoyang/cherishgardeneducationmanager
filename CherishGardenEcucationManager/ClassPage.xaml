@@ -22,7 +22,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="所有年级信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="AllGradesDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended">
+                    <DataGrid DataGridCell.Selected="DataGrid_GotFocus" AutoGenerateColumns="False" Name="AllGradesDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended">
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />
@@ -46,7 +46,7 @@
             <Border BorderBrush="BlueViolet" BorderThickness="1" Margin="0,10,0,10">
                 <StackPanel>
                     <TextBlock FontWeight="Black" Text="所有班级信息"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <DataGrid AutoGenerateColumns="False" Name="AllClassesDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended">
+                    <DataGrid DataGridCell.Selected="DataGrid_GotFocus" AutoGenerateColumns="False" Name="AllClassesDataGrid" CanUserAddRows="False"  Margin="0,10,0,0" SelectionUnit="Cell" SelectionMode="Extended">
                         <DataGrid.ColumnHeaderStyle>
                             <Style>
                                 <Setter Property="TextElement.FontSize" Value="14" />

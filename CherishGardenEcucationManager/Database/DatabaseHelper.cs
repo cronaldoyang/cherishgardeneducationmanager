@@ -1174,5 +1174,254 @@ namespace CherishGardenEducationManager.Database
             }
             return physicMoreInfo;
         }
+
+        public static ObservableCollection<Course> getWeekCoursesByDate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ObservableCollection<CourseLocation> getallCourseLocations()
+        {
+            ObservableCollection<CourseLocation> allCourseLocations = new ObservableCollection<CourseLocation>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryCourseLocationsSql = "select * from courselocation ;";
+                cmd.CommandText = queryCourseLocationsSql;
+                MySqlDataReader readerCourseLocations = cmd.ExecuteReader();
+                if (!readerCourseLocations.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerCourseLocations.Read())
+                    {
+                        int _id = (int)readerCourseLocations[0];
+                        string _location = (string)readerCourseLocations[1];
+                        allCourseLocations.Add(new CourseLocation()
+                        {
+                            id = _id,
+                            location = _location
+                        });
+                    }
+                }
+                readerCourseLocations.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allCourseLocations;
+        }
+
+        public static ObservableCollection<CourseGroup> getallCourseGroups()
+        {
+            ObservableCollection<CourseGroup> allCourseGroups = new ObservableCollection<CourseGroup>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                //get all grades.
+                string queryCourseGroupsSql = "select * from coursegroups ;";
+                cmd.CommandText = queryCourseGroupsSql;
+                MySqlDataReader readerCourseGroups = cmd.ExecuteReader();
+                if (!readerCourseGroups.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerCourseGroups.Read())
+                    {
+                        int _id = (int)readerCourseGroups[0];
+                        string _coursename = (string)readerCourseGroups[1];
+                        allCourseGroups.Add(new CourseGroup()
+                        {
+                            id = _id,
+                            courseName = _coursename
+                        });
+                    }
+                }
+                readerCourseGroups.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allCourseGroups;
+        }
+
+        public static ObservableCollection<CourseWeekItem> getOneWeekCourseWeekItems(int weekno)
+        {
+            ObservableCollection<CourseWeekItem> oneWeekCourseItems = new ObservableCollection<CourseWeekItem>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                string queryOneWeekCourseItemsSql = "select * from courseweek where weekno=@weekno;";
+                cmd.CommandText = queryOneWeekCourseItemsSql;
+                cmd.Parameters.AddWithValue("@weekno", weekno); 
+
+                MySqlDataReader readerOneWeekCourse = cmd.ExecuteReader();
+                if (!readerOneWeekCourse.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    while (readerOneWeekCourse.Read())
+                    {
+                        int _id = (int)readerOneWeekCourse[0];
+                        int _gradeid = (int)readerOneWeekCourse[1];
+                        int _weekno = (int)readerOneWeekCourse[2];
+                        int _weekday = (int)readerOneWeekCourse[3];
+                        string _contentdesc = (string)readerOneWeekCourse[4];
+                        int _jieci = (int)readerOneWeekCourse[5];
+                        int _coursegroupid = (int)readerOneWeekCourse[6];
+                        int _teacherid = (int)readerOneWeekCourse[7];
+                        int _locationid = (int)readerOneWeekCourse[8];
+
+                        oneWeekCourseItems.Add(new CourseWeekItem()
+                        {
+                            id = _id,
+                            gradeid = _gradeid,
+                            weekno = _weekno,
+                            weekday = _weekday,
+                            jieci = _jieci,
+                            contentdesc = _contentdesc,
+                            coursegroupid = _coursegroupid,
+                            teacherid = _teacherid,
+                            locationid = _locationid
+                            
+                        });
+                    }
+                }
+                readerOneWeekCourse.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return oneWeekCourseItems;
+        }
+
+        // Save one week course items including updating and inserting data.
+        public static bool saveOneWeekCourseItems(ObservableCollection<CourseWeekItem> OldOneWeekCourseItems, ObservableCollection<CourseWeekItem> newOneWeekCourseItems)
+        {
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            conn.Open();
+            MySqlTransaction trans = conn.BeginTransaction();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+                cmd.Transaction = trans;
+
+                //update old classes
+                int oldOneWeekCourseItmesCount = OldOneWeekCourseItems.Count;
+                if (oldOneWeekCourseItmesCount > 0)
+                {
+                    // the last final string like this :
+                    //update class 
+                    //set name=case _id when 3 then 'shabi' when 4 then 'niubi' end,
+                    //headerteacherid=case _id when 3 then 6 when 4 then 7' end, 
+                    //gradeid=case _id when 3 then 5 when 4 then 6 end where _id in (3,4);
+                    string updateCourseWeekSql = "update courseweek set ";
+                    string contentDescUpdateSql = " contentdesc=case _id ";
+                    string courseGroupidUpdateSql = " coursegroupid=case _id ";
+                    string teacheridUpdateSql = " teacherid=case _id ";
+                    string locationidUpdateSql = " locationid=case _id ";
+                    string wheresql = "where _id in (";
+                    CourseWeekItem tempCourseWeekItem = null;
+                    for (int i = 0; i < oldOneWeekCourseItmesCount; i++)
+                    {
+                        tempCourseWeekItem = OldOneWeekCourseItems[i];
+                        contentDescUpdateSql += " when " + tempCourseWeekItem.id + " then  '" + tempCourseWeekItem.contentdesc + "'";
+                        courseGroupidUpdateSql += " when " + tempCourseWeekItem.id + " then  " + tempCourseWeekItem.coursegroupid;
+                        teacheridUpdateSql += " when " + tempCourseWeekItem.id + " then  " + tempCourseWeekItem.teacherid;
+                        locationidUpdateSql += " when " + tempCourseWeekItem.id + " then  " + tempCourseWeekItem.locationid;
+                        wheresql += tempCourseWeekItem.id;
+                        if (i < oldOneWeekCourseItmesCount - 1)
+                        {
+                            wheresql += ",";
+                        }
+                        else
+                        {
+                            contentDescUpdateSql += " end, ";
+                            courseGroupidUpdateSql += " end, ";
+                            teacheridUpdateSql += " end, ";
+                            locationidUpdateSql += " end ";
+                            wheresql += ");";
+                        }
+                    }
+                    cmd.CommandText = updateCourseWeekSql + contentDescUpdateSql + courseGroupidUpdateSql + teacheridUpdateSql + locationidUpdateSql + wheresql;
+                    cmd.ExecuteNonQuery();
+                }
+
+                //save physic more info obj;
+                int newOneWeekCourseItemsCount = newOneWeekCourseItems.Count;
+                if (newOneWeekCourseItemsCount > 0)
+                {
+                    string insertOneWeekCourseItemsSql = "insert into courseweek(gradeid, weekno,weekday,contentdesc,jieci, coursegroupid,teacherid, locationid) values ";
+                    CourseWeekItem tempCourseWeekItem = null;
+                    for (int i = 0; i < newOneWeekCourseItemsCount; i++)
+                    {
+                        tempCourseWeekItem = newOneWeekCourseItems[i];
+                        insertOneWeekCourseItemsSql += "(" + tempCourseWeekItem.gradeid + "," + tempCourseWeekItem.weekno + "," + tempCourseWeekItem.weekday +",'" +
+                            tempCourseWeekItem.contentdesc + "'," + tempCourseWeekItem.jieci + "," + tempCourseWeekItem.coursegroupid + ","  +
+                            tempCourseWeekItem.teacherid + "," + tempCourseWeekItem.locationid + ")";
+                        if (i < newOneWeekCourseItemsCount - 1)
+                        {
+                            insertOneWeekCourseItemsSql += ",";
+                        }
+                        else
+                        {
+                            insertOneWeekCourseItemsSql += ";";
+                        }
+                    }
+                    cmd.CommandText = insertOneWeekCourseItemsSql;
+                    cmd.ExecuteNonQuery();
+                }
+                trans.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }
