@@ -29,11 +29,10 @@ namespace CherishGardenEducationManager
         {
             TextBox userTB = (TextBox)FindName("operatorName");
             PasswordBox passowrdPB = (PasswordBox)FindName("pwd");
-            Button loginBtn = (Button)sender;
             String operatorName = userTB.Text;
             String password = passowrdPB.Password;
-            OperatorUser currentUser = DatabaseHelper.findOperatorUser(operatorName);
-            if (currentUser != null && currentUser.password == password)
+            MemberBasic currentUser = DatabaseHelper.findOperatorUser(operatorName, password);
+            if (currentUser != null)
             {
                 Application.Current.Properties["currentUser"] = currentUser;
                 navigateToMainWindow();

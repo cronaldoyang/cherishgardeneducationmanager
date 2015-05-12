@@ -17,9 +17,8 @@ namespace CherishGardenEducationManager.Database
         private static string SAVEMEMBERINFO_SP = "savememberinfo_sp";
 
         //Judge the user login success?
-        public static OperatorUser findOperatorUser(string loginuser)
+        public static MemberBasic findOperatorUser(string loginuser, string pwd)
         {
-            OperatorUser user = null;
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
             conn.Open();
             MySqlTransaction trans = conn.BeginTransaction();
@@ -28,9 +27,12 @@ namespace CherishGardenEducationManager.Database
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.Text;
-                string query = "select password, mbid from operatorinfo where mbid in (select _id from memberbasic where engname=@username)";
+                string query = "select * from memberbasic where _id in (select mbid from operatorinfo where engname=@username and password=@pwd) and isteacher=@isteacher";
                 cmd.Parameters.AddWithValue("@username", loginuser);
+                cmd.Parameters.AddWithValue("@pwd", pwd);
+                cmd.Parameters.AddWithValue("@isteacher", 1);
                 cmd.CommandText = query;
+
                 MySqlDataReader reader = cmd.ExecuteReader();
                 if (!reader.HasRows)
                 {
@@ -40,9 +42,14 @@ namespace CherishGardenEducationManager.Database
                 {
                     while (reader.Read())
                     {
-                        string password = reader[0].ToString();
-                        int mbid = (int)reader[1];
-                        user = new OperatorUser(password, mbid);
+                        return new MemberBasic()
+                        {
+                            id = (int)reader[0],
+                            name = (string)reader[1],
+                            engname = (string)reader[2],
+                            gender = (string)reader[3],
+                            idcardno = (string)reader[4]
+                        };
                     }
                 }
                 reader.Close();
@@ -56,7 +63,7 @@ namespace CherishGardenEducationManager.Database
                 conn.Close();
             }
 
-            return user;
+            return null;
         }
 
         //Save memberinfo;
@@ -1436,9 +1443,9 @@ namespace CherishGardenEducationManager.Database
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.Text;
 
-                string queryGradeIdSql = "select gradeid from class where headerteacherid=@headteacherid ;";
+                string queryGradeIdSql = "select gradeid from class where headteacherid=@headteacherid ;";
                 cmd.CommandText = queryGradeIdSql;
-                cmd.Parameters.AddWithValue("@headerteacherid", basicId);
+                cmd.Parameters.AddWithValue("@headteacherid", basicId);
 
                 MySqlDataReader readerGradeId = cmd.ExecuteReader();
                 if (!readerGradeId.HasRows)
@@ -1448,7 +1455,10 @@ namespace CherishGardenEducationManager.Database
                 else
                 {
                     //has data.
-                    gradeId = (int)readerGradeId[0];
+                    while (readerGradeId.Read())
+                    {
+                        gradeId = (int)readerGradeId[0];
+                    }
                 }
                 readerGradeId.Close();
             }

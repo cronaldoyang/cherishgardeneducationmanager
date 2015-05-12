@@ -38,7 +38,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
                     <Image Source="/Resources/imgs/Icon.png"  />
-                    <TextBlock Text="cronaldo" TextAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock Name="userNameTextBlock" TextAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
 
             </DockPanel>

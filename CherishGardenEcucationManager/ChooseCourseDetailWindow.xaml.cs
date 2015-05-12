@@ -72,7 +72,6 @@ namespace CherishGardenEducationManager
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool contentHasChanged = false; 
             int oldCourseGroupId = mCourseWeekItem.coursegroupid;
             int oldCourseTeacherId = mCourseWeekItem.teacherid;
             int oldCourseLocationId = mCourseWeekItem.locationid;
@@ -93,7 +92,7 @@ namespace CherishGardenEducationManager
                 CourseWeekViewModel.getInstance().contentHasChanged = true;
             }
 
-            //Save data into memory.
+            //Save new data into memory.
             if (mCourseWeekItem.id==-1 && CourseWeekViewModel.getInstance().isNeedTOSaveInMemoryByJieCi(mEditingRow, mEditingColumn))
             {
                 //this means we have added new data.

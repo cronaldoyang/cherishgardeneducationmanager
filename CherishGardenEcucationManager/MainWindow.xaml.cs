@@ -23,6 +23,11 @@ namespace CherishGardenEducationManager
         public MainWindow()
         {
             InitializeComponent();
+            MemberBasic basic = (MemberBasic)Application.Current.Properties["currentUser"];
+            if (basic != null)
+            {
+                userNameTextBlock.Text = basic.engname;
+            }
             contentPanelFrame = (Frame)FindName("contentPanel");
             contentPanelFrame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
         }

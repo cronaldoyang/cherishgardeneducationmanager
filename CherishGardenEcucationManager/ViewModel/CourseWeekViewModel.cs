@@ -54,11 +54,11 @@ namespace CherishGardenEducationManager.ViewModel
             allGrades = DatabaseHelper.getAllGrades();
             allCourseLocations = DatabaseHelper.getallCourseLocations();
             allCourseGroup = DatabaseHelper.getallCourseGroups();
-            OperatorUser currentUser = (OperatorUser)Application.Current.Properties["currentUser"];
+            MemberBasic currentUser = (MemberBasic)Application.Current.Properties["currentUser"];
             if (currentUser != null)
             {
                 //set selectedGradeId;
-                int basicId = currentUser.operatorid;
+                int basicId = currentUser.id;
                 selectedGradeId = DatabaseHelper.getGradeIdByTeacherId(basicId);
             }
             if (selectedGradeId == -1)
