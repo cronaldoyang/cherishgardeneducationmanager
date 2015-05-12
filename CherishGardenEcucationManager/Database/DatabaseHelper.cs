@@ -1270,7 +1270,7 @@ namespace CherishGardenEducationManager.Database
             return allCourseGroups;
         }
 
-        public static ObservableCollection<CourseWeekItem> getOneWeekCourseWeekItems(int weekno)
+        public static ObservableCollection<CourseWeekItem> getOneWeekCourseWeekItems(int gradeid, int weekno)
         {
             ObservableCollection<CourseWeekItem> oneWeekCourseItems = new ObservableCollection<CourseWeekItem>();
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
@@ -1281,8 +1281,9 @@ namespace CherishGardenEducationManager.Database
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.Text;
 
-                string queryOneWeekCourseItemsSql = "select * from courseweek where weekno=@weekno;";
+                string queryOneWeekCourseItemsSql = "select * from courseweek where gradeid=@gradeid and weekno=@weekno;";
                 cmd.CommandText = queryOneWeekCourseItemsSql;
+                cmd.Parameters.AddWithValue("@gradeid", gradeid); 
                 cmd.Parameters.AddWithValue("@weekno", weekno); 
 
                 MySqlDataReader readerOneWeekCourse = cmd.ExecuteReader();
@@ -1422,6 +1423,44 @@ namespace CherishGardenEducationManager.Database
             {
                 conn.Close();
             }
+        }
+
+        public static int getGradeIdByTeacherId(int basicId)
+        {
+            int gradeId = -1;
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                string queryGradeIdSql = "select gradeid from class where headerteacherid=@headteacherid ;";
+                cmd.CommandText = queryGradeIdSql;
+                cmd.Parameters.AddWithValue("@headerteacherid", basicId);
+
+                MySqlDataReader readerGradeId = cmd.ExecuteReader();
+                if (!readerGradeId.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    //has data.
+                    gradeId = (int)readerGradeId[0];
+                }
+                readerGradeId.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return gradeId;
         }
     }
 }

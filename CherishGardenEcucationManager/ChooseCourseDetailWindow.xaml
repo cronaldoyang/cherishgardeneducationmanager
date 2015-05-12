@@ -22,7 +22,7 @@
                 <Label Content="请选择该节课内容" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" FontWeight="Black"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="所上科目：" />
-                    <ComboBox  Name="courseGroupComboBox"  DisplayMemberPath="courseName" SelectedValuePath="id"/>
+                    <ComboBox  Name="courseGroupComboBox"  DisplayMemberPath="courseName" SelectedValuePath="id" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="任课老师：" />
@@ -30,7 +30,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="上课地点：" />
-                    <ComboBox  Name="courseLocationComboBox"  DisplayMemberPath="location"  SelectedValuePath="id"/>
+                    <ComboBox  Name="courseLocationComboBox"  DisplayMemberPath="location"  SelectedValuePath="id" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="内容简述：" />

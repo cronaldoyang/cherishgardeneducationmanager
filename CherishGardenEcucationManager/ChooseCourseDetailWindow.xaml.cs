@@ -64,7 +64,7 @@ namespace CherishGardenEducationManager
                 //It means we should create the new one.
                 mCourseWeekItem = new CourseWeekItem();
                 mCourseWeekItem.gradeid = CourseWeekViewModel.getInstance().selectedGradeId;
-                mCourseWeekItem.weekno = CourseWeekViewModel.getInstance().CourseWeekNoForDB;
+                mCourseWeekItem.weekno = CourseWeekViewModel.getInstance().courseWeekNoForDB;
                 mCourseWeekItem.weekday = mEditingColumn + 1;
                 mCourseWeekItem.jieci = (mEditingColumn + 1) * 10 + mEditingRow;
             }
@@ -72,7 +72,11 @@ namespace CherishGardenEducationManager
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-            //string resultStr = "科  目：" + courseGroupComboBox.SelectedValue + "\n任课教师：" + courseTeacherComboBox.SelectedValue + "\n上课地点：" + courseLocationComboBox.SelectedValue;
+            bool contentHasChanged = false; 
+            int oldCourseGroupId = mCourseWeekItem.coursegroupid;
+            int oldCourseTeacherId = mCourseWeekItem.teacherid;
+            int oldCourseLocationId = mCourseWeekItem.locationid;
+            string oldCouseContentDesc = mCourseWeekItem.contentdesc;
             
             //bind the new data.
             mCourseWeekItem.coursegroupid =(int)courseGroupComboBox.SelectedValue;
@@ -80,17 +84,27 @@ namespace CherishGardenEducationManager
             mCourseWeekItem.locationid = (int)courseLocationComboBox.SelectedValue;
             mCourseWeekItem.contentdesc = contentDescTextBox.Text;
 
-            //Save data into memory.
-            bool isNeedToSaveInMemory = CourseWeekViewModel.getInstance().isNeedTOSaveInMemoryByJieCi(mEditingRow, mEditingColumn);
-            if (mCourseWeekItem.id==-1 && isNeedToSaveInMemory)
+            if((mCourseWeekItem.id!=-1 &&( oldCourseGroupId!= mCourseWeekItem.coursegroupid || 
+                oldCourseTeacherId!=mCourseWeekItem.teacherid || 
+                oldCourseLocationId!=mCourseWeekItem.locationid ||
+                !oldCouseContentDesc.Equals(mCourseWeekItem.contentdesc))))
             {
-                CourseWeekViewModel.getInstance().saveCourseWeekItemInMemory(mCourseWeekItem);
+                //This means has modified the original data.
+                CourseWeekViewModel.getInstance().contentHasChanged = true;
             }
+
+            //Save data into memory.
+            if (mCourseWeekItem.id==-1 && CourseWeekViewModel.getInstance().isNeedTOSaveInMemoryByJieCi(mEditingRow, mEditingColumn))
+            {
+                //this means we have added new data.
+                CourseWeekViewModel.getInstance().saveCourseWeekItemInMemory(mCourseWeekItem);
+                CourseWeekViewModel.getInstance().contentHasChanged = true;
+            }
+
 
             //Close the window.
             Close();
         }
-
        
     }
 }

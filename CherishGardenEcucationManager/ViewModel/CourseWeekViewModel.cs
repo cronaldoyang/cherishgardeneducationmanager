@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CherishGardenEducationManager.ViewModel
 {
@@ -16,8 +17,9 @@ namespace CherishGardenEducationManager.ViewModel
         private static volatile CourseWeekViewModel instance;
         public int selectedGradeId = -1;
         public int courseWeekNoForDisplay = 0;
-        public int CourseWeekNoForDB = -1;
-        private int currentTerm = 1;
+        public int courseWeekNoForDB = -1;
+        public bool contentHasChanged = false;
+
         //Helper for Thread Safety
         private static object m_lock = new object();
 
@@ -52,6 +54,17 @@ namespace CherishGardenEducationManager.ViewModel
             allGrades = DatabaseHelper.getAllGrades();
             allCourseLocations = DatabaseHelper.getallCourseLocations();
             allCourseGroup = DatabaseHelper.getallCourseGroups();
+            OperatorUser currentUser = (OperatorUser)Application.Current.Properties["currentUser"];
+            if (currentUser != null)
+            {
+                //set selectedGradeId;
+                int basicId = currentUser.operatorid;
+                selectedGradeId = DatabaseHelper.getGradeIdByTeacherId(basicId);
+            }
+            if (selectedGradeId == -1)
+            {
+                selectedGradeId = allGrades[0].id;
+            }
             //1415211  14~15代表学年，2代表第二学期，11代表第十一周
             if (newMakeCourseSchedule)
             {
@@ -59,9 +72,14 @@ namespace CherishGardenEducationManager.ViewModel
             }
             else
             {
-                oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(1415212);
+                oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(selectedGradeId ,courseWeekNoForDB);
             }
             mHasSavedInMemoryHashTable = new Hashtable();
+        }
+
+        public void worker_reloadOneWeekCourseDataFromDatabase()
+        {
+            oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(selectedGradeId, courseWeekNoForDB);
         }
 
         private void initWeekNo()
@@ -70,6 +88,7 @@ namespace CherishGardenEducationManager.ViewModel
             string monthStr = DateTime.Now.ToString("MM");
             string day = DateTime.Now.ToString("dd");
 
+            int currentTerm = 1;
             int termStartYear = Int32.Parse(currentYearStr);
             int termStartDay = 1;
             int termStartMonth = 1;
@@ -116,7 +135,7 @@ namespace CherishGardenEducationManager.ViewModel
             // Difference in days. 
             int differenceInDays = ts.Days;
             courseWeekNoForDisplay = differenceInDays / 7 + 1;
-            CourseWeekNoForDB = schoolYear * 100 + courseWeekNoForDisplay;
+            courseWeekNoForDB = schoolYear * 100 + courseWeekNoForDisplay;
         }
 
 
@@ -282,11 +301,28 @@ namespace CherishGardenEducationManager.ViewModel
             return index;
         }
 
+        public int getGradeIndexById(int gradeId)
+        {
+            int index = 0;
+            foreach (Grade grade in allGrades)
+            {
+                if (grade.id == gradeId) return index;
+                index++;
+            }
+            return index;
+        }
+
         public bool isNeedTOSaveInMemoryByJieCi(int row, int column)
         {
             int jieci = getJieCiByRowAndColumn(row, column);
             return !mHasSavedInMemoryHashTable.ContainsKey(jieci);
         }
 
+        public void clealrOneWeekCourse()
+        {
+            contentHasChanged = false;
+            oneWeekCourseWeekItems.Clear();
+            mHasSavedInMemoryHashTable.Clear();
+        }
     }
 }
