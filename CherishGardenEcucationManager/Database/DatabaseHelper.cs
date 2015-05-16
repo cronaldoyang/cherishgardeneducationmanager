@@ -1,4 +1,5 @@
 ﻿using CherishGardenEducationManager.Entity;
+using CherishGardenEducationManager.Mode;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -1357,11 +1358,6 @@ namespace CherishGardenEducationManager.Database
                 int oldOneWeekCourseItmesCount = OldOneWeekCourseItems.Count;
                 if (oldOneWeekCourseItmesCount > 0)
                 {
-                    // the last final string like this :
-                    //update class 
-                    //set name=case _id when 3 then 'shabi' when 4 then 'niubi' end,
-                    //headerteacherid=case _id when 3 then 6 when 4 then 7' end, 
-                    //gradeid=case _id when 3 then 5 when 4 then 6 end where _id in (3,4);
                     string updateCourseWeekSql = "update courseweek set ";
                     string contentDescUpdateSql = " contentdesc=case _id ";
                     string courseGroupidUpdateSql = " coursegroupid=case _id ";
@@ -1394,7 +1390,7 @@ namespace CherishGardenEducationManager.Database
                     cmd.ExecuteNonQuery();
                 }
 
-                //save physic more info obj;
+                //save new courseweek;
                 int newOneWeekCourseItemsCount = newOneWeekCourseItems.Count;
                 if (newOneWeekCourseItemsCount > 0)
                 {
@@ -1432,6 +1428,10 @@ namespace CherishGardenEducationManager.Database
             }
         }
 
+        /**
+         * Get grade id from database's table grade by teacher id;
+         *
+         */
         public static int getGradeIdByTeacherId(int basicId)
         {
             int gradeId = -1;
@@ -1471,6 +1471,185 @@ namespace CherishGardenEducationManager.Database
                 conn.Close();
             }
             return gradeId;
+        }
+
+        /**
+         * Get all course cards from database.
+         */
+        public static ObservableCollection<CourseCard> getAllCourseCards(int classid, int courseid)
+        {
+            ObservableCollection<CourseCard> allCourseCards = new ObservableCollection<CourseCard>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                string queryAllCourseCardsSql = "select * from coursecards where classid=@classid and courseid=@courseid ;";
+                cmd.CommandText = queryAllCourseCardsSql;
+                cmd.Parameters.AddWithValue("@classid", classid);
+                cmd.Parameters.AddWithValue("@courseid", courseid);
+
+
+                MySqlDataReader readerCourseCards = cmd.ExecuteReader();
+                if (!readerCourseCards.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    //has data.
+                    while (readerCourseCards.Read())
+                    {
+                        allCourseCards.Add(new CourseCard() { 
+                            id = (int)readerCourseCards[0],
+                            time = (DateTime)readerCourseCards[1],
+                            updatetime = (DateTime)readerCourseCards[2],
+                            name = (string)readerCourseCards[3],
+                            targets = (string)readerCourseCards[4],
+                            teachingplan = (string)readerCourseCards[5],
+                            materias = (string)readerCourseCards[6],
+                            mark = (string)readerCourseCards[7],
+                            classid = (int)readerCourseCards[8],
+                            courseid = (int)readerCourseCards[9]
+                        });
+                    }
+                }
+                readerCourseCards.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allCourseCards;
+        }
+
+        public static bool saveCourseCards(ObservableCollection<CourseCard> oldCourseCards, ObservableCollection<CourseCard> newCourseCards, ObservableCollection<CourseCard> deletedCourseCards)
+        {
+
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            conn.Open();
+            MySqlTransaction trans = conn.BeginTransaction();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+                cmd.Transaction = trans;
+
+                //update old classes
+                int oldCourseCardsCount = oldCourseCards.Count;
+                if (oldCourseCardsCount > 0)
+                {
+                    string updateCourseCardsSql = "update coursecards set ";
+                    string timeUpdateSql = " time=case _id ";
+                    string updatetimeUpdateSql = " updatetime=case _id ";
+                    string nameUpdateSql = " name=case _id ";
+                    string targetsUpdateSql = " targets=case _id ";
+                    string teachingplanUpdateSql = " teachingplan=case _id ";
+                    string materialsUpdateSql = " materials=case _id ";
+                    string markUpdateSql = " mark=case _id ";
+
+                    string wheresql = "where _id in (";
+                    CourseCard tempCourseCard = null;
+                    for (int i = 0; i < oldCourseCardsCount; i++)
+                    {
+                        tempCourseCard = oldCourseCards[i];
+                        timeUpdateSql += " when " + tempCourseCard.id + " then  '" + tempCourseCard.time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "'";
+                        updatetimeUpdateSql += " when " + tempCourseCard.id + " then  '" + tempCourseCard.updatetime.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "'";
+                        nameUpdateSql += " when " + tempCourseCard.id + " then  '" + tempCourseCard.name + "'";
+                        targetsUpdateSql += " when " + tempCourseCard.id + " then  '" + tempCourseCard.targets + "'";
+                        teachingplanUpdateSql += " when " + tempCourseCard.id + " then  '" + tempCourseCard.teachingplan + "'";
+                        materialsUpdateSql += " when " + tempCourseCard.id + " then  '" + tempCourseCard.materias + "'";
+                        markUpdateSql += " when " + tempCourseCard.id + " then  '" + tempCourseCard.mark + "'";
+                        wheresql += tempCourseCard.id;
+                        if (i < oldCourseCardsCount - 1)
+                        {
+                            wheresql += ",";
+                        }
+                        else
+                        {
+                            timeUpdateSql += " end, ";
+                            updatetimeUpdateSql += " end, ";
+                            nameUpdateSql += " end, ";
+                            targetsUpdateSql += " end, ";
+                            teachingplanUpdateSql += " end, ";
+                            materialsUpdateSql += " end, ";
+                            markUpdateSql += " end ";
+                            wheresql += ");";
+                        }
+                    }
+                    cmd.CommandText = updateCourseCardsSql + timeUpdateSql + updatetimeUpdateSql + 
+                        nameUpdateSql + targetsUpdateSql + teachingplanUpdateSql + materialsUpdateSql +
+                        markUpdateSql + wheresql;
+                    cmd.ExecuteNonQuery();
+                }
+
+                //save new courseweek;
+                int newCourseCardsCount = newCourseCards.Count;
+                if (newCourseCardsCount > 0)
+                {
+                    string insertCourseCardsSql = "insert into coursecards(time, updatetime,name,targets,teachingplan, materials,mark, classid, courseid) values ";
+                    CourseCard tempCourseCard = null;
+                    for (int i = 0; i < newCourseCardsCount; i++)
+                    {
+                        tempCourseCard = newCourseCards[i];
+                        insertCourseCardsSql += "('" + tempCourseCard.time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + 
+                            tempCourseCard.updatetime.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) + "','" + tempCourseCard.name + "','" +
+                            tempCourseCard.targets + "','" + tempCourseCard.teachingplan + "','" + tempCourseCard.materias + "','" + tempCourseCard.mark + "'," +
+                            tempCourseCard.classid + "," + tempCourseCard.courseid + ")";
+                        if (i < newCourseCardsCount - 1)
+                        {
+                            insertCourseCardsSql += ",";
+                        }
+                        else
+                        {
+                            insertCourseCardsSql += ";";
+                        }
+                    }
+                    cmd.CommandText = insertCourseCardsSql;
+                    cmd.ExecuteNonQuery();
+                }
+
+                int deleteCourseCardsCount = deletedCourseCards.Count;
+                if (deleteCourseCardsCount > 0)
+                {
+                    string deleteCourseCardsSql = "delete from coursecards where _id in (";
+                    CourseCard tempCourseCard = null;
+                    for (int i = 0; i < deleteCourseCardsCount; i++)
+                    {
+                        tempCourseCard = deletedCourseCards[i];
+
+                        if (i < deleteCourseCardsCount - 1)
+                        {
+                            deleteCourseCardsSql +=  tempCourseCard.id  + ",";
+                        }
+                        else
+                        {
+                            deleteCourseCardsSql += tempCourseCard.id + ");";
+                        }
+                    }
+                    cmd.CommandText = deleteCourseCardsSql;
+                    cmd.ExecuteNonQuery();
+                }
+                trans.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

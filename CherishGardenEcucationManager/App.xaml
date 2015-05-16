@@ -4,7 +4,7 @@
              xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:CherishGardenEducationManager"
-             StartupUri="LoginWindow.xaml">
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--Gender list-->
         <x:Array x:Key="GenderList" Type="System:String">
