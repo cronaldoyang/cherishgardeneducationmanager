@@ -1,5 +1,5 @@
 ﻿using CherishGardenEducationManager.Database;
-using CherishGardenEducationManager.Entity;
+using CherishGardenEducationManager.Mode;
 using CherishGardenEducationManager.Helper;
 using CherishGardenEducationManager.ViewModel;
 using System;

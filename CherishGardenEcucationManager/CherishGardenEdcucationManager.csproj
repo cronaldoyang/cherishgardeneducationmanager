@@ -112,6 +112,7 @@
     <Compile Include="Helper\HelperJudgeLongClick.cs" />
     <Compile Include="Mode\AwardOrPunishment.cs" />
     <Compile Include="Mode\Class.cs" />
+    <Compile Include="Mode\ClassCourse.cs" />
     <Compile Include="Mode\Course.cs" />
     <Compile Include="Mode\CourseCard.cs" />
     <Compile Include="Mode\CourseGroup.cs" />

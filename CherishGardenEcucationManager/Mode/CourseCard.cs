@@ -25,5 +25,6 @@ namespace CherishGardenEducationManager.Mode
         public string mark { get; set; }
         public int classid { get; set; }
         public int courseid { get; set; }
+        public bool contentChanged { get; set; }//This field's target as mark the object content has changed.
     }
 }

@@ -1,4 +1,4 @@
-﻿using CherishGardenEducationManager.Entity;
+﻿using CherishGardenEducationManager.Mode;
 using CherishGardenEducationManager.Mode;
 using MySql.Data.MySqlClient;
 using System;
@@ -1651,5 +1651,100 @@ namespace CherishGardenEducationManager.Database
                 conn.Close();
             }
         }
+
+        /**
+        * Get all classcourse from database by teacherid.
+        */
+        public static ObservableCollection<ClassCourse> getClassCoursesByTeacherId(int courseTeacherid)
+        {
+            ObservableCollection<ClassCourse> allClassCourses = new ObservableCollection<ClassCourse>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                string queryClassCoursesSql = "select classid, couresesid from classcourse where courseteacherid=@courseteacherid;";
+                cmd.CommandText = queryClassCoursesSql;
+                cmd.Parameters.AddWithValue("@courseteacherid", courseTeacherid);
+
+
+                MySqlDataReader readerClassCourses = cmd.ExecuteReader();
+                if (!readerClassCourses.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    //has data.
+                    while (readerClassCourses.Read())
+                    {
+                        allClassCourses.Add(new ClassCourse()
+                        {
+                            classid = (int)readerClassCourses[0],
+                            coursesid = (string)readerClassCourses[1]
+                        });
+                    }
+                }
+                readerClassCourses.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return allClassCourses;
+        }
+
+        /**
+       * Get the class id if the teacher is the header teacher of this class.
+       */
+        public static int getClassIdByHeadTeacherId(int headTeacherid)
+        {
+            int classid = -1;
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                string queryClassCoursesSql = "select _id from class where headteacherid=@headteacherid;";
+                cmd.CommandText = queryClassCoursesSql;
+                cmd.Parameters.AddWithValue("@headteacherid", headTeacherid);
+
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (!reader.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    //has data.
+                    while (reader.Read())
+                    {
+                        classid = (int)reader[0];
+                    }
+                }
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return classid;
+        }
+
     }
 }

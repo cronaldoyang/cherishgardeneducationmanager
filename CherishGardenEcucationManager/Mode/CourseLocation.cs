@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherishGardenEducationManager.Entity
+namespace CherishGardenEducationManager.Mode
 {
     //This entity is for course week location.
     public class CourseLocation

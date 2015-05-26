@@ -42,23 +42,23 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="1">
                                     <Label Content="教学概述："  Grid.Column="0" />
-                                    <TextBox Text="{Binding name}"  MinHeight="40" Grid.Column="1"  MinWidth="300"/>
+                                    <TextBox Text="{Binding name}"  MinHeight="40" Grid.Column="1"  MinWidth="300" TextChanged="name_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="2">
                                     <Label Content="教学目标："  Grid.Column="0"/>
-                                    <TextBox Text="{Binding targets}"   MinHeight="80" Grid.Column="1"  MinWidth="300"/>
+                                    <TextBox Text="{Binding targets}"   MinHeight="80" Grid.Column="1"  MinWidth="300" TextChanged="targets_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="3">
                                     <Label Content="教学过程："  Grid.Column="0"/>
-                                    <TextBox Text="{Binding teachingplan}"  MinHeight="250" MinWidth="300"  AcceptsReturn="True" Grid.Column="1"/>
+                                    <TextBox Text="{Binding teachingplan}"  MinHeight="250" MinWidth="300"  AcceptsReturn="True" Grid.Column="1" TextChanged="teachingplan_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="4">
                                     <Label Content="材料准备："  Grid.Column="0"/>
-                                    <TextBox Text="{Binding materias}"   Grid.Column="1"  MinWidth="300"/>
+                                    <TextBox Text="{Binding materias}"   Grid.Column="1"  MinWidth="300" TextChanged="materias_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="5" >
                                     <Label Content="教学备注："  Grid.Column="0"/>
-                                    <TextBox Text="{Binding mark}"  Grid.Column="1" MinWidth="300"/>
+                                    <TextBox Text="{Binding mark}"  Grid.Column="1" MinWidth="300" TextChanged="mark_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="6">
                                     <Label Content="最后改动：" Grid.Column="0"/>
@@ -84,13 +84,26 @@
 
     <Grid Background="LightYellow">
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="新增课程卡" Name="AddCourseCard"  Margin="5" FontSize="16" Click="AddCourseCard_Click"/>
-            <Button Content="保存课程卡" Name="SaveCourseCards"  Margin="5" FontSize="16" Click="SaveCourseCards_Click" />
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="班级："/>
+                <ComboBox  Name="ClassesBox"  DisplayMemberPath="name"  SelectedValuePath="id" FontSize="16"  FontWeight="Black" SelectionChanged="ClassesBox_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="课程：" />
+                <ComboBox  Name="CoursesBox"  DisplayMemberPath="courseName"  SelectedValuePath="id" FontSize="16"  FontWeight="Black" SelectionChanged="CoursesBox_SelectionChanged"/>
+            </StackPanel>
+            <Button Content="新增课程卡" Name="AddCourseCard"  Margin="5" FontWeight="Black" FontSize="16" Click="AddCourseCard_Click"/>
+            <Button Content="保存课程卡" Name="SaveCourseCards"  Margin="5" FontWeight="Black" FontSize="16" Click="SaveCourseCards_Click" />
         </StackPanel>
-        <ListView HorizontalAlignment="Center" Name="allCourseCardsListView" Margin="40" >
+        <ListView HorizontalAlignment="Center" Name="allCourseCardsListView" Margin="40" SelectionChanged="ListView_SelectionChanged" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="PreviewMouseDown" Handler="ListViewItem_PreviewMouseDown" />
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="IsSelected" Value="True" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

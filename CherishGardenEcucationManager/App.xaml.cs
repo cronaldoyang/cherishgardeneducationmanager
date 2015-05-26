@@ -15,7 +15,6 @@ namespace CherishGardenEducationManager
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            /*
             Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
             LoginWindow window = new LoginWindow();
             bool? dialogResult = window.ShowDialog();
@@ -28,7 +27,7 @@ namespace CherishGardenEducationManager
             else
             {
                 this.Shutdown();
-            }*/
+            }
         }
     }
 }

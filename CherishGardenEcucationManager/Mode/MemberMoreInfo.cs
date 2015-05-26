@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
 
-namespace CherishGardenEducationManager.Entity
+namespace CherishGardenEducationManager.Mode
 {
     class MemberMoreInfo
     {

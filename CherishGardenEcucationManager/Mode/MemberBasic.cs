@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CherishGardenEducationManager.Entity
+namespace CherishGardenEducationManager.Mode
 {
     public class MemberBasic
     {

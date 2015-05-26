@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherishGardenEducationManager.Entity
+namespace CherishGardenEducationManager.Mode
 {
     class Course
     {

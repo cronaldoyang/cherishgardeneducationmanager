@@ -1,4 +1,4 @@
-﻿using CherishGardenEducationManager.Entity;
+﻿using CherishGardenEducationManager.Mode;
 using CherishGardenEducationManager.ViewModel;
 using System;
 using System.Collections.Generic;

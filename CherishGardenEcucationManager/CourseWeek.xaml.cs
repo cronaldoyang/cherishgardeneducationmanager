@@ -1,4 +1,4 @@
-﻿using CherishGardenEducationManager.Entity;
+﻿using CherishGardenEducationManager.Mode;
 using CherishGardenEducationManager.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -57,8 +57,8 @@ namespace CherishGardenEducationManager
         {
             //Bind Data to UI.
             weeknoTextBlock.Text = "第" + CourseWeekViewModel.getInstance().courseWeekNoForDisplay + "周课程表";
-            GradesBox.ItemsSource = CourseWeekViewModel.getInstance().allGrades;
-            GradesBox.SelectedIndex = CourseWeekViewModel.getInstance().getGradeIndexById(CourseWeekViewModel.getInstance().selectedGradeId);
+            GradesBox.ItemsSource = ClassViewModel.getInstance().allGrades;
+            GradesBox.SelectedIndex = ClassViewModel.getInstance().getGradeIndexById(CourseWeekViewModel.getInstance().selectedGradeId);
             bindDataToUI();
         }
 
@@ -113,7 +113,7 @@ namespace CherishGardenEducationManager
             {
                 return CourseWeekViewModel.getInstance().getCourseGroupById(item.coursegroupid).courseName + "\n" +
                     item.contentdesc + "\n" +
-                    CourseWeekViewModel.getInstance().getTeacherById(item.teacherid).name + "\n" +
+                    ClassViewModel.getInstance().getTeacherById(item.teacherid).name + "\n" +
                     CourseWeekViewModel.getInstance().getLocationById(item.locationid).location + "\n";
             }
             else
@@ -172,7 +172,7 @@ namespace CherishGardenEducationManager
             else
             {
                 // Cancel code here, do nothing.
-                GradesBox.SelectedIndex = CourseWeekViewModel.getInstance().getGradeIndexById(CourseWeekViewModel.getInstance().selectedGradeId);
+                GradesBox.SelectedIndex = ClassViewModel.getInstance().getGradeIndexById(CourseWeekViewModel.getInstance().selectedGradeId);
             }
         }
 

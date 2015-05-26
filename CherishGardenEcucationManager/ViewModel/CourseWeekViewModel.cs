@@ -1,5 +1,5 @@
 ﻿using CherishGardenEducationManager.Database;
-using CherishGardenEducationManager.Entity;
+using CherishGardenEducationManager.Mode;
 using CherishGardenEducationManager.Helper;
 using System;
 using System.Collections;
@@ -22,12 +22,10 @@ namespace CherishGardenEducationManager.ViewModel
 
         //Helper for Thread Safety
         private static object m_lock = new object();
-
+        public bool mIsInitialized = false;
+        public bool mIsInitializedCourseGroupsAndLocations = false;
         public ObservableCollection<CourseWeekItem> oneWeekCourseWeekItems { get; set; }
         public Hashtable mHasSavedInMemoryHashTable;
-
-        public ObservableCollection<MemberBasic> allTeachers { get; set; }
-        public ObservableCollection<Grade> allGrades { get; set; }
         public ObservableCollection<CourseGroup> allCourseGroup { get; set; }
         public ObservableCollection<CourseLocation> allCourseLocations { get; set; }
 
@@ -50,10 +48,16 @@ namespace CherishGardenEducationManager.ViewModel
         public void worker_initDataFromDatabase(bool newMakeCourseSchedule)
         {
             initWeekNo();
-            allTeachers = DatabaseHelper.getAllTeachers();
-            allGrades = DatabaseHelper.getAllGrades();
-            allCourseLocations = DatabaseHelper.getallCourseLocations();
-            allCourseGroup = DatabaseHelper.getallCourseGroups();
+
+            //Judge ClassViewModel is initilized to get all teachers, all grades and all classes.
+            if (!ClassViewModel.getInstance().mIsInitialized)
+            {
+                ClassViewModel.getInstance().worker_initData();
+            }
+            // load course groups and locations.
+            justInitCourseGroupsAndLocations();
+
+            //init selected grade id.
             MemberBasic currentUser = (MemberBasic)Application.Current.Properties["currentUser"];
             if (currentUser != null)
             {
@@ -63,7 +67,7 @@ namespace CherishGardenEducationManager.ViewModel
             }
             if (selectedGradeId == -1)
             {
-                selectedGradeId = allGrades[0].id;
+                selectedGradeId = ClassViewModel.getInstance().allGrades[0].id;
             }
             //1415211  14~15代表学年，2代表第二学期，11代表第十一周
             if (newMakeCourseSchedule)
@@ -75,6 +79,17 @@ namespace CherishGardenEducationManager.ViewModel
                 oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(selectedGradeId ,courseWeekNoForDB);
             }
             mHasSavedInMemoryHashTable = new Hashtable();
+            mIsInitialized = true;
+        }
+
+        public void justInitCourseGroupsAndLocations()
+        {
+            if (!mIsInitializedCourseGroupsAndLocations)
+            {
+                allCourseLocations = DatabaseHelper.getallCourseLocations();
+                allCourseGroup = DatabaseHelper.getallCourseGroups();
+                mIsInitializedCourseGroupsAndLocations = true;
+            }
         }
 
         public void worker_reloadOneWeekCourseDataFromDatabase()
@@ -180,24 +195,25 @@ namespace CherishGardenEducationManager.ViewModel
             DatabaseHelper.saveOneWeekCourseItems(OldOneWeekCourseItems, newOneWeekCourseItems);
             //TODO do we need refresh the list?
         }
-
-        public MemberBasic getTeacherByName(string name)
-        {
-            foreach(MemberBasic basic in allTeachers) 
-            {
-                if(basic.name.Equals(name)) 
-                {
-                    return basic;
-                }
-            }
-            return null;
-        }
-
         public CourseLocation getLocationByName(string name)
         {
             foreach (CourseLocation tempLocation in allCourseLocations)
             {
                 if (tempLocation.location.Equals(name))
+                {
+                    return tempLocation;
+                }
+            }
+            return null;
+        }
+
+       
+
+        public CourseLocation getLocationById(int id)
+        {
+            foreach (CourseLocation tempLocation in allCourseLocations)
+            {
+                if (tempLocation.id == id)
                 {
                     return tempLocation;
                 }
@@ -217,30 +233,6 @@ namespace CherishGardenEducationManager.ViewModel
             return null;
         }
 
-        public MemberBasic getTeacherById(int id)
-        {
-            foreach (MemberBasic basic in allTeachers)
-            {
-                if (basic.id==id)
-                {
-                    return basic;
-                }
-            }
-            return null;
-        }
-
-        public CourseLocation getLocationById(int id)
-        {
-            foreach (CourseLocation tempLocation in allCourseLocations)
-            {
-                if (tempLocation.id == id)
-                {
-                    return tempLocation;
-                }
-            }
-            return null;
-        }
-
         public CourseGroup getCourseGroupById(int id)
         {
             foreach (CourseGroup courseGroupTemp in allCourseGroup)
@@ -252,6 +244,18 @@ namespace CherishGardenEducationManager.ViewModel
             }
             return null;
         }
+
+        public int getCourseGroupIndexById(int id)
+        {
+            int index = 0;
+            foreach (CourseGroup courseGroup in allCourseGroup)
+            {
+                if (courseGroup.id == id) { return index; }
+                index++;
+            }
+            return index;
+        }
+
 
         public CourseWeekItem getCourseWeekItemByJieCi(int row, int column)
         {
@@ -268,27 +272,7 @@ namespace CherishGardenEducationManager.ViewModel
             return (column + 1) * 10 + row;
         }
 
-        public int getTeacherIndexById(int id)
-        {
-            int index = 0;
-            foreach (MemberBasic basic in allTeachers)
-            {
-                if (basic.id == id) { return index; }
-                index++;
-            }
-            return index;
-        }
-
-        public int getCourseGroupIndexById(int id)
-        {
-            int index = 0;
-            foreach (CourseGroup courseGroup in allCourseGroup)
-            {
-                if (courseGroup.id == id) { return index; }
-                index++;
-            }
-            return index;
-        }
+       
 
         public int getCourseLocationIndexById(int id)
         {
@@ -296,17 +280,6 @@ namespace CherishGardenEducationManager.ViewModel
             foreach (CourseLocation location in allCourseLocations)
             {
                 if (location.id == id) { return index; }
-                index++;
-            }
-            return index;
-        }
-
-        public int getGradeIndexById(int gradeId)
-        {
-            int index = 0;
-            foreach (Grade grade in allGrades)
-            {
-                if (grade.id == gradeId) return index;
                 index++;
             }
             return index;

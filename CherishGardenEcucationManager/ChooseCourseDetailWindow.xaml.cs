@@ -1,4 +1,4 @@
-﻿using CherishGardenEducationManager.Entity;
+﻿using CherishGardenEducationManager.Mode;
 using CherishGardenEducationManager.ViewModel;
 using System;
 using System.Collections;
@@ -26,9 +26,6 @@ namespace CherishGardenEducationManager
         CourseWeekItem mCourseWeekItem;
         int mEditingColumn = -1;
         int mEditingRow = -1;
-        ObservableCollection<MemberBasic> mAllTeachers;
-        ObservableCollection<CourseGroup> mAllCourseGroups;
-        ObservableCollection<CourseLocation> mAllCourseLocations;
 
         public ChooseCourseDetailWindow()
         {
@@ -44,17 +41,15 @@ namespace CherishGardenEducationManager
             mCourseWeekItem = CourseWeekViewModel.getInstance().getCourseWeekItemByJieCi(mEditingRow,mEditingColumn);
 
             //Start to give related value to collection.
-            mAllTeachers = CourseWeekViewModel.getInstance().allTeachers;
-            mAllCourseGroups = CourseWeekViewModel.getInstance().allCourseGroup;
-            mAllCourseLocations = CourseWeekViewModel.getInstance().allCourseLocations;
-            courseTeacherComboBox.ItemsSource = mAllTeachers;
-            courseGroupComboBox.ItemsSource = mAllCourseGroups;
-            courseLocationComboBox.ItemsSource = mAllCourseLocations;
+            courseTeacherComboBox.ItemsSource = ClassViewModel.getInstance().allTeachers;
+;
+            courseGroupComboBox.ItemsSource = CourseWeekViewModel.getInstance().allCourseGroup;
+            courseLocationComboBox.ItemsSource = CourseWeekViewModel.getInstance().allCourseLocations;
 
             if (mCourseWeekItem != null)
             {
                 //Means modify data.
-                courseTeacherComboBox.SelectedIndex = CourseWeekViewModel.getInstance().getTeacherIndexById(mCourseWeekItem.teacherid);
+                courseTeacherComboBox.SelectedIndex = ClassViewModel.getInstance().getTeacherIndexById(mCourseWeekItem.teacherid);
                 courseGroupComboBox.SelectedIndex = CourseWeekViewModel.getInstance().getCourseGroupIndexById(mCourseWeekItem.coursegroupid);
                 courseLocationComboBox.SelectedIndex = CourseWeekViewModel.getInstance().getCourseLocationIndexById(mCourseWeekItem.locationid);
                 contentDescTextBox.Text = mCourseWeekItem.contentdesc;

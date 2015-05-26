@@ -1,5 +1,5 @@
 ﻿using CherishGardenEducationManager.Database;
-using CherishGardenEducationManager.Entity;
+using CherishGardenEducationManager.Mode;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,6 +32,7 @@ namespace CherishGardenEducationManager.ViewModel
 
         //Helper for Thread Safety
         private static object m_lock = new object();
+        public bool mIsInitialized = false;
 
         public ObservableCollection<MemberBasic> allTeachers { get; set; }
         public ObservableCollection<Grade> allGrades { get; set; }
@@ -42,6 +43,16 @@ namespace CherishGardenEducationManager.ViewModel
             allGrades = DatabaseHelper.getAllGrades();
             allTeachers = DatabaseHelper.getAllTeachers();
             allClasses = DatabaseHelper.getAllClasses();
+            mIsInitialized = true;
+        }
+
+        public Class getClassById(int id)
+        {
+            foreach(Class item in allClasses) 
+            {
+                if (item.id == id) return item;
+            }
+            return null;
         }
 
         public  string getTeacherNameByid(int id)
@@ -84,6 +95,40 @@ namespace CherishGardenEducationManager.ViewModel
                 }
             }
             return teacherid;
+        }
+
+        public MemberBasic getTeacherById(int id)
+        {
+            foreach (MemberBasic basic in allTeachers)
+            {
+                if (basic.id == id)
+                {
+                    return basic;
+                }
+            }
+            return null;
+        }
+
+        public int getTeacherIndexById(int id)
+        {
+            int index = 0;
+            foreach (MemberBasic basic in allTeachers)
+            {
+                if (basic.id == id) { return index; }
+                index++;
+            }
+            return index;
+        }
+
+        public int getGradeIndexById(int gradeId)
+        {
+            int index = 0;
+            foreach (Grade grade in allGrades)
+            {
+                if (grade.id == gradeId) return index;
+                index++;
+            }
+            return index;
         }
 
         public void addNewClassRecord()
