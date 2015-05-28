@@ -103,7 +103,11 @@ namespace CherishGardenEducationManager
                 }
                 else
                 {
-                    CourseCardsViewModel.getInstance().selectedClassid = ((int)ClassesBox.SelectedValue);
+                    Object classBoxSelectedValue = ClassesBox.SelectedValue;//Void the NPE.
+                    if (classBoxSelectedValue != null)
+                    {
+                        CourseCardsViewModel.getInstance().selectedClassid = ((int)ClassesBox.SelectedValue);
+                    }
                     CourseCardsViewModel.getInstance().refreshCourseGroupsData();
                     CoursesBox.ItemsSource = CourseCardsViewModel.getInstance().courseGroups;
                     CoursesBox.SelectedIndex = 0;
@@ -132,7 +136,11 @@ namespace CherishGardenEducationManager
                 }
                 else
                 {
-                    CourseCardsViewModel.getInstance().selectedCourseid = ((int)CoursesBox.SelectedValue);
+                    Object courseCardsSelectedValue = CoursesBox.SelectedValue;//Void the NPE
+                    if(courseCardsSelectedValue!=null) 
+                    {
+                        CourseCardsViewModel.getInstance().selectedCourseid = (int)courseCardsSelectedValue;
+                    }
                     CourseCardsViewModel.getInstance().refreshCourseCards();
                     allCourseCardsListView.ItemsSource = CourseCardsViewModel.getInstance().currentCourseCards;
                 }

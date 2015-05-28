@@ -21,8 +21,8 @@
                     <Menu TextBlock.FontSize="14"  Background="White">
                         <MenuItem Header="添加师生信息"  >
                             <MenuItem Header="年级班级管理" Click="naviagetToClassesManager"/>
-                            <MenuItem Header="添加老师" Click="naviagetToAddTeacherInfo"/>
-                            <MenuItem Header="添加学生" Click="naviagetToAddStudentInfo"/>
+                            <MenuItem Header="添加老师" Click="naviagetToAddTeacherInfo" IsEnabled="False"/>
+                            <MenuItem Header="添加学生" Click="naviagetToAddStudentInfo" IsEnabled="False"/>
                         </MenuItem>
                         <MenuItem Header="学生相关记录">
                             <MenuItem Header="身高体重记录"/>

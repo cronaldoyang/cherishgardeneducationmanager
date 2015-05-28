@@ -1,14 +1,10 @@
 ﻿using CherishGardenEducationManager.Mode;
-using CherishGardenEducationManager.Mode;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 
 namespace CherishGardenEducationManager.Database
 {

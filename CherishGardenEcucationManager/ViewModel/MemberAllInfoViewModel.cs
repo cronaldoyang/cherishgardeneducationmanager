@@ -40,6 +40,7 @@ namespace CherishGardenEducationManager.ViewModel
         public void initData(Boolean fromStudentPage)
         {
             reset();
+            //TODO need to write logic. 
             string engname = fromStudentPage ? "hellen" :"cronaldo";
             basic = DatabaseHelper.getMemberBasicInfoFromDB(engname);
             moreInfo = DatabaseHelper.getMemberMoreInfoFromDB(basic.id, basic.isteacher);
