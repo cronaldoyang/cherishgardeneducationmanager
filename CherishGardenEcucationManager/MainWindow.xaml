@@ -20,20 +20,20 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                     <Menu TextBlock.FontSize="14"  Background="White">
                         <MenuItem Header="添加师生信息"  >
-                            <MenuItem Header="年级班级管理" Click="naviagetToClassesManager"/>
+                            <MenuItem Header="年级班级管理" Click="naviagetToClassesManager" IsEnabled="False"/>
                             <MenuItem Header="添加老师" Click="naviagetToAddTeacherInfo" IsEnabled="False"/>
                             <MenuItem Header="添加学生" Click="naviagetToAddStudentInfo" IsEnabled="False"/>
                         </MenuItem>
                         <MenuItem Header="学生相关记录">
-                            <MenuItem Header="身高体重记录"/>
-                            <MenuItem Header="师生趣事记录"/>
-                            <MenuItem Header="写给未来的信"/>
+                            <MenuItem Header="身高体重记录" IsEnabled="False"/>
+                            <MenuItem Header="师生趣事记录" IsEnabled="False"/>
+                            <MenuItem Header="写给未来的信" IsEnabled="False"/>
                         </MenuItem>
                         <MenuItem Header="制作相关报表">
                             <MenuItem Header="每周课表" Click="navigateToMakeupCourse"/>
                             <MenuItem Header="课程卡" Click="navigateToCourseCards"/>
-                            <MenuItem Header="成长报告"/>
-                            <MenuItem Header="学期报告"/>
+                            <MenuItem Header="成长报告" IsEnabled="False"/>
+                            <MenuItem Header="学期报告" IsEnabled="False"/>
                         </MenuItem>
                     </Menu>
                 </StackPanel>

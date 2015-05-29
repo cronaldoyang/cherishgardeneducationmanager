@@ -42,11 +42,11 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="1">
                                     <Label Content="教学概述："  Grid.Column="0" />
-                                    <TextBox Text="{Binding name}"  MinHeight="40" Grid.Column="1"  MinWidth="300" TextChanged="name_textchanged"/>
+                                    <TextBox Text="{Binding name}"  MinHeight="40" Grid.Column="1" AcceptsReturn="True"  MinWidth="300" TextChanged="name_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="2">
                                     <Label Content="教学目标："  Grid.Column="0"/>
-                                    <TextBox Text="{Binding targets}"   MinHeight="80" Grid.Column="1"  MinWidth="300" TextChanged="targets_textchanged"/>
+                                    <TextBox Text="{Binding targets}"   MinHeight="80" Grid.Column="1" AcceptsReturn="True"  MinWidth="300" TextChanged="targets_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="3">
                                     <Label Content="教学过程："  Grid.Column="0"/>
@@ -54,11 +54,11 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="4">
                                     <Label Content="材料准备："  Grid.Column="0"/>
-                                    <TextBox Text="{Binding materias}"   Grid.Column="1"  MinWidth="300" TextChanged="materias_textchanged"/>
+                                    <TextBox Text="{Binding materias}"   Grid.Column="1"  MinWidth="300" AcceptsReturn="True" TextChanged="materias_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="5" >
                                     <Label Content="教学备注："  Grid.Column="0"/>
-                                    <TextBox Text="{Binding mark}"  Grid.Column="1" MinWidth="300" TextChanged="mark_textchanged"/>
+                                    <TextBox Text="{Binding mark}"  Grid.Column="1" MinWidth="300" AcceptsReturn="True" TextChanged="mark_textchanged"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal"  Grid.Row="6">
                                     <Label Content="最后改动：" Grid.Column="0"/>

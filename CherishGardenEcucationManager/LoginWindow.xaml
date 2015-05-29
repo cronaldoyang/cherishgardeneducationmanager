@@ -19,7 +19,7 @@
                     <PasswordBox  Name="pwd"  Margin="5" Width="200" Height="30" 
                                  Template="{StaticResource WatermarkedPasswordBoxTemplate}" local:PasswordBoxHelper.Watermark="密码"/>
                     <Button Name="btnLogin" Margin="5" Background="White" Content="登录" Foreground="Black"  FontSize="20" 
-                            HorizontalAlignment="Center" Width="200" Click="btnLogin_Click" />
+                            HorizontalAlignment="Center" Width="200" Click="btnLogin_Click" IsDefault="True"/>
                 </StackPanel>
             </StackPanel>
             <TextBlock Text="Powered by Lohasedu and CherishGarden 2015~2016!" Width="400" HorizontalAlignment="Center"/>

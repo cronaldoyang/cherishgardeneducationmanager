@@ -61,7 +61,7 @@ namespace CherishGardenEducationManager
         //Do the logic to judge the click is long or short?
         protected async void ListViewItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-           bool isLongPress = await HelperJudgeLongClick.MouseDown(e.Source as FrameworkElement, TimeSpan.FromSeconds(1));
+           bool isLongPress = await HelperJudgeLongClick.MouseDown(e.Source as FrameworkElement, TimeSpan.FromSeconds(3));
            if (isLongPress) {
               // long press
                MessageBoxResult result = MessageBox.Show("你将删除如下课程卡：" + "\n" + currentCourseCard.time + "\n" + currentCourseCard.name,
