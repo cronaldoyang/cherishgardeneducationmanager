@@ -57,8 +57,8 @@ namespace CherishGardenEducationManager
         {
             //Bind Data to UI.
             weeknoTextBlock.Text = "第" + CourseWeekViewModel.getInstance().courseWeekNoForDisplay + "周课程表";
-            GradesBox.ItemsSource = ClassViewModel.getInstance().allGrades;
-            GradesBox.SelectedIndex = ClassViewModel.getInstance().getGradeIndexById(CourseWeekViewModel.getInstance().selectedGradeId);
+            ClassesBox.ItemsSource = ClassViewModel.getInstance().allClasses;
+            ClassesBox.SelectedIndex = ClassViewModel.getInstance().getClassIndexById(CourseWeekViewModel.getInstance().selectedClassId);
             bindDataToUI();
         }
 
@@ -142,7 +142,7 @@ namespace CherishGardenEducationManager
                 }
                 else
                 {
-                    CourseWeekViewModel.getInstance().selectedGradeId = ((int)GradesBox.SelectedValue);
+                    CourseWeekViewModel.getInstance().selectedClassId = ((int)ClassesBox.SelectedValue);
                     CourseWeekViewModel.getInstance().clealrOneWeekCourse();
                     refreshData();
                 }
@@ -157,7 +157,7 @@ namespace CherishGardenEducationManager
             if (result == MessageBoxResult.Yes)
             {
                 // Yes code here
-                CourseWeekViewModel.getInstance().selectedGradeId = ((int)GradesBox.SelectedValue);
+                CourseWeekViewModel.getInstance().selectedClassId = ((int)ClassesBox.SelectedValue);
                 CourseWeekViewModel.getInstance().saveOneWeekCourseData();//TODO should be in thread.
                 CourseWeekViewModel.getInstance().clealrOneWeekCourse();
                 refreshData();
@@ -165,14 +165,14 @@ namespace CherishGardenEducationManager
             else if (result == MessageBoxResult.No)
             {
                 // No code here
-                CourseWeekViewModel.getInstance().selectedGradeId  = ((int)GradesBox.SelectedValue);
+                CourseWeekViewModel.getInstance().selectedClassId = ((int)ClassesBox.SelectedValue);
                 CourseWeekViewModel.getInstance().clealrOneWeekCourse();
                 refreshData();
             }
             else
             {
                 // Cancel code here, do nothing.
-                GradesBox.SelectedIndex = ClassViewModel.getInstance().getGradeIndexById(CourseWeekViewModel.getInstance().selectedGradeId);
+                ClassesBox.SelectedIndex = ClassViewModel.getInstance().getGradeIndexById(CourseWeekViewModel.getInstance().selectedClassId);
             }
         }
 

@@ -15,9 +15,11 @@ namespace CherishGardenEducationManager.ViewModel
     public class CourseWeekViewModel
     {
         private static volatile CourseWeekViewModel instance;
-        public int selectedGradeId = -1;
+        public int selectedClassId = -1;
         public int courseWeekNoForDisplay = 0;
         public int courseWeekNoForDB = -1;
+        public int defaultLocationId = -1;
+        public int defaultTeacherId = -1;
         public bool contentHasChanged = false;
 
         //Helper for Thread Safety
@@ -62,13 +64,17 @@ namespace CherishGardenEducationManager.ViewModel
             if (currentUser != null)
             {
                 //set selectedGradeId;
-                int basicId = currentUser.id;
-                selectedGradeId = DatabaseHelper.getGradeIdByTeacherId(basicId);
+                defaultTeacherId = currentUser.id;
+                selectedClassId = DatabaseHelper.getClassIdByTeacherId(defaultTeacherId);
             }
-            if (selectedGradeId == -1)
+            if (selectedClassId == -1)
             {
-                selectedGradeId = ClassViewModel.getInstance().allGrades[0].id;
+                defaultTeacherId = ClassViewModel.getInstance().allTeachers[0].id;
+                selectedClassId = ClassViewModel.getInstance().allClasses[0].id;
             }
+
+            defaultLocationId = ClassViewModel.getInstance().getClassDefaultLocationByClassId(selectedClassId);
+
             //1415211  14~15代表学年，2代表第二学期，11代表第十一周
             if (newMakeCourseSchedule)
             {
@@ -76,7 +82,7 @@ namespace CherishGardenEducationManager.ViewModel
             }
             else
             {
-                oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(selectedGradeId ,courseWeekNoForDB);
+                oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(selectedClassId ,courseWeekNoForDB);
             }
             mHasSavedInMemoryHashTable = new Hashtable();
             mIsInitialized = true;
@@ -94,7 +100,7 @@ namespace CherishGardenEducationManager.ViewModel
 
         public void worker_reloadOneWeekCourseDataFromDatabase()
         {
-            oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(selectedGradeId, courseWeekNoForDB);
+            oneWeekCourseWeekItems = DatabaseHelper.getOneWeekCourseWeekItems(selectedClassId, courseWeekNoForDB);
         }
 
         private void initWeekNo()

@@ -1,0 +1,158 @@
+﻿<Page x:Class="CherishGardenEducationManager.WeeklyReport"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Custom="http://schemas.microsoft.com/wpf/2008/toolkit"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="WeeklyReport">
+
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander x:Name="exp" IsExpanded="True"
+                          Background="White" FontSize="14" FontWeight="Black">
+                            <Expander.Header>
+                                <TextBlock Text="{Binding Name}"/>
+                            </Expander.Header>
+                            <ItemsPresenter />
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="恩涛树下幼儿园" />
+                <TextBlock Name="SchoolYearTextBlock" />
+                <ComboBox  Name="ClassesBox"  FontSize="20" FontWeight="Black" DisplayMemberPath="name"  SelectedValuePath="id" />
+                <TextBlock Name="WeekNoTextBlock" />
+                <TextBlock Text="成长报告模板"/>
+            </StackPanel>
+            <Custom:DataGrid x:Name="weeklyReportLiveDataGrid" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="True" FontSize="14" FontWeight="Black">
+                <Custom:DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <Custom:DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </Custom:DataGrid.GroupStyle>
+                <Custom:DataGrid.RowStyle>
+                    <Style TargetType="Custom:DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!--当鼠标经过时 改变颜色-->
+                                <Setter Property="Background" Value="SkyBlue"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Custom:DataGrid.RowStyle>
+                <Custom:DataGrid.CellStyle>
+                    <Style TargetType="Custom:DataGridCell">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Custom:DataGrid.CellStyle>
+                <Custom:DataGrid.Columns>
+                    <Custom:DataGridTextColumn Header="课程" Binding="{Binding coursename}" Width="0.2*"/>
+                    <Custom:DataGridTextColumn Header="目标" Binding="{Binding target}" Width="0.6*"/>
+                    <Custom:DataGridTextColumn Header="评价" Binding="{Binding courseid}" Width="0.2*"/>
+                </Custom:DataGrid.Columns>
+            </Custom:DataGrid>
+            <Custom:DataGrid x:Name="weeklyReportDuoyuanDataGrid" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="True" FontSize="14" FontWeight="Black">
+                <Custom:DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <Custom:DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </Custom:DataGrid.GroupStyle>
+                <Custom:DataGrid.RowStyle>
+                    <Style TargetType="Custom:DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!--当鼠标经过时 改变颜色-->
+                                <Setter Property="Background" Value="SkyBlue"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Custom:DataGrid.RowStyle>
+                <Custom:DataGrid.CellStyle>
+                    <Style TargetType="Custom:DataGridCell">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Custom:DataGrid.CellStyle>
+                <Custom:DataGrid.Columns>
+                    <Custom:DataGridTextColumn Header="课程" Binding="{Binding coursename}" Width="0.2*"/>
+                    <Custom:DataGridTextColumn Header="目标" Binding="{Binding target}" Width="0.6*"/>
+                    <Custom:DataGridTextColumn Header="评价" Binding="{Binding courseid}" Width="0.2*"/>
+                </Custom:DataGrid.Columns>
+            </Custom:DataGrid>
+            <Custom:DataGrid x:Name="weeklyReportRiskDataGrid" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="True" FontSize="14" FontWeight="Black">
+                <Custom:DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <Custom:DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </Custom:DataGrid.GroupStyle>
+                <Custom:DataGrid.Columns>
+                    <Custom:DataGridTextColumn Header="目标" Binding="{Binding target}" Width="0.6*"/>
+                </Custom:DataGrid.Columns>
+            </Custom:DataGrid>
+            <Custom:DataGrid x:Name="weeklyReportEvaluationDataGrid" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="True" FontSize="14" FontWeight="Black">
+                <Custom:DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <Custom:DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </Custom:DataGrid.GroupStyle>
+                <Custom:DataGrid.Columns>
+                    <Custom:DataGridTextColumn Header="目标" Binding="{Binding target}" Width="0.6*"/>
+                </Custom:DataGrid.Columns>
+            </Custom:DataGrid>
+            <Custom:DataGrid x:Name="weeklyReportFamilyAndSchoolEduDataGrid" CanUserAddRows="True" AutoGenerateColumns="False" CanUserDeleteRows="True" FontSize="14" FontWeight="Black">
+                <Custom:DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <Custom:DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </Custom:DataGrid.GroupStyle>
+                <Custom:DataGrid.Columns>
+                    <Custom:DataGridTextColumn Header="目标" Binding="{Binding target}" Width="0.6*"/>
+                </Custom:DataGrid.Columns>
+            </Custom:DataGrid>
+        </StackPanel>
+
+    </Grid>
+</Page>

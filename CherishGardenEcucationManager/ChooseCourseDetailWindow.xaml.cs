@@ -58,10 +58,14 @@ namespace CherishGardenEducationManager
             {
                 //It means we should create the new one.
                 mCourseWeekItem = new CourseWeekItem();
-                mCourseWeekItem.gradeid = CourseWeekViewModel.getInstance().selectedGradeId;
+                mCourseWeekItem.gradeid = CourseWeekViewModel.getInstance().selectedClassId;
                 mCourseWeekItem.weekno = CourseWeekViewModel.getInstance().courseWeekNoForDB;
                 mCourseWeekItem.weekday = mEditingColumn + 1;
                 mCourseWeekItem.jieci = (mEditingColumn + 1) * 10 + mEditingRow;
+
+                //Bind the initial comboBox value.
+                courseTeacherComboBox.SelectedIndex = ClassViewModel.getInstance().getTeacherIndexById(CourseWeekViewModel.getInstance().defaultTeacherId) ;
+                courseLocationComboBox.SelectedIndex = CourseWeekViewModel.getInstance().getCourseLocationIndexById(CourseWeekViewModel.getInstance().defaultLocationId);
             }
         }
 
@@ -73,7 +77,10 @@ namespace CherishGardenEducationManager
             string oldCouseContentDesc = mCourseWeekItem.contentdesc;
             
             //bind the new data.
-            mCourseWeekItem.coursegroupid =(int)courseGroupComboBox.SelectedValue;
+            if (courseGroupComboBox.SelectedValue != null)
+            {
+                mCourseWeekItem.coursegroupid = (int)courseGroupComboBox.SelectedValue;
+            }
             mCourseWeekItem.teacherid = (int)courseTeacherComboBox.SelectedValue;
             mCourseWeekItem.locationid = (int)courseLocationComboBox.SelectedValue;
             mCourseWeekItem.contentdesc = contentDescTextBox.Text;

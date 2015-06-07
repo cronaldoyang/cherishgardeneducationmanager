@@ -39,9 +39,11 @@ namespace CherishGardenEducationManager
             }
             else {
                 //retry login
+                /*
                 userTB.Text = "";
-                userTB.Focus();
+                userTB.Focus();*/ // Not need clear the user name.
                 passowrdPB.Password = null;
+                passowrdPB.Focus();
             }
         }
 

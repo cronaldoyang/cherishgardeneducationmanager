@@ -55,6 +55,27 @@ namespace CherishGardenEducationManager.ViewModel
             return null;
         }
 
+        public int getClassIndexById(int id)
+        {
+            int index = 0;
+            foreach (Class  cs in allClasses)
+            {
+                if (cs.id == id) { return index; }
+                index++;
+            }
+            return index;
+        }
+
+        public int getClassDefaultLocationByClassId(int classid)
+        {
+            int locationid = 0;
+            foreach (Class cs in allClasses)
+            {
+                if (cs.id == classid) { return cs.defaultlocationid; }
+            }
+            return locationid;
+        }
+
         public  string getTeacherNameByid(int id)
         {
             string teachername = "";

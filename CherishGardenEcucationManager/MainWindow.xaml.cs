@@ -79,6 +79,11 @@ namespace CherishGardenEducationManager
             contentPanelFrame.Navigate(coursePage);
         }
 
+        private void navigateToWeeklyReport(object sender, RoutedEventArgs e)
+        {
+            WeeklyReport weeklyReportPage = new WeeklyReport();
+            contentPanelFrame.Navigate(weeklyReportPage);
+        }
 
     }
 }

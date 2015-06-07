@@ -11,7 +11,7 @@ namespace CherishGardenEducationManager.Mode
         public CourseGroup() { }
 
         private int _id;
-        private int _groupid;
+        private string _category;
         private string _courseName;
 
         public int id
@@ -20,10 +20,10 @@ namespace CherishGardenEducationManager.Mode
             set { _id = value; }
         }
 
-        public int goupid
+        public string category
         {
-            get { return _groupid; }
-            set { _groupid = value; }
+            get { return _category; }
+            set { _category = value; }
         }
 
         public string courseName

@@ -772,6 +772,7 @@ namespace CherishGardenEducationManager.Database
                         string _name = (string)readerClasses[1];
                         int _headteacherid = (int)readerClasses[2];
                         int _gradeid = (int)readerClasses[3];
+                        int _defaultlocationid = (int)readerClasses[4];
 
                         allClasses.Add(new Class()
                         {
@@ -779,6 +780,7 @@ namespace CherishGardenEducationManager.Database
                             name = _name,
                             teacherid = _headteacherid,
                             gradeid = _gradeid,
+                            defaultlocationid = _defaultlocationid,
                             candidateGrades = candidateGradesFromDB,
                             candidateTeachers = candidateTeachersFromDB
                         });
@@ -1254,10 +1256,12 @@ namespace CherishGardenEducationManager.Database
                     {
                         int _id = (int)readerCourseGroups[0];
                         string _coursename = (string)readerCourseGroups[1];
+                        string _category = (string)readerCourseGroups[2];
                         allCourseGroups.Add(new CourseGroup()
                         {
                             id = _id,
-                            courseName = _coursename
+                            courseName = _coursename,
+                            category = _category
                         });
                     }
                 }
@@ -1428,9 +1432,9 @@ namespace CherishGardenEducationManager.Database
          * Get grade id from database's table grade by teacher id;
          *
          */
-        public static int getGradeIdByTeacherId(int basicId)
+        public static int getClassIdByTeacherId(int basicId)
         {
-            int gradeId = -1;
+            int classId = -1;
             MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
             try
             {
@@ -1439,24 +1443,24 @@ namespace CherishGardenEducationManager.Database
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.Text;
 
-                string queryGradeIdSql = "select gradeid from class where headteacherid=@headteacherid ;";
-                cmd.CommandText = queryGradeIdSql;
+                string queryClassIdSql = "select _id from class where headteacherid=@headteacherid ;";
+                cmd.CommandText = queryClassIdSql;
                 cmd.Parameters.AddWithValue("@headteacherid", basicId);
 
-                MySqlDataReader readerGradeId = cmd.ExecuteReader();
-                if (!readerGradeId.HasRows)
+                MySqlDataReader readerClassId = cmd.ExecuteReader();
+                if (!readerClassId.HasRows)
                 {
                     Console.WriteLine("no data!");
                 }
                 else
                 {
                     //has data.
-                    while (readerGradeId.Read())
+                    while (readerClassId.Read())
                     {
-                        gradeId = (int)readerGradeId[0];
+                        classId = (int)readerClassId[0];
                     }
                 }
-                readerGradeId.Close();
+                readerClassId.Close();
             }
             catch (MySqlException ex)
             {
@@ -1466,7 +1470,7 @@ namespace CherishGardenEducationManager.Database
             {
                 conn.Close();
             }
-            return gradeId;
+            return classId;
         }
 
         /**
@@ -1740,6 +1744,59 @@ namespace CherishGardenEducationManager.Database
                 conn.Close();
             }
             return classid;
+        }
+
+        public static ObservableCollection<WeeklyReportItem> getWeeklyReportItems(int weekno, int classid, int stuid )
+        {
+            ObservableCollection<WeeklyReportItem> weeklyReportItems = new ObservableCollection<WeeklyReportItem>();
+            MySqlConnection conn = new MySqlConnection(CONNECTIONSTR);
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.Text;
+
+                string queryClassCoursesSql = "select * from weeklyreport where weekno=@weekno and classid=@classid and (stuid = -1 or stuid=@stuid);";
+                cmd.CommandText = queryClassCoursesSql;
+                cmd.Parameters.AddWithValue("@weekno", weekno);
+                cmd.Parameters.AddWithValue("@classid", classid);
+                cmd.Parameters.AddWithValue("@stuid", stuid);
+
+
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (!reader.HasRows)
+                {
+                    Console.WriteLine("no data!");
+                }
+                else
+                {
+                    //has data.
+                    while (reader.Read())
+                    {
+                        weeklyReportItems.Add(new WeeklyReportItem()
+                        {
+                            id = (int)reader[0],
+                            weekno = (int)reader[1],
+                            classid = (int)reader[2],
+                            courseid = (int)reader[3],
+                            target = (string)reader[4],
+                            stuid = (int)reader[5]
+                        });
+                    }
+                }
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.Write(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return weeklyReportItems;
         }
 
     }

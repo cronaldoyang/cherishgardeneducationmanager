@@ -1,7 +1,8 @@
 ﻿<Window x:Class="CherishGardenEducationManager.ChooseCourseDetailWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        ResizeMode="NoResize" Icon="/Resources/imgs/Icon.png"
+        ResizeMode="CanResizeWithGrip" Icon="/Resources/imgs/Icon.png"
+        WindowStartupLocation="CenterScreen"
         Title="ChooseCourseDetailWindow" Height="400" Width="400">
     <Window.Resources>
         <Style TargetType="ComboBox">
@@ -23,7 +24,7 @@
                 <Label Content="请选择该节课内容" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" FontWeight="Black"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="所上科目：" />
-                    <ComboBox  Name="courseGroupComboBox"  DisplayMemberPath="courseName" SelectedValuePath="id" />
+                    <ComboBox  Name="courseGroupComboBox"  DisplayMemberPath="courseName" SelectedValuePath="id"  />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="任课老师：" />
@@ -35,7 +36,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="内容简述：" />
-                    <TextBox Name="contentDescTextBox" TextAlignment="Left" MinWidth="250" Margin="10,0,10,0" AcceptsReturn="True" />
+                    <TextBox Name="contentDescTextBox" TextAlignment="Left" Width="250" Margin="10,0,10,0" AcceptsReturn="True" TextWrapping="Wrap"/>
                 </StackPanel>
                 <Button Content="确定" Width="100" Margin="20" FontSize="20" FontWeight="Black" Background="Azure" Click="confirmBtn_Click"/>
             </StackPanel>

@@ -12,6 +12,7 @@ namespace CherishGardenEducationManager.Mode
         string nameField = "";
         int teacheridField;
         int groupidField;
+        public int defaultlocationid { get; set; }
 
         public ObservableCollection<Grade> candidateGrades { get; set; }
         public ObservableCollection<MemberBasic> candidateTeachers { get; set; }

@@ -87,6 +87,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -128,6 +129,7 @@
     <Compile Include="Helper\DynamicGridHelper.cs" />
     <Compile Include="Helper\NumberTextBox.cs" />
     <Compile Include="Helper\Utils.cs" />
+    <Compile Include="Mode\WeeklyReportItem.cs" />
     <Compile Include="TeacherInfoPage.xaml.cs">
       <DependentUpon>TeacherInfoPage.xaml</DependentUpon>
     </Compile>
@@ -135,6 +137,10 @@
     <Compile Include="ViewModel\CourseCardsViewModel.cs" />
     <Compile Include="ViewModel\CourseWeekViewModel.cs" />
     <Compile Include="ViewModel\MemberAllInfoViewModel.cs" />
+    <Compile Include="ViewModel\WeeklyReportViewModel.cs" />
+    <Compile Include="WeeklyReport.xaml.cs">
+      <DependentUpon>WeeklyReport.xaml</DependentUpon>
+    </Compile>
     <Page Include="ChooseCourseDetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TeacherInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WeeklyReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

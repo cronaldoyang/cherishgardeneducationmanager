@@ -23,7 +23,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock FontWeight="Black" Text="恩涛树下幼儿园"   TextAlignment="Center" VerticalAlignment="Center"/>
-                    <ComboBox  Name="GradesBox"  DisplayMemberPath="name"  SelectedValuePath="id" FontSize="20"  FontWeight="Black" SelectionChanged="GradesBox_SelectionChanged"/>
+                    <ComboBox  Name="ClassesBox"  DisplayMemberPath="name"  SelectedValuePath="id" FontSize="20"  FontWeight="Black" SelectionChanged="GradesBox_SelectionChanged"/>
                     <TextBlock Name="weeknoTextBlock" FontWeight="Black"  FontSize="20" TextAlignment="Center" VerticalAlignment="Center"/>
                 </StackPanel>
                
@@ -38,10 +38,10 @@
                         <ColumnDefinition  Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="0.3*" MinHeight="200"/>
+                        <RowDefinition Height="0.3*" MinHeight="200"/>
+                        <RowDefinition Height="0.3*" MinHeight="200"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="周一"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="周二"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
@@ -52,29 +52,29 @@
                     <TextBlock Grid.Row="0" Grid.Column="6" Text="周日"  FontWeight="Black" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
 
 
-                    <TextBox Grid.Row="1" Grid.Column="0" MouseDoubleClick="showPopupWindow" Name="TextBox10"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox11"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox12"/>
-                    <TextBox Grid.Row="1" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox13"/>
-                    <TextBox Grid.Row="1" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox14"/>
-                    <TextBox Grid.Row="1" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox15"/>
-                    <TextBox Grid.Row="1" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox16" />
+                    <TextBox Grid.Row="1" Grid.Column="0" MouseDoubleClick="showPopupWindow" Name="TextBox10" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox11" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox12" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox13" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="1" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox14" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="1" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox15" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="1" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox16" TextWrapping="Wrap"/>
 
-                    <TextBox Grid.Row="2" Grid.Column="0"  MouseDoubleClick="showPopupWindow" Name="TextBox20"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox21"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox22"/>
-                    <TextBox Grid.Row="2" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox23"/>
-                    <TextBox Grid.Row="2" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox24"/>
-                    <TextBox Grid.Row="2" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox25"/>
-                    <TextBox Grid.Row="2" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox26"/>
+                    <TextBox Grid.Row="2" Grid.Column="0"  MouseDoubleClick="showPopupWindow" Name="TextBox20" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox21" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox22" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox23" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="2" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox24" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="2" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox25" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="2" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox26" TextWrapping="Wrap"/>
 
-                    <TextBox Grid.Row="3" Grid.Column="0" MouseDoubleClick="showPopupWindow" Name="TextBox30"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox31"/>
-                    <TextBox Grid.Row="3" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox32"/>
-                    <TextBox Grid.Row="3" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox33"/>
-                    <TextBox Grid.Row="3" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox34"/>
-                    <TextBox Grid.Row="3" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox35"/>
-                    <TextBox Grid.Row="3" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox36"/>
+                    <TextBox Grid.Row="3" Grid.Column="0" MouseDoubleClick="showPopupWindow" Name="TextBox30" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" MouseDoubleClick="showPopupWindow" Name="TextBox31" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" MouseDoubleClick="showPopupWindow" Name="TextBox32" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" MouseDoubleClick="showPopupWindow" Name="TextBox33" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="3" Grid.Column="4" MouseDoubleClick="showPopupWindow" Name="TextBox34" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="3" Grid.Column="5" MouseDoubleClick="showPopupWindow" Name="TextBox35" TextWrapping="Wrap"/>
+                    <TextBox Grid.Row="3" Grid.Column="6" MouseDoubleClick="showPopupWindow" Name="TextBox36" TextWrapping="Wrap"/>
                 </Grid>
 
                 <Button Content="保存" Width="100" Margin="20" FontSize="20" FontWeight="Black" Background="Azure" Click="saveDataToDBBtn_Click"></Button>

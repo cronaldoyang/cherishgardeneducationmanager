@@ -32,7 +32,7 @@
                         <MenuItem Header="制作相关报表">
                             <MenuItem Header="每周课表" Click="navigateToMakeupCourse"/>
                             <MenuItem Header="课程卡" Click="navigateToCourseCards"/>
-                            <MenuItem Header="成长报告" IsEnabled="False"/>
+                            <MenuItem Header="成长报告" Click="navigateToWeeklyReport" />
                             <MenuItem Header="学期报告" IsEnabled="False"/>
                         </MenuItem>
                     </Menu>

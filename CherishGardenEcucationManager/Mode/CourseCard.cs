@@ -11,7 +11,8 @@ namespace CherishGardenEducationManager.Mode
     {
         public CourseCard() 
         { 
-            time = DateTime.Now; 
+            time = DateTime.Now;
+            updatetime = DateTime.Now;
             id = -1; 
         }
 

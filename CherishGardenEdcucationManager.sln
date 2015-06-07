@@ -5,11 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CherishGardenEdcucationManager", "CherishGardenEcucationManager\CherishGardenEdcucationManager.csproj", "{AD4A2CF5-CD4A-4351-A760-167FA27CBBA6}"
 EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "CGEM05", "CGEM05\CGEM05.isproj", "{1709017A-93AC-41F6-988D-7AD34C919048}"
-	ProjectSection(ProjectDependencies) = postProject
-		{AD4A2CF5-CD4A-4351-A760-167FA27CBBA6} = {AD4A2CF5-CD4A-4351-A760-167FA27CBBA6}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -29,16 +24,6 @@ Global
 		{AD4A2CF5-CD4A-4351-A760-167FA27CBBA6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD4A2CF5-CD4A-4351-A760-167FA27CBBA6}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{AD4A2CF5-CD4A-4351-A760-167FA27CBBA6}.SingleImage|Any CPU.Build.0 = Release|Any CPU
-		{1709017A-93AC-41F6-988D-7AD34C919048}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
-		{1709017A-93AC-41F6-988D-7AD34C919048}.CD_ROM|Any CPU.Build.0 = CD_ROM
-		{1709017A-93AC-41F6-988D-7AD34C919048}.Debug|Any CPU.ActiveCfg = DVD-5
-		{1709017A-93AC-41F6-988D-7AD34C919048}.Debug|Any CPU.Build.0 = DVD-5
-		{1709017A-93AC-41F6-988D-7AD34C919048}.DVD-5|Any CPU.ActiveCfg = DVD-5
-		{1709017A-93AC-41F6-988D-7AD34C919048}.DVD-5|Any CPU.Build.0 = DVD-5
-		{1709017A-93AC-41F6-988D-7AD34C919048}.Release|Any CPU.ActiveCfg = SingleImage
-		{1709017A-93AC-41F6-988D-7AD34C919048}.Release|Any CPU.Build.0 = SingleImage
-		{1709017A-93AC-41F6-988D-7AD34C919048}.SingleImage|Any CPU.ActiveCfg = SingleImage
-		{1709017A-93AC-41F6-988D-7AD34C919048}.SingleImage|Any CPU.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
